@@ -1,7 +1,11 @@
 com\mycompany\sipre\Main.class
-com\mycompany\sipre\vista\PanelLogin$3.class
-com\mycompany\sipre\vista\PanelLogin$1.class
-com\mycompany\sipre\vista\PanelLogin.class
+com\mycompany\sipre\vista\DialogoLogin$2.class
+com\mycompany\sipre\vista\MainJFrame$3.class
+com\mycompany\sipre\vista\DialogoLogin.class
+com\mycompany\sipre\vista\DialogoLogin$1.class
+com\mycompany\sipre\vista\DialogoLogin$4.class
 com\mycompany\sipre\vista\MainJFrame$1.class
-com\mycompany\sipre\vista\PanelLogin$2.class
+com\mycompany\sipre\vista\DialogoLogin$3.class
+com\mycompany\sipre\vista\MainJFrame$2.class
+com\mycompany\sipre\vista\PanelInicio.class
 com\mycompany\sipre\vista\MainJFrame.class

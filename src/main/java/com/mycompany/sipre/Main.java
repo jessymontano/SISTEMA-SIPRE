@@ -4,8 +4,8 @@
  */
 package com.mycompany.sipre;
 
+import com.mycompany.sipre.vista.*;
 import javax.swing.SwingUtilities;
-import com.mycompany.sipre.vista.MainJFrame;
 
 /**
  *
@@ -13,6 +13,10 @@ import com.mycompany.sipre.vista.MainJFrame;
  */
 public class Main {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new MainJFrame().setVisible(true));
+        //SwingUtilities.invokeLater(() -> new MainJFrame().setVisible(true));
+        MainJFrame frame = new MainJFrame();
+        DialogoLogin login = new DialogoLogin(frame);
+        
+        login.setVisible(true);
     }
 }

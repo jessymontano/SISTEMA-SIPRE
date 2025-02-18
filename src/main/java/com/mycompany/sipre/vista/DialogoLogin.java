@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package com.mycompany.sipre.vista;
 
@@ -8,12 +8,15 @@ package com.mycompany.sipre.vista;
  *
  * @author jessica
  */
-public class PanelLogin extends javax.swing.JPanel {
+public class DialogoLogin extends javax.swing.JDialog {
 
     /**
-     * Creates new form Registro
+     * Creates new form DialogoLogin
      */
-    public PanelLogin() {
+    public DialogoLogin(java.awt.Frame parent) {
+        super(parent, "Acceder", true);
+        setLocationRelativeTo(parent);
+        
         initComponents();
     }
 
@@ -34,11 +37,14 @@ public class PanelLogin extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(217, 216, 255));
-        setLayout(new java.awt.GridBagLayout());
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         ComboTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Administrador" }));
-        ComboTipoUsuario.setMaximumSize(new java.awt.Dimension(110, 22));
+        ComboTipoUsuario.setMaximumSize(new java.awt.Dimension(150, 22));
+        ComboTipoUsuario.setMinimumSize(new java.awt.Dimension(150, 22));
+        ComboTipoUsuario.setPreferredSize(new java.awt.Dimension(150, 22));
         ComboTipoUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboTipoUsuarioActionPerformed(evt);
@@ -47,18 +53,31 @@ public class PanelLogin extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 46;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(65, 18, 0, 194);
-        add(ComboTipoUsuario, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(77, 18, 0, 69);
+        getContentPane().add(ComboTipoUsuario, gridBagConstraints);
+
+        FieldUsuario.setMaximumSize(new java.awt.Dimension(150, 22));
+        FieldUsuario.setMinimumSize(new java.awt.Dimension(150, 22));
+        FieldUsuario.setPreferredSize(new java.awt.Dimension(150, 22));
+        FieldUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldUsuarioActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 46;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 194);
-        add(FieldUsuario, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 69);
+        getContentPane().add(FieldUsuario, gridBagConstraints);
 
+        FieldContrasena.setMaximumSize(new java.awt.Dimension(150, 22));
+        FieldContrasena.setMinimumSize(new java.awt.Dimension(150, 22));
+        FieldContrasena.setPreferredSize(new java.awt.Dimension(150, 22));
         FieldContrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FieldContrasenaActionPerformed(evt);
@@ -70,8 +89,8 @@ public class PanelLogin extends javax.swing.JPanel {
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 46;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 194);
-        add(FieldContrasena, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 69);
+        getContentPane().add(FieldContrasena, gridBagConstraints);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Usuario:");
@@ -79,8 +98,8 @@ public class PanelLogin extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(21, 87, 0, 0);
-        add(jLabel1, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(21, 51, 0, 0);
+        getContentPane().add(jLabel1, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Contraseña:");
@@ -89,8 +108,8 @@ public class PanelLogin extends javax.swing.JPanel {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 87, 0, 0);
-        add(jLabel2, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(21, 51, 0, 0);
+        getContentPane().add(jLabel2, gridBagConstraints);
 
         jButton1.setBackground(new java.awt.Color(148, 143, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -104,14 +123,21 @@ public class PanelLogin extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 5;
+        gridBagConstraints.ipadx = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 24, 73, 194);
-        add(jButton1, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(18, 101, 80, 69);
+        getContentPane().add(jButton1, gridBagConstraints);
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ComboTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboTipoUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ComboTipoUsuarioActionPerformed
+
+    private void FieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FieldUsuarioActionPerformed
 
     private void FieldContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldContrasenaActionPerformed
         // TODO add your handling code here:
@@ -120,7 +146,6 @@ public class PanelLogin extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboTipoUsuario;

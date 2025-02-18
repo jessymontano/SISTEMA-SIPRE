@@ -6,14 +6,20 @@ package com.mycompany.sipre.vista;
 
 import java.awt.CardLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import com.mycompany.sipre.vista.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 
 /**
  *
  * @author jessica
  */
 public class MainJFrame extends JFrame {
-    private CardLayout layout;
-    private PanelLogin login;
+    private CardLayout cardLayout;
+    private JPanel panelContenedor;
     /**
      * Creates new form Main
      */
@@ -22,9 +28,29 @@ public class MainJFrame extends JFrame {
         setSize(1080,720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        login = new PanelLogin();
-        setContentPane(login);
+        setMinimumSize(new Dimension(800,600));
+        JPanel panelMenu = new JPanel();
+        
+        panelMenu.setLayout(new BoxLayout(panelMenu, BoxLayout.Y_AXIS));
+        
+        cardLayout = new CardLayout();
+        panelContenedor = new JPanel(cardLayout);
+        
+        panelContenedor.add("inicio", new PanelInicio(this));
+        
         initComponents();
+        
+        panelMenu.add(jMenuBar1);
+        panelMenu.add(jMenuBar2);
+        
+        setLayout(new BorderLayout());
+        add(panelMenu, BorderLayout.NORTH);
+        add(panelContenedor, BorderLayout.CENTER);
+    }
+    
+    public void mostrarPanel(String nombrePanel, String titulo) {
+        cardLayout.show(panelContenedor, nombrePanel);
+        setTitle(titulo);
     }
 
     /**
@@ -36,10 +62,122 @@ public class MainJFrame extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
+
+        jMenu1.setText("nombre");
+
+        jMenuItem1.setText("Información personal");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Configuración");
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Cerrar sesión");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuBar1.add(Box.createHorizontalStrut(500));
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Modalidad");
+
+        jMenuItem4.setText("Usuario");
+        jMenu2.add(jMenuItem4);
+
+        jMenuItem5.setText("Administrador");
+        jMenu2.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Buscar por");
+
+        jMenuItem6.setText("Folio");
+        jMenu3.add(jMenuItem6);
+
+        jMenuItem7.setText("Tipo");
+        jMenu3.add(jMenuItem7);
+
+        jMenuItem8.setText("Fecha");
+        jMenu3.add(jMenuItem8);
+
+        jMenuBar2.add(jMenu3);
+
+        jMenu4.setText("Consultar");
+
+        jMenuItem9.setText("Certificados y títulos de propiedad");
+        jMenu4.add(jMenuItem9);
+
+        jMenuItem10.setText("Disponibilidad de formatos preimpresos");
+        jMenu4.add(jMenuItem10);
+
+        jMenuItem11.setText("Gestión de formatos preimpresos");
+        jMenu4.add(jMenuItem11);
+
+        jMenuBar2.add(jMenu4);
+
+        jMenu5.setText("Solicitar");
+
+        jMenuItem12.setText("Impresión");
+        jMenu5.add(jMenuItem12);
+
+        jMenuItem13.setText("Cancelar solicitud");
+        jMenu5.add(jMenuItem13);
+
+        jMenuItem14.setText("Ver estado de solicitud");
+        jMenu5.add(jMenuItem14);
+
+        jMenuBar2.add(jMenu5);
+
+        jMenu6.setText("Ayuda");
+        jMenuBar2.add(jMenu6);
+
+        jMenu7.setText("Modalidad: ");
+        jMenuBar2.add(jMenu7);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +217,28 @@ public class MainJFrame extends JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }
