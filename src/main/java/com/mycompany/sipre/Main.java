@@ -4,6 +4,7 @@
  */
 package com.mycompany.sipre;
 
+import com.mycompany.sipre.controlador.LoginController;
 import com.mycompany.sipre.vista.*;
 import javax.swing.SwingUtilities;
 
@@ -13,10 +14,19 @@ import javax.swing.SwingUtilities;
  */
 public class Main {
     public static void main(String[] args) {
-        //SwingUtilities.invokeLater(() -> new MainJFrame().setVisible(true));
-        MainJFrame frame = new MainJFrame();
-        DialogoLogin login = new DialogoLogin(frame);
-        
-        login.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            //crear dialogo de login
+            LoginController loginController = new LoginController();
+            DialogoLogin dialogoLogin = new DialogoLogin(null, loginController);
+            dialogoLogin.setVisible(true);
+            
+            if (dialogoLogin.isAutenticado()) {
+                //crear ventana principal si se inicia sesion correctamente
+                MainJFrame frame = new MainJFrame(dialogoLogin.getUsuarioAutenticado());
+                frame.setVisible(true);
+            } else {
+                System.exit(0);
+            }
+        }); 
     }
 }
