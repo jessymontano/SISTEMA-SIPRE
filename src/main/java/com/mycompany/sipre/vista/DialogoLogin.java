@@ -4,20 +4,30 @@
  */
 package com.mycompany.sipre.vista;
 
+import com.mycompany.sipre.controlador.LoginController;
+import com.mycompany.sipre.modelo.Usuario;
+import java.awt.Color;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jessica
  */
 public class DialogoLogin extends javax.swing.JDialog {
-
+    private boolean autenticado = false;
+    private LoginController loginController;
+    private Usuario usuarioAutenticado;
     /**
      * Creates new form DialogoLogin
      */
-    public DialogoLogin(java.awt.Frame parent) {
+    public DialogoLogin(JFrame parent, LoginController controller) {
         super(parent, "Acceder", true);
         setLocationRelativeTo(parent);
+        this.loginController = controller;
         
         initComponents();
+        getContentPane().setBackground(new Color(217,216,255));
     }
 
     /**
@@ -30,67 +40,54 @@ public class DialogoLogin extends javax.swing.JDialog {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        ComboTipoUsuario = new javax.swing.JComboBox<>();
-        FieldUsuario = new javax.swing.JTextField();
-        FieldContrasena = new javax.swing.JTextField();
+        comboTipoUsuario = new javax.swing.JComboBox<>();
+        fieldUsuario = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        fieldContrasena = new javax.swing.JPasswordField();
+        jToggleButton3 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Acceder");
         setBackground(new java.awt.Color(217, 216, 255));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        ComboTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Administrador" }));
-        ComboTipoUsuario.setMaximumSize(new java.awt.Dimension(150, 22));
-        ComboTipoUsuario.setMinimumSize(new java.awt.Dimension(150, 22));
-        ComboTipoUsuario.setPreferredSize(new java.awt.Dimension(150, 22));
-        ComboTipoUsuario.addActionListener(new java.awt.event.ActionListener() {
+        comboTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Administrador" }));
+        comboTipoUsuario.setMaximumSize(new java.awt.Dimension(150, 22));
+        comboTipoUsuario.setMinimumSize(new java.awt.Dimension(150, 22));
+        comboTipoUsuario.setPreferredSize(new java.awt.Dimension(150, 22));
+        comboTipoUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboTipoUsuarioActionPerformed(evt);
+                comboTipoUsuarioActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.ipadx = 46;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(77, 18, 0, 69);
-        getContentPane().add(ComboTipoUsuario, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(71, 18, 0, 98);
+        getContentPane().add(comboTipoUsuario, gridBagConstraints);
 
-        FieldUsuario.setMaximumSize(new java.awt.Dimension(150, 22));
-        FieldUsuario.setMinimumSize(new java.awt.Dimension(150, 22));
-        FieldUsuario.setPreferredSize(new java.awt.Dimension(150, 22));
-        FieldUsuario.addActionListener(new java.awt.event.ActionListener() {
+        fieldUsuario.setMaximumSize(new java.awt.Dimension(150, 22));
+        fieldUsuario.setMinimumSize(new java.awt.Dimension(150, 22));
+        fieldUsuario.setPreferredSize(new java.awt.Dimension(150, 22));
+        fieldUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FieldUsuarioActionPerformed(evt);
+                fieldUsuarioActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 46;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 69);
-        getContentPane().add(FieldUsuario, gridBagConstraints);
-
-        FieldContrasena.setMaximumSize(new java.awt.Dimension(150, 22));
-        FieldContrasena.setMinimumSize(new java.awt.Dimension(150, 22));
-        FieldContrasena.setPreferredSize(new java.awt.Dimension(150, 22));
-        FieldContrasena.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FieldContrasenaActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 46;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 69);
-        getContentPane().add(FieldContrasena, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 98);
+        getContentPane().add(fieldUsuario, gridBagConstraints);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Usuario:");
@@ -98,7 +95,7 @@ public class DialogoLogin extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(21, 51, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(21, 54, 0, 0);
         getContentPane().add(jLabel1, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -108,7 +105,7 @@ public class DialogoLogin extends javax.swing.JDialog {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(21, 51, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(21, 54, 0, 0);
         getContentPane().add(jLabel2, gridBagConstraints);
 
         jButton1.setBackground(new java.awt.Color(148, 143, 255));
@@ -122,37 +119,90 @@ public class DialogoLogin extends javax.swing.JDialog {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.ipadx = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 101, 80, 69);
+        gridBagConstraints.insets = new java.awt.Insets(14, 101, 89, 98);
         getContentPane().add(jButton1, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 99;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 0);
+        getContentPane().add(fieldContrasena, gridBagConstraints);
+
+        jToggleButton3.setBackground(new java.awt.Color(148, 143, 255));
+        jToggleButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jToggleButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jToggleButton3.setText("?");
+        jToggleButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jToggleButton3.setMargin(new java.awt.Insets(2, 2, 3, 2));
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.ipadx = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 0);
+        getContentPane().add(jToggleButton3, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ComboTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboTipoUsuarioActionPerformed
+    private void comboTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ComboTipoUsuarioActionPerformed
+    }//GEN-LAST:event_comboTipoUsuarioActionPerformed
 
-    private void FieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldUsuarioActionPerformed
+    private void fieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_FieldUsuarioActionPerformed
-
-    private void FieldContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldContrasenaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FieldContrasenaActionPerformed
+    }//GEN-LAST:event_fieldUsuarioActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // manejar inicio de sesión
+        String usuario = fieldUsuario.getText();
+        String contrasena = new String(fieldContrasena.getPassword());
+        
+        if (loginController.autenticar(usuario, contrasena)) {
+            autenticado = true;
+            usuarioAutenticado = loginController.getUsuario(usuario);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+        // mostrar contraseña
+        if (jToggleButton3.isSelected()) {
+            fieldContrasena.setEchoChar((char)0);
+        } else {
+            fieldContrasena.setEchoChar('*');
+        }
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
+    
+    public boolean isAutenticado() {
+        return autenticado;
+    }
+    
+    public Usuario getUsuarioAutenticado() {
+        return usuarioAutenticado;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboTipoUsuario;
-    private javax.swing.JTextField FieldContrasena;
-    private javax.swing.JTextField FieldUsuario;
+    private javax.swing.JComboBox<String> comboTipoUsuario;
+    private javax.swing.JPasswordField fieldContrasena;
+    private javax.swing.JTextField fieldUsuario;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JToggleButton jToggleButton3;
     // End of variables declaration//GEN-END:variables
 }
