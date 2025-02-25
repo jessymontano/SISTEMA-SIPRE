@@ -14,20 +14,20 @@ import java.util.Map;
  * @author jessica
  */
 public class LoginController {
-    private Map<String, Usuario> usuarios;
-    
+    //private Map<String, Usuario> usuarios;
+    private UsuarioDAO usuarios;
     public LoginController() {
-        usuarios = new HashMap<>();
-        
-        usuarios.put("prueba", new Usuario("prueba", "12345", "Jessica Montaño", "C. aaaaa Col. bbbbb #xyz C.P: #####", LocalDate.of(2003, 1, 13), "F", "prueba@ejemplo.com", "usuario"));
+        //   usuarios = new HashMap<>();
+        usuarios = new UsuarioDAO();
+        //  usuarios.put("prueba", new Usuario("prueba", "12345", "Jessica Montaño", "C. aaaaa Col. bbbbb #xyz C.P: #####", LocalDate.of(2003, 1, 13), "F", "prueba@ejemplo.com", "usuario"));
     }
-    
+
     public boolean autenticar(String nombreUsuario, String contrasena) {
-        Usuario usuario = usuarios.get(nombreUsuario);
-        return usuario != null && usuario.verificarContrasena(contrasena);
+        return usuarios.autenticar(nombreUsuario, contrasena);
     }
-    
+
     public Usuario getUsuario(String nombreUsuario) {
-        return usuarios.get(nombreUsuario);
+        return usuarios.getUsuario(nombreUsuario);
     }
 }
+
