@@ -12,22 +12,22 @@ import java.time.LocalDate;
  */
 public class Usuario {
     private String usuario;
+
+    private String nombre;
+
+    private String apellido;
+
+    private String email;
     private String contrasena;
-    private String nombreCompleto;
-    private String domicilio;
-    private LocalDate fechaNacimiento;
-    private String sexo;
-    private String correo;
+
     private String rol;
     
-    public Usuario(String usuario, String contrasena, String nombreCompleto, String domicilio, LocalDate fechaNacimiento, String sexo, String correo, String rol) {
+    public Usuario(String usuario, String nombre, String apellido, String email, String contrasena, String rol) {
         this.usuario = usuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
         this.contrasena = contrasena;
-        this.nombreCompleto = nombreCompleto;
-        this.domicilio = domicilio;
-        this.fechaNacimiento = fechaNacimiento;
-        this.sexo = sexo;
-        this.correo = correo;
         this.rol = rol;
     }
     
@@ -39,24 +39,20 @@ public class Usuario {
         return this.contrasena.equals(contrasenaIngresada);
     }
     
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getNombre() {
+        return nombre;
     }
     
-    public String getDomicilio() {
-        return domicilio;
+    public String getApellido() {
+        return apellido;
     }
     
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
+    public String getEmail() {
+        return email;
     }
     
-    public String getSexo() {
-        return sexo;
-    }
-    
-    public String getCorreo() {
-        return correo;
+    public String getContrasena() {
+        return contrasena;
     }
     
     public String getRol() {
