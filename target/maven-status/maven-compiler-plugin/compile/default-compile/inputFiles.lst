@@ -1,7 +1,11 @@
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\db\MySQLConnection.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\LoginController.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\SolicitudDAO.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\UsuarioDAO.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\Main.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\modelo\Documento.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\modelo\Inventario.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\modelo\Solicitud.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\modelo\Usuario.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\buscar\PanelFecha.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\buscar\PanelFolio.java

@@ -1,5 +1,7 @@
 com\mycompany\sipre\vista\MainJFrame$6.class
 com\mycompany\sipre\vista\configuracion\PanelCambioContrasena$2.class
+com\mycompany\sipre\modelo\Documento.class
+com\mycompany\sipre\modelo\Solicitud.class
 com\mycompany\sipre\vista\DialogoLogin$3.class
 com\mycompany\sipre\vista\solicitar\PanelCancelar.class
 com\mycompany\sipre\vista\buscar\PanelTipo$2.class
@@ -78,6 +80,7 @@ com\mycompany\sipre\vista\configuracion\PanelEliminarCuenta$1.class
 com\mycompany\sipre\vista\MainJFrame$3.class
 com\mycompany\sipre\vista\solicitar\PanelSolicitud.class
 com\mycompany\sipre\vista\consultar\PanelCert$2.class
+com\mycompany\sipre\modelo\Inventario.class
 com\mycompany\sipre\vista\buscar\PanelFolio$2.class
 com\mycompany\sipre\vista\configuracion\PanelActualizarDatos.class
 com\mycompany\sipre\vista\solicitar\PanelResumenCancelacion.class
@@ -85,5 +88,6 @@ com\mycompany\sipre\vista\configuracion\PanelCambioContrasena.class
 com\mycompany\sipre\vista\MainJFrame$12.class
 com\mycompany\sipre\vista\MainJFrame$15.class
 com\mycompany\sipre\vista\PanelAyuda.class
+com\mycompany\sipre\controlador\SolicitudDAO.class
 com\mycompany\sipre\vista\configuracion\PanelCambioContrasena$5.class
 com\mycompany\sipre\vista\MainJFrame.class
