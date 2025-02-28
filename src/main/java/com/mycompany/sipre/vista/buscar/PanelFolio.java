@@ -4,8 +4,12 @@
  */
 package com.mycompany.sipre.vista.buscar;
 
+import com.mycompany.sipre.controlador.SolicitudDAO;
+import com.mycompany.sipre.modelo.Solicitud;
+
 import java.awt.Color;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -140,8 +144,31 @@ public class PanelFolio extends javax.swing.JPanel {
     }//GEN-LAST:event_FieldFolioActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+            try {
+                int folio = Integer.parseInt(FieldFolio.getText().trim()); // Obtiene y convierte el folio
+
+                SolicitudDAO solicitudDAO = new SolicitudDAO();
+                Solicitud solicitud = solicitudDAO.buscarSolicitud(folio); // Busca la solicitud
+
+                if (solicitud != null) {
+                    // Limpiar la tabla antes de mostrar el nuevo resultado
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    model.setRowCount(0);
+
+                    // Agregar la solicitud encontrada a la tabla
+                    model.addRow(new Object[]{
+                            solicitud.getFolio(),
+                            solicitud.getTipoDocumento(),
+                            solicitud.getFecha(),
+                            solicitud.getMotivo()
+                    });
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "No se encontró ninguna solicitud con el folio ingresado.", "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido (número entero).", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
