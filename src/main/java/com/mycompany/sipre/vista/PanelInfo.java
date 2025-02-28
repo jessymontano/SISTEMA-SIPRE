@@ -32,17 +32,16 @@ public class PanelInfo extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         LabelNombre = new javax.swing.JLabel();
-        LabelDomicilio = new javax.swing.JLabel();
-        LabelFecha = new javax.swing.JLabel();
-        LabelSexo = new javax.swing.JLabel();
+        LabelApellido = new javax.swing.JLabel();
         LabelCorreo = new javax.swing.JLabel();
+        LabelRol = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(217, 216, 255));
         setPreferredSize(new java.awt.Dimension(587, 300));
         setLayout(new java.awt.GridBagLayout());
 
         LabelNombre.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        LabelNombre.setText("Nombre: " + usuario.getNombreCompleto());
+        LabelNombre.setText("Nombre: " + usuario.getNombre());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -51,51 +50,43 @@ public class PanelInfo extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(65, 49, 0, 0);
         add(LabelNombre, gridBagConstraints);
 
-        LabelDomicilio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        LabelDomicilio.setText("Domicilio: " + usuario.getDomicilio());
+        LabelApellido.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        LabelApellido.setText("Apellido: " + usuario.getApellido());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(18, 49, 0, 0);
-        add(LabelDomicilio, gridBagConstraints);
-
-        LabelFecha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        LabelFecha.setText("Fecha de nacimiento: " + usuario.getFechaNacimiento());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 49, 0, 0);
-        add(LabelFecha, gridBagConstraints);
-
-        LabelSexo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        LabelSexo.setText("Sexo: " + usuario.getSexo());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 49, 123, 0);
-        add(LabelSexo, gridBagConstraints);
+        add(LabelApellido, gridBagConstraints);
 
         LabelCorreo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        LabelCorreo.setText("Correo electrónico: " + usuario.getCorreo());
+        LabelCorreo.setText("Correo electrónico: " + usuario.getEmail());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(65, 138, 0, 176);
         add(LabelCorreo, gridBagConstraints);
+
+        LabelRol.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        LabelRol.setText("Rol: " + usuario.getRol());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 49, 123, 0);
+        add(LabelRol, gridBagConstraints);
+
+
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel LabelCorreo;
-    private javax.swing.JLabel LabelDomicilio;
-    private javax.swing.JLabel LabelFecha;
+
     private javax.swing.JLabel LabelNombre;
-    private javax.swing.JLabel LabelSexo;
+    private javax.swing.JLabel LabelApellido;
+    private javax.swing.JLabel LabelCorreo;
+    private javax.swing.JLabel LabelRol;
     // End of variables declaration//GEN-END:variables
 }
