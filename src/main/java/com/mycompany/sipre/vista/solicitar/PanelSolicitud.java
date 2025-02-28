@@ -115,7 +115,7 @@ public class PanelSolicitud extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(12, 1, 0, 0);
         add(FieldFolio, gridBagConstraints);
 
-        ComboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Certificados", "Títulos de propiedad" }));
+        ComboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cert. Uso Común", "Cert. Parcelario Individual", "Cert. Parcelario de Grupo", "Cert. Parcelario Destino Esp.", "Tit. De Solar Individual", "Tit. Dominio Pleno Individual", "Tit. Dominio Pleno de Grupo", "Tit. De Solar a Favor del Ejido", "Tit. De Solar Servicio Público", "Tit. De Solar Asoc. Religiosas" }));
         ComboTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboTipoActionPerformed(evt);

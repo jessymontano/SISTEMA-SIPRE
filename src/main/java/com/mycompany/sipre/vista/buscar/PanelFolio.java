@@ -116,6 +116,7 @@ public class PanelFolio extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setMaximumSize(new java.awt.Dimension(300, 100));
         jTable1.getTableHeader().setOpaque(false);
         jTable1.getTableHeader().setBackground(new Color(148, 143, 255));
         jScrollPane1.setViewportView(jTable1);

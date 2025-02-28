@@ -106,6 +106,7 @@ public class MainJFrame extends JFrame {
         menuCancelar = new javax.swing.JMenuItem();
         menuEstado = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         textoModalidad = new javax.swing.JMenu();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCuenta = new javax.swing.JMenu();
@@ -240,6 +241,15 @@ public class MainJFrame extends JFrame {
                 menuAyudaActionPerformed(evt);
             }
         });
+
+        jMenuItem1.setText("Ayuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuAyuda.add(jMenuItem1);
+
         jMenuBar2.add(menuAyuda);
 
         textoModalidad.setBackground(new java.awt.Color(186, 200, 211));
@@ -258,7 +268,7 @@ public class MainJFrame extends JFrame {
         jMenuBar1.setPreferredSize(new java.awt.Dimension(800, 23));
 
         menuCuenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
-        menuCuenta.setText(usuario.getNombreCompleto());
+        menuCuenta.setText(usuario.getNombre());
         menuCuenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuCuenta.setMaximumSize(new java.awt.Dimension(500, 50));
         menuCuenta.setMinimumSize(new java.awt.Dimension(200, 50));
@@ -317,6 +327,7 @@ public class MainJFrame extends JFrame {
         jMenuBar1.add(menuModalidad);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -404,14 +415,20 @@ public class MainJFrame extends JFrame {
     }//GEN-LAST:event_menuEstadoActionPerformed
 
     private void menuAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAyudaActionPerformed
-        // TODO cambiar contenido a panel ayuda
+        // 
     }//GEN-LAST:event_menuAyudaActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // cambiar contenido a panel ayuda
+        mostrarPanel("ayuda", "Ayuda");
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem cerrarSesion;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenu menuBuscar;
     private javax.swing.JMenuItem menuCancelar;

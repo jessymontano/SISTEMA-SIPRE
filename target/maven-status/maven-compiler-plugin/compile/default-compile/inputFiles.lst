@@ -1,4 +1,6 @@
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\db\MySQLConnection.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\LoginController.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\UsuarioDAO.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\Main.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\modelo\Usuario.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\buscar\PanelFecha.java
@@ -11,6 +13,7 @@ C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\si
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\consultar\PanelCert.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\consultar\PanelDisp.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\consultar\PanelGestion.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\consultar\PanelResultados.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\DialogoLogin.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\MainJFrame.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\PanelAyuda.java
@@ -19,4 +22,5 @@ C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\si
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelCancelar.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelEstado.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelResumen.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelResumenCancelacion.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelSolicitud.java
