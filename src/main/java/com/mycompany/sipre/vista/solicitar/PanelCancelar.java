@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package com.mycompany.sipre.vista.solicitar;
-
+import com.mycompany.sipre.controlador.SolicitudDAO;
 import java.awt.Color;
 import javax.swing.JFrame;
+
 
 /**
  *
@@ -131,8 +132,38 @@ public class PanelCancelar extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+            try {
+                // Obtén el folio ingresado
+                int folio = Integer.parseInt(FieldFolio.getText().trim());
+
+                // Verifica que se haya ingresado un folio válido
+                if (folio <= 0) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Confirmar eliminación
+                int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this,
+                        "¿Estás seguro de que deseas cancelar la solicitud con folio " + folio + "?",
+                        "Confirmar cancelación", javax.swing.JOptionPane.YES_NO_OPTION);
+
+                if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+                    // Crear instancia del DAO y llamar al método para eliminar la solicitud
+                    SolicitudDAO solicitudDAO = new SolicitudDAO();
+                    boolean resultado = solicitudDAO.cancelarSolicitud(folio);
+
+                    // Mostrar mensaje según el resultado
+                    if (resultado) {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Solicitud eliminada con éxito.");
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(this, "No se encontró una solicitud con el folio especificado.",
+                                "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } catch (NumberFormatException e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
