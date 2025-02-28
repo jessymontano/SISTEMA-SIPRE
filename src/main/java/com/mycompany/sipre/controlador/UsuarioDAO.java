@@ -11,20 +11,17 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class UsuarioDAO {
-    public boolean agregarUsuario(String username, String password, String fullName, String address, String birthDate, String gender, String email, String role) {
-        String query = "INSERT INTO usuarios (username, password, full_name, address, birth_date, gender, email, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public boolean agregarUsuario(String Nombre, String Apellido, String Email, String Contrasena, String Rol) {
+        String query = "INSERT INTO sipre.usuarios (Nombre, Apellido, Email, Contrasena, Rol) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = MySQLConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, username);
-            statement.setString(2, password); // Recuerda hashear la contraseña antes de almacenarla
-            statement.setString(3, fullName);
-            statement.setString(4, address);
-            statement.setString(5, birthDate);
-            statement.setString(6, gender);
-            statement.setString(7, email);
-            statement.setString(8, role);
+            statement.setString(1, Nombre);
+            statement.setString(2, Apellido); // Recuerda hashear la contraseña antes de almacenarla
+            statement.setString(3, Email);
+            statement.setString(4, Contrasena);
+            statement.setString(5, Rol);
 
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
@@ -34,14 +31,14 @@ public class UsuarioDAO {
             return false;
         }
     }
-    public boolean autenticar(String username, String password) {
-        String query = "SELECT * FROM usuarios WHERE username = ? AND password = ?";
+    public boolean autenticar(String Nombre, String Contrasena) {
+        String query = "SELECT * FROM usuarios WHERE Nombre = ? AND Contrasena = ?";
 
         try (Connection connection = MySQLConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, username);
-            statement.setString(2, password); // Recuerda hashear la contraseña antes de compararla
+            statement.setString(1, Nombre);
+            statement.setString(2, Contrasena); // Recuerda hashear la contraseña antes de compararla
 
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next(); // Si hay un resultado, el usuario existe
@@ -51,26 +48,23 @@ public class UsuarioDAO {
             return false;
         }
     }
-    public Usuario getUsuario(String username) {
-        String query = "SELECT * FROM usuarios WHERE username = ?";
+    public Usuario getUsuario(String Usuario) {
+        String query = "SELECT * FROM usuarios WHERE Nombre = ?";
 
         try (Connection connection = MySQLConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, username);
+            statement.setString(1, Usuario);
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                LocalDate birthDate = resultSet.getDate("birth_date").toLocalDate();
                 return new Usuario(
-                        resultSet.getString("username"),
-                        resultSet.getString("password"),
-                        resultSet.getString("full_name"),
-                        resultSet.getString("address"),
-                        birthDate,
-                        resultSet.getString("gender"),
-                        resultSet.getString("email"),
-                        resultSet.getString("role")
+                        resultSet.getString("ID_Usuario"),
+                        resultSet.getString("Nombre"),
+                        resultSet.getString("Apellido"),
+                        resultSet.getString("Email"),
+                        resultSet.getString("Contrasena"),
+                        resultSet.getString("Rol")
                 );
             }
 

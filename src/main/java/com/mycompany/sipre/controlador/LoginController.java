@@ -19,7 +19,7 @@ public class LoginController {
     public LoginController() {
         //   usuarios = new HashMap<>();
         usuarios = new UsuarioDAO();
-        //  usuarios.put("prueba", new Usuario("prueba", "12345", "Jessica Montaño", "C. aaaaa Col. bbbbb #xyz C.P: #####", LocalDate.of(2003, 1, 13), "F", "prueba@ejemplo.com", "usuario"));
+        //usuarios.put("prueba", new Usuario("prueba", "12345", "Jessica Montaño", "C. aaaaa Col. bbbbb #xyz C.P: #####", LocalDate.of(2003, 1, 13), "F", "prueba@ejemplo.com", "usuario"));
     }
 
     public boolean autenticar(String nombreUsuario, String contrasena) {
