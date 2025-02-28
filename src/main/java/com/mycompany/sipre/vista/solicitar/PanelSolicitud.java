@@ -4,7 +4,10 @@
  */
 package com.mycompany.sipre.vista.solicitar;
 
+import com.mycompany.sipre.controlador.SolicitudDAO;
+
 import javax.swing.JFrame;
+import java.sql.Date;
 
 /**
  *
@@ -202,7 +205,34 @@ public class PanelSolicitud extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // Obtén los datos de los campos
+            int folio = Integer.parseInt(FieldFolio.getText()); // Convierte el texto del folio a entero
+            String tipoDocumento = ComboTipo.getSelectedItem().toString(); // Obtén el tipo de documento seleccionado
+            String motivo = jTextArea1.getText(); // Obtén el texto del motivo
+
+            // Obtén la fecha de la solicitud
+            String anoSeleccionado = ComboAno.getSelectedItem().toString(); // Año seleccionado
+            int mesSeleccionado = ComboMes.getSelectedIndex() + 1; // Mes seleccionado (1 = Enero, 12 = Diciembre)
+
+            // Construir la fecha con el primer día del mes
+            String fechaStr = String.format("%s-%02d-01", anoSeleccionado, mesSeleccionado);
+            Date fechaSolicitud = Date.valueOf(fechaStr); // Convierte la fecha en formato String a tipo Date
+
+            // Crear una instancia de SolicitudDAO y agregar la solicitud
+            SolicitudDAO solicitudDAO = new SolicitudDAO();
+            boolean resultado = solicitudDAO.agregarSolicitud(folio, tipoDocumento, fechaSolicitud, motivo);
+
+            if (resultado) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Solicitud enviada con éxito!");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al enviar la solicitud.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error en la fecha seleccionada.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void FieldFolioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldFolioActionPerformed
