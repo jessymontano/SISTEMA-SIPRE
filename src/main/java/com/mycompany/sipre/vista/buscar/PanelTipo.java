@@ -4,8 +4,13 @@
  */
 package com.mycompany.sipre.vista.buscar;
 
+import com.mycompany.sipre.controlador.SolicitudDAO;
+import com.mycompany.sipre.modelo.Solicitud;
+
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
+import java.util.List;
 
 /**
  *
@@ -129,9 +134,27 @@ public class PanelTipo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String tipoSeleccionado = (String) ComboTipo.getSelectedItem(); // Obtener tipo de documento
 
+        SolicitudDAO solicitudDAO = new SolicitudDAO();
+        List<Solicitud> solicitudes = solicitudDAO.buscarSolicitudesPorTipo(tipoSeleccionado); // Buscar solicitudes
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Limpiar la tabla antes de mostrar los resultados
+
+        if (!solicitudes.isEmpty()) {
+            for (Solicitud solicitud : solicitudes) {
+                model.addRow(new Object[]{
+                        solicitud.getFolio(),
+                        solicitud.getTipoDocumento(),
+                        solicitud.getFecha(),
+                        solicitud.getMotivo()
+                });
+            }
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No se encontraron solicitudes de este tipo.", "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboTipo;
