@@ -4,8 +4,13 @@
  */
 package com.mycompany.sipre.vista.buscar;
 
+import com.mycompany.sipre.controlador.SolicitudDAO;
+import com.mycompany.sipre.modelo.Solicitud;
+
 import java.awt.Color;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -52,6 +57,7 @@ public class PanelFecha extends javax.swing.JPanel {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
+
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
@@ -172,7 +178,19 @@ public class PanelFecha extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // mostrar tabla con resultados
+        int anio = Integer.parseInt(ComboAno.getSelectedItem().toString());
+        int mes = ComboMes.getSelectedIndex() + 1; // Sumamos 1 porque enero es 0 en el ComboBox
+
+        SolicitudDAO solicitudDAO = new SolicitudDAO();
+        List<Solicitud> resultados = solicitudDAO.buscarSolicitudPorMesAnio(anio, mes);
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Limpiar la tabla antes de agregar nuevos resultados
+
+        for (Solicitud s : resultados) {
+            model.addRow(new Object[]{s.getFolio(), s.getTipoDocumento(), s.getFecha()});
+        }
+
         jTable1.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
