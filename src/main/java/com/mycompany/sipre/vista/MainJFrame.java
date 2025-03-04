@@ -15,6 +15,7 @@ import com.mycompany.sipre.vista.buscar.*;
 import com.mycompany.sipre.vista.consultar.*;
 import com.mycompany.sipre.vista.solicitar.*;
 import com.mycompany.sipre.vista.reportes.Panelinventario;
+import com.mycompany.sipre.vista.solicitar.reportes.PanelMovimientos_solicitudes;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -66,6 +67,7 @@ public class MainJFrame extends JFrame {
         panelContenedor.add("estado", new PanelEstado(this));
         panelContenedor.add("ayuda", new PanelAyuda(this));
         panelContenedor.add("inventario", new Panelinventario(this));
+        panelContenedor.add("movimientos", new PanelMovimientos_solicitudes(this));
         
         initComponents();
         
@@ -246,7 +248,7 @@ public class MainJFrame extends JFrame {
 
 // Opción 1: "Movimiento de solicitudes"
         javax.swing.JMenuItem menuMovimientos = new javax.swing.JMenuItem();
-        menuMovimientos.setText("Movimiento de solicitudes"); // Texto de la opción
+        menuMovimientos.setText("Inventario"); // Texto de la opción
         menuMovimientos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuMovimientosActionPerformed(evt); // Método a ejecutar al hacer clic
@@ -256,7 +258,7 @@ public class MainJFrame extends JFrame {
 
 // Opción 2: "Inventario"
         javax.swing.JMenuItem menuInventario = new javax.swing.JMenuItem();
-        menuInventario.setText("Inventario"); // Texto de la opción
+        menuInventario.setText("Movimiento de solicitudes"); // Texto de la opción
         menuInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuInventarioActionPerformed(evt); // Método a ejecutar al hacer clic
@@ -463,11 +465,11 @@ public class MainJFrame extends JFrame {
         mostrarPanel("ayuda", "Ayuda");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
     private void menuMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-
+        mostrarPanel("inventario", "Reporte_Inventario");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
     //menuInventarioActionPerformed
     private void menuInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        mostrarPanel("inventario", "Reporte_Inventario");
+        mostrarPanel("movimientos", "Reporte_movimientos");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 
