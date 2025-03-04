@@ -3,6 +3,8 @@ import com.mycompany.sipre.controlador.db.MySQLConnection;
 import com.mycompany.sipre.modelo.Solicitud;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SolicitudDAO {
 
@@ -67,11 +69,58 @@ public class SolicitudDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return solicitud; // Retorna la solicitud o null si no la encuentra
     }
 
+    public List<Solicitud> buscarSolicitudesPorTipo(String tipoDocumento) {
+        String sql = "SELECT * FROM sipre.solicitud WHERE TipoDocumento = ?";
+        List<Solicitud> solicitudes = new ArrayList<>();
 
+        try (Connection connection = MySQLConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
+            stmt.setString(1, tipoDocumento); // Establece el tipo de documento en la consulta
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) { // Usamos while para recorrer todas las coincidencias
+                Solicitud solicitud = new Solicitud();
+                solicitud.setFolio(rs.getInt("Folio"));
+                solicitud.setTipoDocumento(rs.getString("TipoDocumento"));
+                solicitud.setFecha(rs.getDate("Fecha_Solicitud"));
+                solicitud.setMotivo(rs.getString("Motivo"));
+
+                solicitudes.add(solicitud);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return solicitudes; // Retorna la lista de solicitudes
+    }
+
+    public List<Solicitud> buscarSolicitudPorMesAnio(int anio, int mes) {
+        String sql = "SELECT * FROM sipre.solicitud WHERE YEAR(Fecha_Solicitud) = ? AND MONTH(Fecha_Solicitud) = ?";
+        List<Solicitud> solicitudes = new ArrayList<>();
+
+        try (Connection connection = MySQLConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, anio);
+            stmt.setInt(2, mes);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Solicitud solicitud = new Solicitud();
+                solicitud.setFolio(rs.getInt("Folio"));
+                solicitud.setTipoDocumento(rs.getString("TipoDocumento"));
+                solicitud.setFecha(rs.getDate("Fecha_Solicitud"));
+                solicitud.setMotivo(rs.getString("Motivo"));
+                solicitudes.add(solicitud);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return solicitudes;
+    }
 }
 
