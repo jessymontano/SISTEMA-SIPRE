@@ -14,6 +14,8 @@ import com.mycompany.sipre.modelo.Usuario;
 import com.mycompany.sipre.vista.buscar.*;
 import com.mycompany.sipre.vista.consultar.*;
 import com.mycompany.sipre.vista.solicitar.*;
+import com.mycompany.sipre.vista.reportes.Panelinventario;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.Box;
@@ -63,6 +65,7 @@ public class MainJFrame extends JFrame {
         panelContenedor.add("cancelar", new PanelCancelar(this));
         panelContenedor.add("estado", new PanelEstado(this));
         panelContenedor.add("ayuda", new PanelAyuda(this));
+        panelContenedor.add("inventario", new Panelinventario(this));
         
         initComponents();
         
@@ -93,6 +96,7 @@ public class MainJFrame extends JFrame {
     private void initComponents() {
 
         jMenuBar2 = new javax.swing.JMenuBar();
+        menuReportes=new javax.swing.JMenu();
         menuBuscar = new javax.swing.JMenu();
         menuFolio = new javax.swing.JMenuItem();
         menuTipo = new javax.swing.JMenuItem();
@@ -116,6 +120,7 @@ public class MainJFrame extends JFrame {
         menuModalidad = new javax.swing.JMenu();
         modalidadUsuario = new javax.swing.JMenuItem();
         modalidadAdmin = new javax.swing.JMenuItem();
+
 
         jMenuBar2.setBackground(new java.awt.Color(186, 200, 211));
         jMenuBar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
@@ -227,6 +232,41 @@ public class MainJFrame extends JFrame {
         menuSolicitar.add(menuEstado);
 
         jMenuBar2.add(menuSolicitar);
+
+        ///
+        // Crear el menú principal "Reportes"
+        javax.swing.JMenu menuReportes = new javax.swing.JMenu();
+        menuReportes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255))); // Borde azul claro
+        menuReportes.setText("Reportes"); // Texto del menú principal
+        menuReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); // Cursor en forma de mano
+        menuReportes.setMaximumSize(new java.awt.Dimension(100, 50)); // Tamaño máximo
+        menuReportes.setMinimumSize(new java.awt.Dimension(100, 50)); // Tamaño mínimo
+        menuReportes.setPreferredSize(new java.awt.Dimension(100, 50)); // Tamaño preferido
+        menuReportes.setOpaque(true); // Hacer el fondo opaco
+
+// Opción 1: "Movimiento de solicitudes"
+        javax.swing.JMenuItem menuMovimientos = new javax.swing.JMenuItem();
+        menuMovimientos.setText("Movimiento de solicitudes"); // Texto de la opción
+        menuMovimientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMovimientosActionPerformed(evt); // Método a ejecutar al hacer clic
+            }
+        });
+        menuReportes.add(menuMovimientos); // Agregar la opción al menú "Reportes"
+
+// Opción 2: "Inventario"
+        javax.swing.JMenuItem menuInventario = new javax.swing.JMenuItem();
+        menuInventario.setText("Inventario"); // Texto de la opción
+        menuInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuInventarioActionPerformed(evt); // Método a ejecutar al hacer clic
+            }
+        });
+        menuReportes.add(menuInventario); // Agregar la opción al menú "Reportes"
+
+// Agregar el menú "Reportes" a la barra de menú
+        jMenuBar2.add(menuReportes);
+        ///
 
         menuAyuda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
         menuAyuda.setText("Ayuda");
@@ -417,10 +457,17 @@ public class MainJFrame extends JFrame {
     private void menuAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAyudaActionPerformed
         // 
     }//GEN-LAST:event_menuAyudaActionPerformed
-
+    //menuMovimientosActionPerformed
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // cambiar contenido a panel ayuda
         mostrarPanel("ayuda", "Ayuda");
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void menuMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    //menuInventarioActionPerformed
+    private void menuInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        mostrarPanel("inventario", "Reporte_Inventario");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 
@@ -431,6 +478,7 @@ public class MainJFrame extends JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenu menuBuscar;
+    private javax.swing.JMenu menuReportes;
     private javax.swing.JMenuItem menuCancelar;
     private javax.swing.JMenuItem menuCertificados;
     private javax.swing.JMenuItem menuConfiguracion;
