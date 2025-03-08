@@ -4,7 +4,9 @@
  */
 package com.mycompany.sipre.vista.buscar;
 
+import com.mycompany.sipre.controlador.DocumentoDAO;
 import com.mycompany.sipre.controlador.SolicitudDAO;
+import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
 
 import java.awt.Color;
@@ -98,18 +100,18 @@ public class PanelFolio extends javax.swing.JPanel {
         add(jButton1, gridBagConstraints);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+                new Object [][] {
 
-            },
-            new String [] {
-                "Folio", "Tipo de documento", "Fecha de emisión", ""
-            }
+                },
+                new String [] {
+                        "Folio", "Tipo de documento", "Estatus", "Cantidad de documentos", "Fecha de emisión", "Motivo"
+                }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                    java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                    false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -144,30 +146,36 @@ public class PanelFolio extends javax.swing.JPanel {
     }//GEN-LAST:event_FieldFolioActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            try {
-                int folio = Integer.parseInt(FieldFolio.getText().trim()); // Obtiene y convierte el folio
+        try {
+            // Obtener el folio desde el campo de texto (FieldFolio es el JTextField)
+            int folio = Integer.parseInt(FieldFolio.getText().trim());
 
-                SolicitudDAO solicitudDAO = new SolicitudDAO();
-                Solicitud solicitud = solicitudDAO.buscarSolicitud(folio); // Busca la solicitud
+            // Crear instancia del DAO y buscar el documento
+            DocumentoDAO documentoDAO = new DocumentoDAO();
+            Documento documento = documentoDAO.buscarDocumentoPorFolio(folio);
 
-                if (solicitud != null) {
-                    // Limpiar la tabla antes de mostrar el nuevo resultado
-                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                    model.setRowCount(0);
+            if (documento != null) {
+                // Limpiar la tabla antes de mostrar los nuevos resultados
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0);
 
-                    // Agregar la solicitud encontrada a la tabla
-                    model.addRow(new Object[]{
-                            solicitud.getFolio(),
-                            solicitud.getTipoDocumento(),
-                            solicitud.getFecha(),
-                            solicitud.getMotivo()
-                    });
-                } else {
-                    javax.swing.JOptionPane.showMessageDialog(this, "No se encontró ninguna solicitud con el folio ingresado.", "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                }
-            } catch (NumberFormatException e) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido (número entero).", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                // Agregar los datos del documento a la tabla
+                model.addRow(new Object[]{
+                        documento.getFolio(),
+                        documento.getTipoDocumento(),
+                        documento.getEstatus(),
+                        documento.getCantidadDocumentos(),
+                        documento.getFecha(),
+                        documento.getMotivo()
+                });
+            } else {
+                // Mostrar mensaje si no se encuentra el documento
+                javax.swing.JOptionPane.showMessageDialog(this, "No se encontró ningún documento con el folio ingresado.", "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
+        } catch (NumberFormatException e) {
+            // Manejar el caso donde el folio no sea un número válido
+            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido (número entero).", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
         }//GEN-LAST:event_jButton1ActionPerformed
 
 
