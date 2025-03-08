@@ -4,7 +4,9 @@
  */
 package com.mycompany.sipre.vista.buscar;
 
+import com.mycompany.sipre.controlador.DocumentoDAO;
 import com.mycompany.sipre.controlador.SolicitudDAO;
+import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
 
 import javax.swing.JFrame;
@@ -75,6 +77,7 @@ public class PanelTipo extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -93,26 +96,31 @@ public class PanelTipo extends javax.swing.JPanel {
         add(ComboTipo, gridBagConstraints);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Folio", "Tipo de documento", "Fecha de emisión", ""
-            }
+                new Object [][] {},
+                new String [] {
+                        "Folio", "Tipo de documento", "Estatus", "Cantidad de documentos", "Fecha de emisión", "Motivo"
+                }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                    java.lang.String.class,   // Folio
+                    java.lang.String.class,   // Tipo de documento
+                    java.lang.String.class,   // Estatus
+                    java.lang.Integer.class,  // Cantidad de documentos
+                    java.sql.Date.class,      // Fecha de emisión
+                    java.lang.String.class    // Motivo
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                    false, false, false, false, false, false
             };
 
+            @Override
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jTable1.getTableHeader().setOpaque(false);
@@ -134,25 +142,31 @@ public class PanelTipo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String tipoSeleccionado = (String) ComboTipo.getSelectedItem(); // Obtener tipo de documento
+        // Obtener el tipo de documento seleccionado
+        String tipoDocumento = (String) ComboTipo.getSelectedItem();
 
-        SolicitudDAO solicitudDAO = new SolicitudDAO();
-        List<Solicitud> solicitudes = solicitudDAO.buscarSolicitudesPorTipo(tipoSeleccionado); // Buscar solicitudes
+        // Crear una instancia de DocumentoDAO (o el DAO correspondiente)
+        DocumentoDAO documentoDAO = new DocumentoDAO();
 
+        // Buscar los documentos según el tipo de documento
+        List<Documento> documentos = documentoDAO.buscarDocumentosPorTipo(tipoDocumento);
+
+        // Obtener el modelo de la tabla
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Limpiar la tabla antes de mostrar los resultados
 
-        if (!solicitudes.isEmpty()) {
-            for (Solicitud solicitud : solicitudes) {
-                model.addRow(new Object[]{
-                        solicitud.getFolio(),
-                        solicitud.getTipoDocumento(),
-                        solicitud.getFecha(),
-                        solicitud.getMotivo()
-                });
-            }
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "No se encontraron solicitudes de este tipo.", "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        // Limpiar la tabla antes de agregar nuevos datos
+        model.setRowCount(0);
+
+        // Llenar la tabla con los documentos encontrados
+        for (Documento documento : documentos) {
+            model.addRow(new Object[]{
+                    documento.getFolio(),
+                    documento.getTipoDocumento(),
+                    documento.getEstatus(),
+                    documento.getCantidadDocumentos(),
+                    documento.getFecha(),
+                    documento.getMotivo()
+            });
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
