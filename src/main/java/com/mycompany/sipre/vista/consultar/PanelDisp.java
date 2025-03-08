@@ -4,8 +4,13 @@
  */
 package com.mycompany.sipre.vista.consultar;
 
+import com.mycompany.sipre.modelo.Documento;
+import com.mycompany.sipre.controlador.DocumentoDAO;
+
 import java.awt.Color;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,6 +25,7 @@ public class PanelDisp extends javax.swing.JPanel {
         initComponents();
     }
 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,6 +37,8 @@ public class PanelDisp extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         ComboFiltro = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -40,7 +48,7 @@ public class PanelDisp extends javax.swing.JPanel {
         setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("Disponibilidad de formatos preimpresos");
+        jLabel1.setText("Disponibilidad de documentos en bodega");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -48,7 +56,33 @@ public class PanelDisp extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(62, 211, 0, 0);
         add(jLabel1, gridBagConstraints);
 
-        ComboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alta", "Baja", "Agotada" }));
+        jLabel2.setText("Seleccione el Estatus de los documento");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 21;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 181, 0, 0);
+        add(jLabel2, gridBagConstraints);
+
+        jButton1.setBackground(new java.awt.Color(148, 143, 255));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 237, 0, 0);
+        add(jButton1, gridBagConstraints);
+
+        ComboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "En bodega", "Solicitado", "Todos"}));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -62,7 +96,7 @@ public class PanelDisp extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Formato", "Folio", "Cantidad disponible", "Última actualización", ""
+                "Formato", "Folio", "Cantidad disponible", "Estatus"
             }
         ) {
             Class[] types = new Class [] {
@@ -97,11 +131,47 @@ public class PanelDisp extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(12, 6, 32, 6);
         add(jScrollPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String estatusSeleccionado = ComboFiltro.getSelectedItem().toString();
+
+        DocumentoDAO documentoDAO = new DocumentoDAO();
+        List<Documento> documentos = null;
+
+        if ("Todos".equals(estatusSeleccionado)) {
+            // Si el estatus es "Todos", buscar los documentos con ambos estatus
+            List<Documento> documentosEnBodega = documentoDAO.buscarDocumentosPorEstatus("En bodega");
+            List<Documento> documentosSolicitados = documentoDAO.buscarDocumentosPorEstatus("Solicitado");
+
+            // Combinar las dos listas
+            documentos = documentosEnBodega;
+            documentos.addAll(documentosSolicitados);
+        } else {
+            // Si no es "Todos", buscar solo el estatus seleccionado
+            documentos = documentoDAO.buscarDocumentosPorEstatus(estatusSeleccionado);
+        }
+
+        // Limpiar la tabla antes de mostrar los nuevos datos
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Limpiar la tabla
+
+        // Agregar los documentos a la tabla
+        for (Documento documento : documentos) {
+            Object[] row = new Object[4];
+            row[0] = documento.getTipoDocumento();
+            row[1] = documento.getFolio();
+            row[2] = documento.getCantidadDocumentos();
+            row[3] = documento.getEstatus();
+
+            model.addRow(row); // Añadir la fila a la tabla
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboFiltro;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
