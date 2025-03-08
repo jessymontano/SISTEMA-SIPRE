@@ -4,9 +4,10 @@
  */
 package com.mycompany.sipre.vista.solicitar;
 
+import com.mycompany.sipre.controlador.GeneradorPDF;
 import com.mycompany.sipre.controlador.SolicitudDAO;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.sql.Date;
 
 /**
@@ -32,15 +33,16 @@ public class PanelSolicitud extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        FieldFolio = new javax.swing.JTextField();
-        ComboTipo = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        FieldFolio = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         ComboAno = new javax.swing.JComboBox<>();
@@ -53,7 +55,7 @@ public class PanelSolicitud extends javax.swing.JPanel {
         jButton2.setBackground(new java.awt.Color(148, 143, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Enviar solicitud");
+        jButton2.setText("Guardar solicitud");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -77,13 +79,30 @@ public class PanelSolicitud extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(39, 17, 0, 0);
         add(jLabel1, gridBagConstraints);
 
-        jLabel2.setText("Folio:");
+        jLabel2.setText("Folio Existente en bodega:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 135, 0, 0);
         add(jLabel2, gridBagConstraints);
+
+        jButton3.setBackground(new java.awt.Color(148, 143, 255));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Check");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 30;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 40;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 12, 22, 162);
+        add(jButton3, gridBagConstraints);
 
         jLabel3.setText("Tipo de documento:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -112,26 +131,20 @@ public class PanelSolicitud extends javax.swing.JPanel {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 25;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridheight = 40;
         gridBagConstraints.ipadx = 159;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 1, 0, 0);
         add(FieldFolio, gridBagConstraints);
 
-        ComboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cert. Uso Común", "Cert. Parcelario Individual", "Cert. Parcelario de Grupo", "Cert. Parcelario Destino Esp.", "Tit. De Solar Individual", "Tit. Dominio Pleno Individual", "Tit. Dominio Pleno de Grupo", "Tit. De Solar a Favor del Ejido", "Tit. De Solar Servicio Público", "Tit. De Solar Asoc. Religiosas" }));
-        ComboTipo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboTipoActionPerformed(evt);
-            }
-        });
+        jLabel6.setText("Tipo de documento:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 20;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 12, 0, 0);
-        add(ComboTipo, gridBagConstraints);
+        add(jLabel6, gridBagConstraints);
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Limpiar");
@@ -206,42 +219,99 @@ public class PanelSolicitud extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            // Obtén los datos de los campos
-            int folio = Integer.parseInt(FieldFolio.getText()); // Convierte el texto del folio a entero
-            String tipoDocumento = ComboTipo.getSelectedItem().toString(); // Obtén el tipo de documento seleccionado
-            String motivo = jTextArea1.getText(); // Obtén el texto del motivo
+            // Verificar si el campo de folio no está vacío
+            String folioText = FieldFolio.getText().trim();
+            if (folioText.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El campo Folio no puede estar vacío.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-            // Obtén la fecha de la solicitud
-            String anoSeleccionado = ComboAno.getSelectedItem().toString(); // Año seleccionado
-            int mesSeleccionado = ComboMes.getSelectedIndex() + 1; // Mes seleccionado (1 = Enero, 12 = Diciembre)
+            // Convierte el texto del folio a entero
+            int folio = Integer.parseInt(folioText);
 
-            // Construir la fecha con el primer día del mes
-            String fechaStr = String.format("%s-%02d-01", anoSeleccionado, mesSeleccionado);
-            Date fechaSolicitud = Date.valueOf(fechaStr); // Convierte la fecha en formato String a tipo Date
-
-            // Crear una instancia de SolicitudDAO y agregar la solicitud
+            // Llamar al método para obtener el tipo de documento
             SolicitudDAO solicitudDAO = new SolicitudDAO();
+            String tipoDocumento = solicitudDAO.obtenerTipoDocumentoPorFolio(folio);
+
+            if (tipoDocumento != null) {
+                jLabel6.setText(tipoDocumento);  // Establecer el valor del tipo de documento
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Folio no encontrado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return; // Salir si no se encuentra el folio
+            }
+
+            // Validar el motivo
+            String motivo = jTextArea1.getText().trim();
+            if (motivo.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El campo Motivo no puede estar vacío.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Obtener la fecha seleccionada
+            String anoSeleccionado = ComboAno.getSelectedItem().toString();
+            int mesSeleccionado = ComboMes.getSelectedIndex() + 1;
+
+            if (mesSeleccionado == 0) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Por favor seleccione un mes válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Formato de fecha: "YYYY-MM-DD"
+            String fechaStr = String.format("%s-%02d-01", anoSeleccionado, mesSeleccionado);
+            Date fechaSolicitud = Date.valueOf(fechaStr);
+
+            // Continuar con la lógica de agregar la solicitud solo si todo está bien
             boolean resultado = solicitudDAO.agregarSolicitud(folio, tipoDocumento, fechaSolicitud, motivo);
 
             if (resultado) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Solicitud enviada con éxito!");
+                javax.swing.JOptionPane.showMessageDialog(this, "Solicitud guardada con éxito!");
+
+                // Generar el PDF después de guardar la solicitud
+                GeneradorPDF.generarPDF(folio, tipoDocumento, fechaSolicitud, motivo);  // Llamada al método para generar el PDF
+
             } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Error al enviar la solicitud.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar la solicitud.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error en la fecha seleccionada.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            // Captura cualquier otra excepción que pueda ocurrir
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }
+
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+            try {
+                // Obtén el número de folio desde el campo de texto
+                int folio = Integer.parseInt(FieldFolio.getText()); // Convierte el texto del folio a entero
+
+                // Crear el objeto de acceso a datos (SolicitudDAO)
+                SolicitudDAO solicitudDAO = new SolicitudDAO();
+
+                // Llamar al método para obtener el tipo de documento asociado al folio
+                String tipoDocumento = solicitudDAO.obtenerTipoDocumentoPorFolio(folio);
+
+                // Si el tipo de documento es encontrado, actualizar la etiqueta
+                if (tipoDocumento != null) {
+                    jLabel6.setText(tipoDocumento);  // Actualiza el texto de la etiqueta con el tipo de documento
+                } else {
+                    // Si no se encuentra el folio, mostrar mensaje de error
+                    javax.swing.JOptionPane.showMessageDialog(this, "Folio no encontrado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                // Si no se pudo convertir el folio a número, mostrar mensaje de error
+                javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
 
     private void FieldFolioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldFolioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_FieldFolioActionPerformed
-
-    private void ComboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboTipoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ComboTipoActionPerformed
 
     private void ComboMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboMesActionPerformed
         // TODO add your handling code here:
@@ -251,15 +321,16 @@ public class PanelSolicitud extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboAno;
     private javax.swing.JComboBox<String> ComboMes;
-    private javax.swing.JComboBox<String> ComboTipo;
     private javax.swing.JTextField FieldFolio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
