@@ -4,7 +4,10 @@
  */
 package com.mycompany.sipre.vista.consultar;
 
+import com.mycompany.sipre.controlador.DocumentoDAO;
 import com.mycompany.sipre.vista.MainJFrame;
+
+import javax.swing.*;
 
 /**
  *
@@ -35,11 +38,10 @@ public class PanelCert extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         FieldFolio = new javax.swing.JTextField();
+        FieldCantidad = new javax.swing.JTextField();
         ComboTipo = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        ComboAno = new javax.swing.JComboBox<>();
-        ComboMes = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(217, 216, 255));
         setPreferredSize(new java.awt.Dimension(587, 300));
@@ -47,7 +49,7 @@ public class PanelCert extends javax.swing.JPanel {
         setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("Certificados y títulos de propiedad");
+        jLabel1.setText("Ingresar certificados y títulos de propiedad existentes en bodega");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -73,14 +75,15 @@ public class PanelCert extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 166, 0, 0);
         add(jLabel3, gridBagConstraints);
 
-        jLabel4.setText("Fecha:");
+        jLabel4.setText("Cantidad:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 166, 0, 0);
         add(jLabel4, gridBagConstraints);
+
 
         FieldFolio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +115,21 @@ public class PanelCert extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(12, 2, 0, 157);
         add(ComboTipo, gridBagConstraints);
 
+        FieldCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FieldCantidadActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 14;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 159;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 8, 0, 157);
+        add(FieldCantidad, gridBagConstraints);
+
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Limpiar");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -125,7 +143,7 @@ public class PanelCert extends javax.swing.JPanel {
         jButton2.setBackground(new java.awt.Color(148, 143, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Buscar");
+        jButton2.setText("Guardar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -139,30 +157,6 @@ public class PanelCert extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(12, 40, 118, 0);
         add(jButton2, gridBagConstraints);
 
-        int anoInicio = 2000;
-        int anoActual = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
-
-        String[] anos = new String[anoActual - anoInicio + 1];
-
-        for (int i = 0; i <= anoActual - anoInicio; i++) {
-            anos[i] = String.valueOf(anoActual - i);
-        }
-        ComboAno.setModel(new javax.swing.DefaultComboBoxModel<>(anos));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 12, 0, 0);
-        add(ComboAno, gridBagConstraints);
-
-        ComboMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
-        ComboMes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboMesActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 5;
@@ -170,11 +164,14 @@ public class PanelCert extends javax.swing.JPanel {
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 12, 0, 0);
-        add(ComboMes, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void FieldFolioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldFolioActionPerformed
-        // TODO add your handling code here:
+
+    }//GEN-LAST:event_FieldFolioActionPerformed
+
+    private void FieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldFolioActionPerformed
+
     }//GEN-LAST:event_FieldFolioActionPerformed
 
     private void ComboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboTipoActionPerformed
@@ -182,8 +179,25 @@ public class PanelCert extends javax.swing.JPanel {
     }//GEN-LAST:event_ComboTipoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // mostrar resultados
-        frame.mostrarPanel("resultados", "Resultados");
+        try {
+            int folio = Integer.parseInt(FieldFolio.getText().trim());
+            String tipoDocumento = (String) ComboTipo.getSelectedItem();
+            String estatus = "En bodega"; //
+            int cantidadDocumentos = Integer.parseInt(FieldCantidad.getText().trim());
+
+            DocumentoDAO dao = new DocumentoDAO();
+            boolean resultado = dao.agregarDocumento(folio, tipoDocumento, estatus, cantidadDocumentos);
+
+            if (resultado) {
+                JOptionPane.showMessageDialog(this, "Documento guardado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al guardar el documento", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Verifica los campos numéricos", "Error de formato", JOptionPane.WARNING_MESSAGE);
+        }
+
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void ComboMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboMesActionPerformed
@@ -192,10 +206,9 @@ public class PanelCert extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboAno;
-    private javax.swing.JComboBox<String> ComboMes;
     private javax.swing.JComboBox<String> ComboTipo;
     private javax.swing.JTextField FieldFolio;
+    private javax.swing.JTextField FieldCantidad;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
