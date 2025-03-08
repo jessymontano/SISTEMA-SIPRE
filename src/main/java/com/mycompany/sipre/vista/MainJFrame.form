@@ -177,12 +177,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuCancelarActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuEstado">
+            <MenuItem class="javax.swing.JMenuItem" name="menuModificar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ver estado de solicitud"/>
+                <Property name="text" type="java.lang.String" value="Modificar solicitud"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuEstadoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuModificarActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

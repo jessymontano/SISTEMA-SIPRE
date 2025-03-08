@@ -27,4 +27,26 @@
         <maven.compiler.release>22</maven.compiler.release>
         <exec.mainClass>com.mycompany.sipre.Main</exec.mainClass>
     </properties>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory> 
+                <includes>
+                    <include>**/*</include> 
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>22</source>
+                    <target>22</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

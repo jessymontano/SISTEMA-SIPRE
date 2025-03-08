@@ -122,5 +122,48 @@ public class SolicitudDAO {
         }
         return solicitudes;
     }
+    
+    public List<Solicitud> obtenerSolicitudes() {
+        String sql = "SELECT * FROM sipre.solicitud";
+        List<Solicitud> solicitudes = new ArrayList<>();
+        
+        try (Connection connection = MySQLConnection.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+                  ResultSet rs = stmt.executeQuery();
+                  while (rs.next()) {
+                      Solicitud solicitud = new Solicitud();
+                      solicitud.setFolio(rs.getInt("Folio"));
+                      solicitud.setTipoDocumento(rs.getString("TipoDocumento"));
+                      solicitud.setFecha(rs.getDate("Fecha_Solicitud"));
+                      solicitud.setMotivo(rs.getString("Motivo"));
+                      solicitudes.add(solicitud);
+                  }
+                  
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+        return solicitudes;
+    }
+    
+    public boolean actualizarSolicitud(Solicitud solicitud) {
+        String sql = "UPDATE sipre.solicitud SET TipoDocumento = ?, Fecha_Solicitud = ?, Motivo = ? WHERE Folio = ?";
+         try (Connection connection = MySQLConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+             
+             java.sql.Date sqlDate = new java.sql.Date(solicitud.getFecha().getTime());
+             
+             stmt.setString(1, solicitud.getTipoDocumento());
+             stmt.setDate(2, sqlDate);
+             stmt.setString(3, solicitud.getMotivo());
+             stmt.setInt(4, solicitud.getFolio());
+
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0; // Retorna true si se actualizo la solicitud
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
 

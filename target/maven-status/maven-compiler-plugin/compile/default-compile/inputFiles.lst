@@ -1,4 +1,5 @@
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\db\MySQLConnection.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\GenerarReportes.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\LoginController.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\SolicitudDAO.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\UsuarioDAO.java
@@ -23,8 +24,10 @@ C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\si
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\PanelAyuda.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\PanelInfo.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\PanelInicio.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\reportes\Panelinventario.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\reportes\PanelMovimientos_solicitudes.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelCancelar.java
-C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelEstado.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelModificar.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelResumen.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelResumenCancelacion.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelSolicitud.java
