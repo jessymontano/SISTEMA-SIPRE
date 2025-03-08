@@ -1,29 +1,72 @@
 package com.mycompany.sipre.modelo;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Documento {
+    private int Folio;
+    private String TipoDocumento;
+    private String Estatus;
+    private int CantidadDocumentos;
 
-    private String documento;
-    private String tipo;
-    private String descripcion;
+    public Date fecha;
 
-    public Documento(String documento, String tipo, String descripcion) {
-        this.documento = documento;
-        this.tipo = tipo;
-        this.descripcion = descripcion;
+    public String motivo;
+
+
+    public Documento(int Folio, String TipoDocumento, String Estatus, int CantidadDocumentos) {
+        this.Folio = Folio;
+        this.TipoDocumento = TipoDocumento;
+        this.Estatus = Estatus;
+        this.CantidadDocumentos = CantidadDocumentos;
     }
 
-    public String getDocumento() {
-        return documento;
+    public Documento() {
     }
 
-    public String getTipo() {
-        return tipo;
+
+    public int getFolio() {
+        return  Folio;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public void setFolio(int Folio) {
+        this.Folio = Folio;
     }
+
+    public String getTipoDocumento() {
+        return TipoDocumento;
+    }
+    public void setTipoDocumento(String TipoDocumento) {
+        this.TipoDocumento = TipoDocumento;
+    }
+
+    public String getEstatus(){
+        return Estatus;
+    }
+    public void setEstatus(String Estatus) {
+        this.Estatus = Estatus;
+    }
+    public int getCantidadDocumentos(){
+        return CantidadDocumentos;
+    }
+
+    public void setCantidadDocumentos(int CantidadDocumentos) {
+        this.CantidadDocumentos = CantidadDocumentos;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
 
 }
