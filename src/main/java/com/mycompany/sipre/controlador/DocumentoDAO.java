@@ -33,7 +33,7 @@ public class DocumentoDAO {
     }
 
     public List<Documento> buscarDocumentosPorEstatus(String estatus) {
-        String sql = "SELECT * FROM sipre.documentos WHERE Estatus = ?";
+        String sql = "SELECT d.Folio, d.TipoDocumento, d.Estatus, d.CantidadDocumentos, s.Fecha_Solicitud, s.Motivo FROM sipre.documentos d LEFT JOIN sipre.solicitud s ON d.Folio = s.Folio WHERE Estatus = ?";
         List<Documento> documentos = new ArrayList<>();
 
         try (Connection connection = MySQLConnection.getConnection();
@@ -48,6 +48,8 @@ public class DocumentoDAO {
                 documento.setTipoDocumento(rs.getString("TipoDocumento"));
                 documento.setEstatus(rs.getString("Estatus"));
                 documento.setCantidadDocumentos(rs.getInt("CantidadDocumentos"));
+                documento.setFecha(rs.getDate("Fecha_Solicitud"));
+                documento.setMotivo(rs.getString("Motivo"));
 
                 documentos.add(documento);
             }
@@ -132,7 +134,62 @@ public class DocumentoDAO {
         }
         return documentos; // Retorna la lista de documentos
     }
+    
+    public List<Documento> obtenerDocumentos() {
+        String sql = "SELECT * FROM sipre.documentos";
+        List<Documento> documentos = new ArrayList<>();
+        
+        try (Connection connection = MySQLConnection.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Documento documento = new Documento();
+                documento.setFolio(rs.getInt("Folio"));
+                documento.setTipoDocumento(rs.getString("TipoDocumento"));
+                documento.setEstatus(rs.getString("Estatus"));
+                documento.setCantidadDocumentos(rs.getInt("CantidadDocumentos"));
+                
+            documentos.add(documento);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return documentos;
+    }
+    
+    public boolean actualizarDocumento(Documento documento, int folioAnterior) {
+        String sql = "UPDATE sipre.documentos SET Folio = ?, TipoDocumento = ?, CantidadDocumentos = ? WHERE Folio = ?";
+        try (Connection connection = MySQLConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
+            stmt.setInt(1, documento.getFolio());
+            stmt.setString(2, documento.getTipoDocumento());
+            stmt.setInt(3, documento.getCantidadDocumentos());
+            stmt.setInt(4, folioAnterior);
 
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0; // Retorna true si se actualizo la documento
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean eliminarDocumento(int folio) {
+        String sql = "DELETE FROM sipre.documentos WHERE Folio = ?";
+        try (Connection connection = MySQLConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, folio);
+
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0; // Retorna true si se actualizo la documento
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
 

@@ -110,6 +110,9 @@ public class MainJFrame extends JFrame {
         menuImpresion = new javax.swing.JMenuItem();
         menuCancelar = new javax.swing.JMenuItem();
         menuModificar = new javax.swing.JMenuItem();
+        menuReportes = new javax.swing.JMenu();
+        menuMovimientos = new javax.swing.JMenuItem();
+        menuInventario = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         textoModalidad = new javax.swing.JMenu();
@@ -232,6 +235,31 @@ public class MainJFrame extends JFrame {
         menuSolicitar.add(menuModificar);
 
         jMenuBar2.add(menuSolicitar);
+
+        menuReportes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
+        menuReportes.setText("Reportes");
+        menuReportes.setMaximumSize(new java.awt.Dimension(100, 50));
+        menuReportes.setMinimumSize(new java.awt.Dimension(100, 50));
+        menuReportes.setOpaque(true);
+        menuReportes.setPreferredSize(new java.awt.Dimension(100, 50));
+
+        menuMovimientos.setText("Movimientos de solicitudes");
+        menuMovimientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuMovimientosActionPerformed(evt);
+            }
+        });
+        menuReportes.add(menuMovimientos);
+
+        menuInventario.setText("Inventario");
+        menuInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuReporteInventarioActionPerformed(evt);
+            }
+        });
+        menuReportes.add(menuInventario);
+
+        jMenuBar2.add(menuReportes);
 
         menuAyuda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
         menuAyuda.setText("Ayuda");
@@ -427,13 +455,18 @@ public class MainJFrame extends JFrame {
         // cambiar contenido a panel ayuda
         mostrarPanel("ayuda", "Ayuda");
     }                                          
-    private void menuMovimientosActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        mostrarPanel("inventario", "Reporte_Inventario");
-    }                                          
     //menuInventarioActionPerformed
     private void menuInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        mostrarPanel("movimientos", "Reporte_movimientos");
+        mostrarPanel("inventario", "Reporte Inventario");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void menuMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMovimientosActionPerformed
+        mostrarPanel("movimientos", "Reporte movimientos");
+    }//GEN-LAST:event_menuMovimientosActionPerformed
+
+    private void menuReporteInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReporteInventarioActionPerformed
+         mostrarPanel("inventario", "Reporte Inventario");
+    }//GEN-LAST:event_menuReporteInventarioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -454,8 +487,11 @@ public class MainJFrame extends JFrame {
     private javax.swing.JMenuItem menuGestion;
     private javax.swing.JMenuItem menuImpresion;
     private javax.swing.JMenuItem menuInfo;
+    private javax.swing.JMenuItem menuInventario;
     private javax.swing.JMenu menuModalidad;
     private javax.swing.JMenuItem menuModificar;
+    private javax.swing.JMenuItem menuMovimientos;
+    private javax.swing.JMenu menuReportes;
     private javax.swing.JMenu menuSolicitar;
     private javax.swing.JMenuItem menuTipo;
     private javax.swing.JMenuItem modalidadAdmin;
