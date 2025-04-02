@@ -4,10 +4,11 @@
  */
 package com.mycompany.sipre.vista.buscar;
 
-import com.mycompany.sipre.controlador.SolicitudDAO;
+import com.mycompany.sipre.controlador.SolicitudController;
 import com.mycompany.sipre.modelo.Solicitud;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
@@ -181,14 +182,18 @@ public class PanelFecha extends javax.swing.JPanel {
         int anio = Integer.parseInt(ComboAno.getSelectedItem().toString());
         int mes = ComboMes.getSelectedIndex() + 1; // Sumamos 1 porque enero es 0 en el ComboBox
 
-        SolicitudDAO solicitudDAO = new SolicitudDAO();
-        List<Solicitud> resultados = solicitudDAO.buscarSolicitudPorMesAnio(anio, mes);
+        SolicitudController solicitudController = new SolicitudController();
 
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Limpiar la tabla antes de agregar nuevos resultados
+        try {
+            List<Solicitud> resultados = solicitudController.obtenerSolicitudesPorFecha(anio, mes);
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0); // Limpiar la tabla antes de agregar nuevos resultados
 
-        for (Solicitud s : resultados) {
-            model.addRow(new Object[]{s.getFolio(), s.getTipoDocumento(), s.getFecha()});
+            for (Solicitud s : resultados) {
+                model.addRow(new Object[]{s.getFolio(), s.getTipoDocumento(), s.getFecha()});
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         jTable1.setVisible(true);

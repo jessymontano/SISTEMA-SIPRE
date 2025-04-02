@@ -4,7 +4,7 @@
  */
 package com.mycompany.sipre.vista.solicitar;
 
-import com.mycompany.sipre.controlador.SolicitudDAO;
+import com.mycompany.sipre.controlador.SolicitudController;
 import com.mycompany.sipre.modelo.Solicitud;
 import java.awt.Color;
 import java.awt.Component;
@@ -13,6 +13,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -48,18 +49,23 @@ public class PanelModificar extends javax.swing.JPanel {
 
     //llenar tabla automaticamente con todas las solicitudes encontradas
     private void llenarTabla() {
-        SolicitudDAO solicitudDAO = new SolicitudDAO();
-        solicitudes = solicitudDAO.obtenerSolicitudes();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        for (Solicitud solicitud : solicitudes) {
-            model.addRow(new Object[]{
-                solicitud.getFolio(),
-                solicitud.getTipoDocumento(),
-                solicitud.getFecha(),
-                "Modificar"
-            });
+        SolicitudController solicitudDAO = new SolicitudController();
+        try {
+            solicitudes = solicitudDAO.obtenerTodasLasSolicitudes();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            for (Solicitud solicitud : solicitudes) {
+                model.addRow(new Object[]{
+                    solicitud.getFolio(),
+                    solicitud.getTipoDocumento(),
+                    solicitud.getFecha(),
+                    "Modificar"
+                });
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
 
     /**
@@ -352,12 +358,12 @@ public class PanelModificar extends javax.swing.JPanel {
         // buscar por folio
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int rowCount = model.getRowCount();
-    
+
         for (int i = 0; i < rowCount; i++) {
-            String folio = model.getValueAt(i, 0).toString(); 
+            String folio = model.getValueAt(i, 0).toString();
             if (folio.equals(FieldFolio.getText())) { //si el folio es igual seleccionar el renglón
-                jTable1.setRowSelectionInterval(i, i); 
-                jTable1.scrollRectToVisible(new Rectangle(jTable1.getCellRect(i, 0, true))); 
+                jTable1.setRowSelectionInterval(i, i);
+                jTable1.scrollRectToVisible(new Rectangle(jTable1.getCellRect(i, 0, true)));
                 return;
             }
         }
@@ -387,11 +393,11 @@ public class PanelModificar extends javax.swing.JPanel {
             if (isSelected) {
                 setBackground(table.getSelectionBackground());
             } else {
-                setBackground(new java.awt.Color(148,143,255));
+                setBackground(new java.awt.Color(148, 143, 255));
             }
             ImageIcon icono = new ImageIcon(getClass().getResource("/edit.png"));
             Image image = icono.getImage();
-            Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH); 
+            Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             icono = new ImageIcon(nuevaImagen);
             setIcon(icono);
             return this;
@@ -400,6 +406,7 @@ public class PanelModificar extends javax.swing.JPanel {
 
     // clase para hacer que funcionen los botones dentro de la tabla y obtengan la información de la solicitud seleccionada
     class ButtonEditor extends DefaultCellEditor {
+
         private JButton button;
         private boolean isPushed;
         private int selectedRow;
@@ -410,7 +417,7 @@ public class PanelModificar extends javax.swing.JPanel {
             button.setOpaque(true);
             ImageIcon icono = new ImageIcon(getClass().getResource("/edit.png"));
             Image image = icono.getImage();
-            Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH); 
+            Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             icono = new ImageIcon(nuevaImagen);
             button.setIcon(icono);
             button.addActionListener(new ActionListener() {
@@ -420,7 +427,7 @@ public class PanelModificar extends javax.swing.JPanel {
                     fireEditingStopped();
                 }
             });
-       }
+        }
 
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
@@ -432,15 +439,15 @@ public class PanelModificar extends javax.swing.JPanel {
         public Object getCellEditorValue() {
             return "Modificar";  // Retorna un valor válido
         }
-    }   
+    }
 
     // abre un nuevo jDialog con un formulario para editar la información de la solicitud
     private void abrirFormulario(int rowIndex) {
         Solicitud solicitud = solicitudes.get(rowIndex);
 
         btnGuardar.addActionListener(e -> {
-            solicitud.setTipoDocumento((String)comboTipo.getSelectedItem());
-            
+            solicitud.setTipoDocumento((String) comboTipo.getSelectedItem());
+
             String nuevoAno = (String) comboAno.getSelectedItem();
             int nuevoMes = comboMes.getSelectedIndex();
 
@@ -449,12 +456,16 @@ public class PanelModificar extends javax.swing.JPanel {
             Date nuevaFecha = newCal.getTime();
 
             solicitud.setFecha(nuevaFecha);
-            
+
             solicitud.setMotivo(txtMotivo.getText());
 
             // actualizar la solicitud con los datos introducidos
-            SolicitudDAO solicitudDAO = new SolicitudDAO();
-            solicitudDAO.actualizarSolicitud(solicitud);
+            SolicitudController solicitudDAO = new SolicitudController();
+            try {
+                solicitudDAO.actualizarSolicitud(solicitud);
+            } catch (IOException error) {
+                error.printStackTrace();
+            }
 
             llenarTabla();
             jDialog1.dispose();

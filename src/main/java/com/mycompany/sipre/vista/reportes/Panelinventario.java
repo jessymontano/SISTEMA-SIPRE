@@ -4,7 +4,7 @@
  */
 package com.mycompany.sipre.vista.reportes;
 
-import com.mycompany.sipre.controlador.GenerarReportes;
+//import com.mycompany.sipre.controlador.GenerarReportes;
 import com.opencsv.CSVWriter;
 
 import javax.swing.*;
@@ -125,7 +125,7 @@ public class Panelinventario extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         tableModel.setRowCount(0);
-        GenerarReportes.cargarDatosInventario(tableModel);
+       // GenerarReportes.cargarDatosInventario(tableModel);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

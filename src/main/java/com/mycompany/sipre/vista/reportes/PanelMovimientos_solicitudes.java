@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.sipre.vista.solicitar.reportes;
+package com.mycompany.sipre.vista.reportes;
 
-import com.mycompany.sipre.controlador.GenerarReportes;
+//import com.mycompany.sipre.controlador.GenerarReportes;
 import com.opencsv.CSVWriter;
 
 import javax.swing.*;
@@ -99,7 +99,7 @@ public class PanelMovimientos_solicitudes extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         tableModel.setRowCount(0);
-        GenerarReportes.cargarDatosMovimientos(tableModel);
+        //GenerarReportes.cargarDatosMovimientos(tableModel);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

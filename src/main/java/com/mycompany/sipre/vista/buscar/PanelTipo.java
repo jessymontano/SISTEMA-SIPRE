@@ -4,14 +4,14 @@
  */
 package com.mycompany.sipre.vista.buscar;
 
-import com.mycompany.sipre.controlador.DocumentoDAO;
-import com.mycompany.sipre.controlador.SolicitudDAO;
+import com.mycompany.sipre.controlador.DocumentoController;
 import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
 
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -146,10 +146,11 @@ public class PanelTipo extends javax.swing.JPanel {
         String tipoDocumento = (String) ComboTipo.getSelectedItem();
 
         // Crear una instancia de DocumentoDAO (o el DAO correspondiente)
-        DocumentoDAO documentoDAO = new DocumentoDAO();
-
-        // Buscar los documentos según el tipo de documento
-        List<Documento> documentos = documentoDAO.buscarDocumentosPorTipo(tipoDocumento);
+        DocumentoController documentoController = new DocumentoController();
+        
+        try {
+            // Buscar los documentos según el tipo de documento
+        List<Documento> documentos = documentoController.obtenerDocumentosPorTipo(tipoDocumento);
 
         // Obtener el modelo de la tabla
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -168,6 +169,10 @@ public class PanelTipo extends javax.swing.JPanel {
                     documento.getMotivo()
             });
         }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

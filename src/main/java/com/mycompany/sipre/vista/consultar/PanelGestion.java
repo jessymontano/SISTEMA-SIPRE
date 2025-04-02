@@ -4,8 +4,7 @@
  */
 package com.mycompany.sipre.vista.consultar;
 
-import com.mycompany.sipre.controlador.DocumentoDAO;
-import com.mycompany.sipre.controlador.SolicitudDAO;
+import com.mycompany.sipre.controlador.DocumentoController;
 import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
 import java.awt.Color;
@@ -14,6 +13,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +32,9 @@ import javax.swing.table.TableCellRenderer;
  * @author jessica
  */
 public class PanelGestion extends javax.swing.JPanel {
+
     List<Documento> documentos;
+
     /**
      * Creates new form PanelGestion
      */
@@ -40,23 +42,28 @@ public class PanelGestion extends javax.swing.JPanel {
         initComponents();
         llenarTabla();
     }
-    
+
     //llenar tabla automaticamente con todas las solicitudes encontradas
     private void llenarTabla() {
         // obtener lista de documentos
-        DocumentoDAO documentoDAO = new DocumentoDAO();
-        documentos = documentoDAO.obtenerDocumentos();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        for (Documento documento : documentos) {
-            model.addRow(new Object[]{
-                documento.getFolio(),
-                documento.getTipoDocumento(),
-                documento.getCantidadDocumentos(),
-                "Modificar",
-                "Eliminar"
-            });
+        DocumentoController documentoDAO = new DocumentoController();
+        try {
+            documentos = documentoDAO.obtenerTodosLosDocumentos();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            for (Documento documento : documentos) {
+                model.addRow(new Object[]{
+                    documento.getFolio(),
+                    documento.getTipoDocumento(),
+                    documento.getCantidadDocumentos(),
+                    "Modificar",
+                    "Eliminar"
+                });
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
 
     /**
@@ -319,6 +326,7 @@ public class PanelGestion extends javax.swing.JPanel {
 
     // clase para mostrar botones en la tabla
     class ButtonRenderer extends JButton implements TableCellRenderer {
+
         private String actionType;
 
         public ButtonRenderer(String actionType) {
@@ -331,19 +339,19 @@ public class PanelGestion extends javax.swing.JPanel {
             if (isSelected) {
                 setBackground(table.getSelectionBackground());
             } else {
-                setBackground(new java.awt.Color(148,143,255));
+                setBackground(new java.awt.Color(148, 143, 255));
             }
 
             if ("Modificar".equals(actionType)) {
                 ImageIcon icono = new ImageIcon(getClass().getResource("/edit.png"));
                 Image image = icono.getImage();
-                Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH); 
+                Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
                 icono = new ImageIcon(nuevaImagen);
                 setIcon(icono);
             } else if ("Eliminar".equals(actionType)) {
                 ImageIcon icono = new ImageIcon(getClass().getResource("/delete.png"));
                 Image image = icono.getImage();
-                Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH); 
+                Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
                 icono = new ImageIcon(nuevaImagen);
                 setIcon(icono);
             }
@@ -352,9 +360,9 @@ public class PanelGestion extends javax.swing.JPanel {
         }
     }
 
-
     // clase para hacer que funcionen los botones dentro de la tabla y obtengan la información del documento seleccionado
     class ButtonEditor extends DefaultCellEditor {
+
         private JButton button;
         private boolean isPushed;
         private int selectedRow;
@@ -369,13 +377,13 @@ public class PanelGestion extends javax.swing.JPanel {
             if ("Modificar".equals(actionType)) {
                 ImageIcon icono = new ImageIcon(getClass().getResource("/edit.png"));
                 Image image = icono.getImage();
-                Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH); 
+                Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
                 icono = new ImageIcon(nuevaImagen);
                 button.setIcon(icono);
             } else if ("Eliminar".equals(actionType)) {
                 ImageIcon icono = new ImageIcon(getClass().getResource("/delete.png"));
                 Image image = icono.getImage();
-                Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH); 
+                Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
                 icono = new ImageIcon(nuevaImagen);
                 button.setIcon(icono);
             }
@@ -386,14 +394,14 @@ public class PanelGestion extends javax.swing.JPanel {
                     if ("Modificar".equals(actionType)) {
                         abrirFormulario(selectedRow);
                     } else if ("Eliminar".equals(actionType)) {
-                        int option = JOptionPane.showConfirmDialog(null, 
-                            "¿Está seguro de que desea eliminar este documento?", 
-                            "Confirmar", JOptionPane.YES_NO_OPTION);
+                        int option = JOptionPane.showConfirmDialog(null,
+                                "¿Está seguro de que desea eliminar este documento?",
+                                "Confirmar", JOptionPane.YES_NO_OPTION);
                         if (option == JOptionPane.YES_OPTION) {
-                            eliminarDocumento(selectedRow); 
+                            eliminarDocumento(selectedRow);
                         }
                     }
-                    fireEditingStopped(); 
+                    fireEditingStopped();
                 }
             });
         }
@@ -406,13 +414,18 @@ public class PanelGestion extends javax.swing.JPanel {
 
         @Override
         public Object getCellEditorValue() {
-            return actionType; 
+            return actionType;
         }
 
         private void eliminarDocumento(int rowIndex) {
-            DocumentoDAO documentoDAO = new DocumentoDAO();
-            documentoDAO.eliminarDocumento(documentos.get(rowIndex).getFolio());
-            llenarTabla(); 
+            DocumentoController documentoDAO = new DocumentoController();
+            try {
+
+                documentoDAO.eliminarDocumento(documentos.get(rowIndex).getFolio());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            llenarTabla();
         }
     }
 
@@ -420,15 +433,20 @@ public class PanelGestion extends javax.swing.JPanel {
     private void abrirFormulario(int rowIndex) {
         Documento documento = documentos.get(rowIndex);
         int folioAnterior = documento.getFolio();
-        
+
         btnGuardar.addActionListener(e -> {
             documento.setFolio(Integer.parseInt(fieldFolio.getText()));
-            documento.setTipoDocumento((String)comboTipo.getSelectedItem());
+            documento.setTipoDocumento((String) comboTipo.getSelectedItem());
             documento.setCantidadDocumentos(Integer.parseInt(fieldCantidad.getText()));
-            
+
             // actualizar el documento con los datos introducidos
-            DocumentoDAO documentoDAO = new DocumentoDAO();
-            documentoDAO.actualizarDocumento(documento, folioAnterior);
+            DocumentoController documentoDAO = new DocumentoController();
+            try {
+                documentoDAO.actualizarDocumento(folioAnterior, documento);
+
+            } catch (IOException error) {
+                error.printStackTrace();
+            }
 
             llenarTabla();
             jDialog1.dispose();

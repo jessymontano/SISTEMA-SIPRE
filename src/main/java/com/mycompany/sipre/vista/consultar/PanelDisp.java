@@ -5,9 +5,10 @@
 package com.mycompany.sipre.vista.consultar;
 
 import com.mycompany.sipre.modelo.Documento;
-import com.mycompany.sipre.controlador.DocumentoDAO;
+import com.mycompany.sipre.controlador.DocumentoController;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +25,6 @@ public class PanelDisp extends javax.swing.JPanel {
     public PanelDisp(JFrame frame) {
         initComponents();
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -134,36 +134,41 @@ public class PanelDisp extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String estatusSeleccionado = ComboFiltro.getSelectedItem().toString();
 
-        DocumentoDAO documentoDAO = new DocumentoDAO();
+        DocumentoController documentoDAO = new DocumentoController();
         List<Documento> documentos = null;
 
-        if ("Todos".equals(estatusSeleccionado)) {
-            // Si el estatus es "Todos", buscar los documentos con ambos estatus
-            List<Documento> documentosEnBodega = documentoDAO.buscarDocumentosPorEstatus("En bodega");
-            List<Documento> documentosSolicitados = documentoDAO.buscarDocumentosPorEstatus("Solicitado");
+        try {
+            if ("Todos".equals(estatusSeleccionado)) {
+                // Si el estatus es "Todos", buscar los documentos con ambos estatus
+                List<Documento> documentosEnBodega = documentoDAO.obtenerDocumentosPorEstatus("En bodega");
+                List<Documento> documentosSolicitados = documentoDAO.obtenerDocumentosPorEstatus("Solicitado");
 
-            // Combinar las dos listas
-            documentos = documentosEnBodega;
-            documentos.addAll(documentosSolicitados);
-        } else {
-            // Si no es "Todos", buscar solo el estatus seleccionado
-            documentos = documentoDAO.buscarDocumentosPorEstatus(estatusSeleccionado);
+                // Combinar las dos listas
+                documentos = documentosEnBodega;
+                documentos.addAll(documentosSolicitados);
+            } else {
+                // Si no es "Todos", buscar solo el estatus seleccionado
+                documentos = documentoDAO.obtenerDocumentosPorEstatus(estatusSeleccionado);
+            }
+
+            // Limpiar la tabla antes de mostrar los nuevos datos
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0); // Limpiar la tabla
+
+            // Agregar los documentos a la tabla
+            for (Documento documento : documentos) {
+                Object[] row = new Object[4];
+                row[0] = documento.getTipoDocumento();
+                row[1] = documento.getFolio();
+                row[2] = documento.getCantidadDocumentos();
+                row[3] = documento.getEstatus();
+
+                model.addRow(row); // Añadir la fila a la tabla
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        // Limpiar la tabla antes de mostrar los nuevos datos
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Limpiar la tabla
-
-        // Agregar los documentos a la tabla
-        for (Documento documento : documentos) {
-            Object[] row = new Object[4];
-            row[0] = documento.getTipoDocumento();
-            row[1] = documento.getFolio();
-            row[2] = documento.getCantidadDocumentos();
-            row[3] = documento.getEstatus();
-
-            model.addRow(row); // Añadir la fila a la tabla
-        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

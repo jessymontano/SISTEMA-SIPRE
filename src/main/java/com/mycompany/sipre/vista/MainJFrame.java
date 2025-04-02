@@ -9,13 +9,13 @@ import com.mycompany.sipre.vista.configuracion.PanelConfiguracion;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import com.mycompany.sipre.controlador.LoginController;
+import com.mycompany.sipre.controlador.UsuarioController;
 import com.mycompany.sipre.modelo.Usuario;
 import com.mycompany.sipre.vista.buscar.*;
 import com.mycompany.sipre.vista.consultar.*;
 import com.mycompany.sipre.vista.solicitar.*;
 import com.mycompany.sipre.vista.reportes.Panelinventario;
-import com.mycompany.sipre.vista.solicitar.reportes.PanelMovimientos_solicitudes;
+//import com.mycompany.sipre.vista.solicitar.reportes.PanelMovimientos_solicitudes;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -67,7 +67,7 @@ public class MainJFrame extends JFrame {
         panelContenedor.add("estado", new PanelModificar(this));
         panelContenedor.add("ayuda", new PanelAyuda(this));
         panelContenedor.add("inventario", new Panelinventario(this));
-        panelContenedor.add("movimientos", new PanelMovimientos_solicitudes(this));
+        //panelContenedor.add("movimientos", new PanelMovimientos_solicitudes(this));
         
         initComponents();
         
@@ -377,7 +377,7 @@ public class MainJFrame extends JFrame {
         if (opcion == 1) { 
             //cerrar mainjframe y mostrar dialogo de login
             this.dispose();
-            DialogoLogin dialogoLogin = new DialogoLogin(null, new LoginController());
+            DialogoLogin dialogoLogin = new DialogoLogin(null, new UsuarioController());
             dialogoLogin.setVisible(true);
             
             if (dialogoLogin.isAutenticado()) { //crear nuevo mainjframe al iniciar sesion

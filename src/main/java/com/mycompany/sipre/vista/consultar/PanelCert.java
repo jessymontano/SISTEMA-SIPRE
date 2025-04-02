@@ -4,8 +4,10 @@
  */
 package com.mycompany.sipre.vista.consultar;
 
-import com.mycompany.sipre.controlador.DocumentoDAO;
+import com.mycompany.sipre.controlador.DocumentoController;
+import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.vista.MainJFrame;
+import java.io.IOException;
 
 import javax.swing.*;
 
@@ -166,9 +168,9 @@ public class PanelCert extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(12, 12, 0, 0);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void FieldFolioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldFolioActionPerformed
+    private void FieldFolioActionPerformed(java.awt.event.ActionEvent evt) {                                           
 
-    }//GEN-LAST:event_FieldFolioActionPerformed
+    }                                          
 
     private void FieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldFolioActionPerformed
 
@@ -185,15 +187,15 @@ public class PanelCert extends javax.swing.JPanel {
             String estatus = "En bodega"; //
             int cantidadDocumentos = Integer.parseInt(FieldCantidad.getText().trim());
 
-            DocumentoDAO dao = new DocumentoDAO();
-            boolean resultado = dao.agregarDocumento(folio, tipoDocumento, estatus, cantidadDocumentos);
+            DocumentoController dao = new DocumentoController();
+            boolean resultado = dao.agregarDocumento(new Documento(folio, tipoDocumento, estatus, cantidadDocumentos));
 
             if (resultado) {
                 JOptionPane.showMessageDialog(this, "Documento guardado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "Error al guardar el documento", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IOException e) {
             JOptionPane.showMessageDialog(this, "Verifica los campos numéricos", "Error de formato", JOptionPane.WARNING_MESSAGE);
         }
 

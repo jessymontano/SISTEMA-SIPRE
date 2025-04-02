@@ -4,7 +4,7 @@
  */
 package com.mycompany.sipre;
 
-import com.mycompany.sipre.controlador.LoginController;
+import com.mycompany.sipre.controlador.UsuarioController;
 import com.mycompany.sipre.vista.*;
 import javax.swing.SwingUtilities;
 
@@ -16,8 +16,8 @@ public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             //crear dialogo de login
-            LoginController loginController = new LoginController();
-            DialogoLogin dialogoLogin = new DialogoLogin(null, loginController);
+            UsuarioController usuarioController = new UsuarioController();
+            DialogoLogin dialogoLogin = new DialogoLogin(null, usuarioController);
             dialogoLogin.setVisible(true);
             
             if (dialogoLogin.isAutenticado()) {

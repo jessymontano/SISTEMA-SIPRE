@@ -4,8 +4,12 @@
  */
 package com.mycompany.sipre.vista.solicitar;
 
+import com.mycompany.sipre.controlador.DocumentoController;
 import com.mycompany.sipre.controlador.GeneradorPDF;
-import com.mycompany.sipre.controlador.SolicitudDAO;
+import com.mycompany.sipre.controlador.SolicitudController;
+import com.mycompany.sipre.modelo.Documento;
+import com.mycompany.sipre.modelo.Solicitud;
+import java.io.IOException;
 
 import javax.swing.*;
 import java.sql.Date;
@@ -217,7 +221,7 @@ public class PanelSolicitud extends javax.swing.JPanel {
         add(ComboMes, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             // Verificar si el campo de folio no está vacío
             String folioText = FieldFolio.getText().trim();
@@ -230,8 +234,10 @@ public class PanelSolicitud extends javax.swing.JPanel {
             int folio = Integer.parseInt(folioText);
 
             // Llamar al método para obtener el tipo de documento
-            SolicitudDAO solicitudDAO = new SolicitudDAO();
-            String tipoDocumento = solicitudDAO.obtenerTipoDocumentoPorFolio(folio);
+            DocumentoController documentoController = new DocumentoController();
+            SolicitudController solicitudController = new SolicitudController();
+            Documento documento = documentoController.obtenerDocumentoPorFolio(folio);
+            String tipoDocumento = documento.getTipoDocumento();
 
             if (tipoDocumento != null) {
                 jLabel6.setText(tipoDocumento);  // Establecer el valor del tipo de documento
@@ -261,7 +267,7 @@ public class PanelSolicitud extends javax.swing.JPanel {
             Date fechaSolicitud = Date.valueOf(fechaStr);
 
             // Continuar con la lógica de agregar la solicitud solo si todo está bien
-            boolean resultado = solicitudDAO.agregarSolicitud(folio, tipoDocumento, fechaSolicitud, motivo);
+            boolean resultado = solicitudController.agregarSolicitud(new Solicitud(folio, tipoDocumento, fechaSolicitud, motivo));
 
             if (resultado) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Solicitud guardada con éxito!");
@@ -283,30 +289,29 @@ public class PanelSolicitud extends javax.swing.JPanel {
         }
     }
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            // Obtén el número de folio desde el campo de texto
+            int folio = Integer.parseInt(FieldFolio.getText()); // Convierte el texto del folio a entero
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-            try {
-                // Obtén el número de folio desde el campo de texto
-                int folio = Integer.parseInt(FieldFolio.getText()); // Convierte el texto del folio a entero
+            // Crear el objeto de acceso a datos (SolicitudDAO)
+            DocumentoController documentoController = new DocumentoController();
+            SolicitudController solicitudController = new SolicitudController();
+            Documento documento = documentoController.obtenerDocumentoPorFolio(folio);
+            String tipoDocumento = documento.getTipoDocumento();
 
-                // Crear el objeto de acceso a datos (SolicitudDAO)
-                SolicitudDAO solicitudDAO = new SolicitudDAO();
-
-                // Llamar al método para obtener el tipo de documento asociado al folio
-                String tipoDocumento = solicitudDAO.obtenerTipoDocumentoPorFolio(folio);
-
-                // Si el tipo de documento es encontrado, actualizar la etiqueta
-                if (tipoDocumento != null) {
-                    jLabel6.setText(tipoDocumento);  // Actualiza el texto de la etiqueta con el tipo de documento
-                } else {
-                    // Si no se encuentra el folio, mostrar mensaje de error
-                    javax.swing.JOptionPane.showMessageDialog(this, "Folio no encontrado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (NumberFormatException e) {
-                // Si no se pudo convertir el folio a número, mostrar mensaje de error
-                javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            // Si el tipo de documento es encontrado, actualizar la etiqueta
+            if (tipoDocumento != null) {
+                jLabel6.setText(tipoDocumento);  // Actualiza el texto de la etiqueta con el tipo de documento
+            } else {
+                // Si no se encuentra el folio, mostrar mensaje de error
+                javax.swing.JOptionPane.showMessageDialog(this, "Folio no encontrado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
+        } catch (NumberFormatException | IOException e) {
+            // Si no se pudo convertir el folio a número, mostrar mensaje de error
+            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
+    }
 
 
     private void FieldFolioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldFolioActionPerformed

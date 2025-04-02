@@ -4,9 +4,10 @@
  */
 package com.mycompany.sipre.vista;
 
-import com.mycompany.sipre.controlador.LoginController;
+import com.mycompany.sipre.controlador.UsuarioController;
 import com.mycompany.sipre.modelo.Usuario;
 import java.awt.Color;
+import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -16,15 +17,15 @@ import javax.swing.JOptionPane;
  */
 public class DialogoLogin extends javax.swing.JDialog {
     private boolean autenticado = false;
-    private LoginController loginController;
+    private UsuarioController usuarioController;
     private Usuario usuarioAutenticado;
     /**
      * Creates new form DialogoLogin
      */
-    public DialogoLogin(JFrame parent, LoginController controller) {
+    public DialogoLogin(JFrame parent, UsuarioController controller) {
         super(parent, "Acceder", true);
         setLocationRelativeTo(parent);
-        this.loginController = controller;
+        this.usuarioController = controller;
         
         initComponents();
         getContentPane().setBackground(new Color(217,216,255));
@@ -169,14 +170,19 @@ public class DialogoLogin extends javax.swing.JDialog {
         // manejar inicio de sesión
         String usuario = fieldUsuario.getText();
         String contrasena = new String(fieldContrasena.getPassword());
-        
-        if (loginController.autenticar(usuario, contrasena)) {
+        try {
+            if (usuarioController.autenticar(usuario, contrasena)) {
             autenticado = true;
-            usuarioAutenticado = loginController.getUsuario(usuario);
+            usuarioAutenticado = usuarioController.getUsuario(usuario);
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error de conexión al servidor", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed

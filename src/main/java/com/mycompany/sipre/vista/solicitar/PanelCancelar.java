@@ -1,35 +1,43 @@
 package com.mycompany.sipre.vista.solicitar;
-import com.mycompany.sipre.controlador.DocumentoDAO;
-import com.mycompany.sipre.controlador.SolicitudDAO;
+
+import com.mycompany.sipre.controlador.DocumentoController;
+import com.mycompany.sipre.controlador.SolicitudController;
 import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
 import java.awt.Color;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 public class PanelCancelar extends javax.swing.JPanel {
+
     List<Documento> documentos;
 
     public PanelCancelar(JFrame frame) {
         initComponents();
         llenarTabla();
     }
-    
+
     private void llenarTabla() {
-        DocumentoDAO documentoDAO = new DocumentoDAO();
-        documentos = documentoDAO.buscarDocumentosPorEstatus("Solicitado");
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        for (Documento documento : documentos) {
-                model.addRow(new Object [] {
+        DocumentoController documentoDAO = new DocumentoController();
+        try {
+            documentos = documentoDAO.obtenerDocumentosPorEstatus("Solicitado");
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            for (Documento documento : documentos) {
+                model.addRow(new Object[]{
                     documento.getFolio(),
                     documento.getTipoDocumento(),
                     documento.getFecha(),
                     documento.getMotivo()
                 });
-            
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -166,7 +174,8 @@ public class PanelCancelar extends javax.swing.JPanel {
 
             if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
                 // Crear instancia del DAO y llamar al método para eliminar la solicitud
-                SolicitudDAO solicitudDAO = new SolicitudDAO();
+                SolicitudController solicitudDAO = new SolicitudController();
+
                 boolean resultado = solicitudDAO.cancelarSolicitud(folio);
                 llenarTabla();
 
@@ -178,7 +187,7 @@ public class PanelCancelar extends javax.swing.JPanel {
                             "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
                 }
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IOException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed

@@ -4,12 +4,12 @@
  */
 package com.mycompany.sipre.vista.buscar;
 
-import com.mycompany.sipre.controlador.DocumentoDAO;
-import com.mycompany.sipre.controlador.SolicitudDAO;
+import com.mycompany.sipre.controlador.DocumentoController;
 import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
 
 import java.awt.Color;
+import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -151,8 +151,9 @@ public class PanelFolio extends javax.swing.JPanel {
             int folio = Integer.parseInt(FieldFolio.getText().trim());
 
             // Crear instancia del DAO y buscar el documento
-            DocumentoDAO documentoDAO = new DocumentoDAO();
-            Documento documento = documentoDAO.buscarDocumentoPorFolio(folio);
+            DocumentoController documentoController = new DocumentoController();
+            
+            Documento documento = documentoController.obtenerDocumentoPorFolio(folio);
 
             if (documento != null) {
                 // Limpiar la tabla antes de mostrar los nuevos resultados
@@ -172,7 +173,7 @@ public class PanelFolio extends javax.swing.JPanel {
                 // Mostrar mensaje si no se encuentra el documento
                 javax.swing.JOptionPane.showMessageDialog(this, "No se encontró ningún documento con el folio ingresado.", "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IOException e) {
             // Manejar el caso donde el folio no sea un número válido
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido (número entero).", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
