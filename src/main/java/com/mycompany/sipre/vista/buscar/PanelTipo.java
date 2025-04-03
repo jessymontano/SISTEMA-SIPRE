@@ -147,32 +147,28 @@ public class PanelTipo extends javax.swing.JPanel {
 
         // Crear una instancia de DocumentoDAO (o el DAO correspondiente)
         DocumentoController documentoController = new DocumentoController();
-        
-        try {
+
             // Buscar los documentos según el tipo de documento
-        List<Documento> documentos = documentoController.obtenerDocumentosPorTipo(tipoDocumento);
+            documentoController.obtenerDocumentosPorTipo(tipoDocumento, documentos -> {
+                // Obtener el modelo de la tabla
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
-        // Obtener el modelo de la tabla
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                // Limpiar la tabla antes de agregar nuevos datos
+                model.setRowCount(0);
 
-        // Limpiar la tabla antes de agregar nuevos datos
-        model.setRowCount(0);
-
-        // Llenar la tabla con los documentos encontrados
-        for (Documento documento : documentos) {
-            model.addRow(new Object[]{
-                    documento.getFolio(),
-                    documento.getTipoDocumento(),
-                    documento.getEstatus(),
-                    documento.getCantidadDocumentos(),
-                    documento.getFecha(),
-                    documento.getMotivo()
+                // Llenar la tabla con los documentos encontrados
+                for (Documento documento : documentos) {
+                    model.addRow(new Object[]{
+                        documento.getFolio(),
+                        documento.getTipoDocumento(),
+                        documento.getEstatus(),
+                        documento.getCantidadDocumentos(),
+                        documento.getFecha(),
+                        documento.getMotivo()
+                    });
+                }
             });
-        }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

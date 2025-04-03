@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.mycompany.sipre.modelo.Usuario;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Consumer;
 import okhttp3.*;
 
 /**
@@ -15,56 +16,82 @@ import okhttp3.*;
  * @author jessica
  */
 public class UsuarioController {
-
     private final String BASE_URL = "http://localhost:8080/usuarios";
     private final OkHttpClient client = new OkHttpClient();
+    private final Gson gson = new Gson();
 
-    public boolean crearUsuario(Usuario usuario) throws IOException {
-        String json = "{"
-                + "\"nombre\": \"" + usuario.getNombre() + "\","
-                + "\"apellido\": \"" + usuario.getApellido() + "\","
-                + "\"email\": \"" + usuario.getEmail() + "\","
-                + "\"contrasena\": \"" + usuario.getContrasena() + "\","
-                + "\"rol\": \"" + usuario.getRol() + "\""
-                + "}";
+    public void crearUsuario(Usuario usuario, Consumer<Boolean> callback) {
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        String json = gson.toJson(usuario);
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+            .url(BASE_URL + "/registrar")
+            .post(body)
+            .build();
 
-        RequestBody body = RequestBody.create(json.getBytes(StandardCharsets.UTF_8));
-        Request request = new Request.Builder().url(BASE_URL + "/registrar").post(body).build();
-
-        try (Response response = client.newCall(request).execute()) {
-            if (response.isSuccessful()) {
-                return true;
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                callback.accept(response.isSuccessful());
             }
-            return false;
-        }
 
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(false);
+            }
+        });
     }
 
-    public boolean autenticar(String nombre, String contrasena) throws IOException {
-        HttpUrl url = HttpUrl.parse(BASE_URL + "/login").newBuilder().addQueryParameter("nombre", nombre).addQueryParameter("contrasena", contrasena).build();
+    public void autenticar(String nombre, String contrasena, Consumer<Boolean> callback) {
+        HttpUrl url = HttpUrl.parse(BASE_URL + "/login").newBuilder()
+            .addQueryParameter("nombre", nombre)
+            .addQueryParameter("contrasena", contrasena)
+            .build();
 
-        Request request = new Request.Builder().url(url).post(RequestBody.create(new byte[0])).build();
+        Request request = new Request.Builder()
+            .url(url)
+            .post(RequestBody.create(new byte[0]))
+            .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (response.isSuccessful()) {
-                return true;
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                callback.accept(response.isSuccessful());
             }
-            return false;
-        }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(false);
+            }
+        });
     }
 
-    public Usuario getUsuario(String nombreUsuario) throws IOException {
-        Request request = new Request.Builder().url(BASE_URL + "/" + nombreUsuario).get().build();
-        try (Response response = client.newCall(request).execute()) {
-            if (response.isSuccessful()) {
-                String jsonResponse = response.body().string();
-                Gson gson = new Gson();
-                Usuario usuario = gson.fromJson(jsonResponse, Usuario.class);
+    public void getUsuario(String nombreUsuario, Consumer<Usuario> callback) {
+        Request request = new Request.Builder()
+            .url(BASE_URL + "/" + nombreUsuario)
+            .get()
+            .build();
 
-                return usuario;
-            } else {
-                throw new IOException("Error al obtener usuario: " + response.message());
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful() && responseBody != null) {
+                        Usuario usuario = gson.fromJson(responseBody.string(), Usuario.class);
+                        callback.accept(usuario);
+                    } else {
+                        callback.accept(null);
+                    }
+                }
             }
-        }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(null);
+            }
+        });
     }
 }

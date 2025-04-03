@@ -184,17 +184,14 @@ public class PanelFecha extends javax.swing.JPanel {
 
         SolicitudController solicitudController = new SolicitudController();
 
-        try {
-            List<Solicitud> resultados = solicitudController.obtenerSolicitudesPorFecha(anio, mes);
+        solicitudController.obtenerSolicitudesPorFecha(anio, mes, resultados -> {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0); // Limpiar la tabla antes de agregar nuevos resultados
 
             for (Solicitud s : resultados) {
                 model.addRow(new Object[]{s.getFolio(), s.getTipoDocumento(), s.getFecha()});
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
 
         jTable1.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed

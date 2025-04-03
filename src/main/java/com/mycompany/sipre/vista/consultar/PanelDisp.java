@@ -9,8 +9,11 @@ import com.mycompany.sipre.controlador.DocumentoController;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -137,40 +140,53 @@ public class PanelDisp extends javax.swing.JPanel {
         DocumentoController documentoDAO = new DocumentoController();
         List<Documento> documentos = null;
 
-        try {
-            if ("Todos".equals(estatusSeleccionado)) {
-                // Si el estatus es "Todos", buscar los documentos con ambos estatus
-                List<Documento> documentosEnBodega = documentoDAO.obtenerDocumentosPorEstatus("En bodega");
-                List<Documento> documentosSolicitados = documentoDAO.obtenerDocumentosPorEstatus("Solicitado");
+        if ("Todos".equals(estatusSeleccionado)) {
+            // Si el estatus es "Todos", buscar los documentos con ambos estatus
+            AtomicReference<List<Documento>> refEnBodega = new AtomicReference<>();
+            AtomicReference<List<Documento>> refSolicitados = new AtomicReference<>();
 
-                // Combinar las dos listas
-                documentos = documentosEnBodega;
-                documentos.addAll(documentosSolicitados);
-            } else {
-                // Si no es "Todos", buscar solo el estatus seleccionado
-                documentos = documentoDAO.obtenerDocumentosPorEstatus(estatusSeleccionado);
-            }
+            documentoDAO.obtenerDocumentosPorEstatus("En bodega", respuesta -> {
+                refEnBodega.set(respuesta);
 
-            // Limpiar la tabla antes de mostrar los nuevos datos
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0); // Limpiar la tabla
+                documentoDAO.obtenerDocumentosPorEstatus("Solicitado", respuesta2 -> {
+                    refSolicitados.set(respuesta2);
 
-            // Agregar los documentos a la tabla
-            for (Documento documento : documentos) {
-                Object[] row = new Object[4];
-                row[0] = documento.getTipoDocumento();
-                row[1] = documento.getFolio();
-                row[2] = documento.getCantidadDocumentos();
-                row[3] = documento.getEstatus();
+                    List<Documento> documentosCombinados = new ArrayList<>();
+                    if (refEnBodega.get() != null) {
+                        documentosCombinados.addAll(refEnBodega.get());
+                    }
+                    if (refSolicitados.get() != null) {
+                        documentosCombinados.addAll(refSolicitados.get());
+                    }
+                    actualizarTabla(documentosCombinados);
+                });
+            });
+        } else {
+            // Si no es "Todos", buscar solo el estatus seleccionado
+            documentoDAO.obtenerDocumentosPorEstatus(estatusSeleccionado, respuesta -> {
+                actualizarTabla(respuesta);
 
-                model.addRow(row); // Añadir la fila a la tabla
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+            });
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+    private void actualizarTabla(List<Documento> documentos) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Limpiar tabla
 
+        if (documentos != null) {
+            for (Documento documento : documentos) {
+                model.addRow(new Object[]{
+                    documento.getTipoDocumento(),
+                    documento.getFolio(),
+                    documento.getCantidadDocumentos(),
+                    documento.getEstatus()
+                });
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al cargar documentos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboFiltro;

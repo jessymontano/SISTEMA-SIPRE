@@ -10,6 +10,7 @@ import com.mycompany.sipre.modelo.Solicitud;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.function.Consumer;
 import okhttp3.*;
 
 /**
@@ -17,111 +18,185 @@ import okhttp3.*;
  * @author jessica
  */
 public class SolicitudController {
+
     private final String BASE_URL = "http://localhost:8080/solicitudes";
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
-    
-    public boolean agregarSolicitud(Solicitud solicitud) throws IOException {
+
+    public void agregarSolicitud(Solicitud solicitud, Consumer<Boolean> callback) {
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         String json = gson.toJson(solicitud);
-        
-        RequestBody body = RequestBody.create(json.getBytes());
+        RequestBody body = RequestBody.create(json, JSON);
         Request request = new Request.Builder().url(BASE_URL).post(body).build();
-        
-        try (Response response = client.newCall(request).execute()) {
-            return response.isSuccessful();
-        }
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                callback.accept(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(false);
+            }
+        });
     }
-    
-    public boolean cancelarSolicitud(int folio) throws IOException {
-        Request request = new Request.Builder().url(BASE_URL + "/cancelar/" + folio).delete().build();
-        try (Response response = client.newCall(request).execute()) {
-            return response.isSuccessful();
-        }
+
+    public void cancelarSolicitud(int folio, Consumer<Boolean> callback) {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "/cancelar/" + folio)
+                .delete()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                callback.accept(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(false);
+            }
+        });
     }
-    
-    public boolean actualizarSolicitud(Solicitud solicitud) throws IOException {
+
+    public void actualizarSolicitud(Solicitud solicitud, Consumer<Boolean> callback) {
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         String json = gson.toJson(solicitud);
-        RequestBody body = RequestBody.create(json.getBytes());
-        Request request = new Request.Builder().url(BASE_URL + "/actuallizar").put(body).build();
-        
-        try (Response response = client.newCall(request).execute()) {
-            return response.isSuccessful();
-        }
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + "/actualizar")
+                .put(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                callback.accept(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(false);
+            }
+        });
     }
-    
-    public Solicitud obtenerSolicitud(int folio) throws IOException {
+
+    public void obtenerSolicitud(int folio, Consumer<Solicitud> callback) {
         Request request = new Request.Builder()
                 .url(BASE_URL + "/" + folio)
                 .get()
                 .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (response.isSuccessful()) {
-                String jsonResponse = response.body().string();
-                return gson.fromJson(jsonResponse, Solicitud.class);
-            } else {
-                throw new IOException("Solicitud no encontrada");
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful() && responseBody != null) {
+                        Solicitud solicitud = gson.fromJson(responseBody.string(), Solicitud.class);
+                        callback.accept(solicitud);
+                    } else {
+                        callback.accept(null);
+                    }
+                }
             }
-        }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(null);
+            }
+        });
     }
-    
-    public List<Solicitud> obtenerSolicitudesPorTipo(String tipoDocumento) throws IOException {
+
+    public void obtenerSolicitudesPorTipo(String tipoDocumento, Consumer<List<Solicitud>> callback) {
         HttpUrl url = HttpUrl.parse(BASE_URL + "/buscar/tipo/" + tipoDocumento).newBuilder().build();
         Request request = new Request.Builder().url(url).get().build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (response.isSuccessful()) {
-                String jsonResponse = response.body().string();
-                Type tipoLista = new TypeToken<List<Solicitud>>() {
-                }.getType();
-                List<Solicitud> solicitudes = gson.fromJson(jsonResponse, tipoLista);
-
-                return solicitudes; 
-            } else {
-                throw new IOException("Error al buscar solicitudes por tipo");
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful() && responseBody != null) {
+                        Type tipoLista = new TypeToken<List<Solicitud>>() {
+                        }.getType();
+                        List<Solicitud> solicitudes = gson.fromJson(responseBody.string(), tipoLista);
+                        callback.accept(solicitudes);
+                    } else {
+                        callback.accept(null);
+                    }
+                }
             }
-        }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(null);
+            }
+        });
     }
-    
-    public List<Solicitud> obtenerSolicitudesPorFecha(int anio, int mes) throws IOException {
+
+    public void obtenerSolicitudesPorFecha(int anio, int mes, Consumer<List<Solicitud>> callback) {
         HttpUrl url = HttpUrl.parse(BASE_URL + "/buscar/fecha").newBuilder()
                 .addQueryParameter("anio", String.valueOf(anio))
                 .addQueryParameter("mes", String.valueOf(mes))
                 .build();
 
-        Request request = new Request.Builder().url(url).get().build();
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (response.isSuccessful()) {
-                String jsonResponse = response.body().string();
-                Type tipoLista = new TypeToken<List<Solicitud>>() {
-                }.getType();
-                List<Solicitud> solicitudes = gson.fromJson(jsonResponse, tipoLista);
-
-                return solicitudes;  
-            } else {
-                throw new IOException("Error al buscar solicitudes por fecha");
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful() && responseBody != null) {
+                        Type tipoLista = new TypeToken<List<Solicitud>>() {
+                        }.getType();
+                        List<Solicitud> solicitudes = gson.fromJson(responseBody.string(), tipoLista);
+                        callback.accept(solicitudes);
+                    } else {
+                        callback.accept(null);
+                    }
+                }
             }
-        }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(null);
+            }
+        });
     }
-    
-    public List<Solicitud> obtenerTodasLasSolicitudes() throws IOException {
+
+    public void obtenerTodasLasSolicitudes(Consumer<List<Solicitud>> callback) {
         Request request = new Request.Builder().url(BASE_URL).get().build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (response.isSuccessful()) {
-                String jsonResponse = response.body().string();
-                Type tipoLista = new TypeToken<List<Solicitud>>() {
-                }.getType();
-                List<Solicitud> solicitudes = gson.fromJson(jsonResponse, tipoLista);
-                for (Solicitud solicitud : solicitudes) {
-                    System.out.println(solicitud.getTipoDocumento());
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful() && responseBody != null) {
+                        Type tipoLista = new TypeToken<List<Solicitud>>() {
+                        }.getType();
+                        List<Solicitud> solicitudes = gson.fromJson(responseBody.string(), tipoLista);
+                        callback.accept(solicitudes);
+                    } else {
+                        callback.accept(null);
+                    }
                 }
-
-                return solicitudes;  
-            } else {
-                throw new IOException("Error al obtener todas las solicitudes");
             }
-        }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(null);
+            }
+        });
     }
 }

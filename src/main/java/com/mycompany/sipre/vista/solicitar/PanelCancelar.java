@@ -21,8 +21,8 @@ public class PanelCancelar extends javax.swing.JPanel {
 
     private void llenarTabla() {
         DocumentoController documentoDAO = new DocumentoController();
-        try {
-            documentos = documentoDAO.obtenerDocumentosPorEstatus("Solicitado");
+
+        documentoDAO.obtenerDocumentosPorEstatus("Solicitado", documentos -> {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
             for (Documento documento : documentos) {
@@ -34,9 +34,7 @@ public class PanelCancelar extends javax.swing.JPanel {
                 });
 
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
 
     }
 
@@ -157,7 +155,7 @@ public class PanelCancelar extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
+        
             // Obtén el folio ingresado
             int folio = Integer.parseInt(FieldFolio.getText().trim());
 
@@ -176,20 +174,19 @@ public class PanelCancelar extends javax.swing.JPanel {
                 // Crear instancia del DAO y llamar al método para eliminar la solicitud
                 SolicitudController solicitudDAO = new SolicitudController();
 
-                boolean resultado = solicitudDAO.cancelarSolicitud(folio);
+                solicitudDAO.cancelarSolicitud(folio, resultado -> {
+                    // Mostrar mensaje según el resultado
+                    if (resultado) {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Solicitud eliminada y estatus actualizado con éxito.");
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(this, "No se encontró una solicitud con el folio especificado o no se pudo actualizar el estatus.",
+                                "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    }
+                });
                 llenarTabla();
 
-                // Mostrar mensaje según el resultado
-                if (resultado) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Solicitud eliminada y estatus actualizado con éxito.");
-                } else {
-                    javax.swing.JOptionPane.showMessageDialog(this, "No se encontró una solicitud con el folio especificado o no se pudo actualizar el estatus.",
-                            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                }
             }
-        } catch (NumberFormatException | IOException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -50,8 +50,8 @@ public class PanelModificar extends javax.swing.JPanel {
     //llenar tabla automaticamente con todas las solicitudes encontradas
     private void llenarTabla() {
         SolicitudController solicitudDAO = new SolicitudController();
-        try {
-            solicitudes = solicitudDAO.obtenerTodasLasSolicitudes();
+
+        solicitudDAO.obtenerTodasLasSolicitudes(solicitudes -> {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
             for (Solicitud solicitud : solicitudes) {
@@ -62,9 +62,7 @@ public class PanelModificar extends javax.swing.JPanel {
                     "Modificar"
                 });
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
 
     }
 
@@ -461,11 +459,9 @@ public class PanelModificar extends javax.swing.JPanel {
 
             // actualizar la solicitud con los datos introducidos
             SolicitudController solicitudDAO = new SolicitudController();
-            try {
-                solicitudDAO.actualizarSolicitud(solicitud);
-            } catch (IOException error) {
-                error.printStackTrace();
-            }
+
+            solicitudDAO.actualizarSolicitud(solicitud, respuesta -> {
+            });
 
             llenarTabla();
             jDialog1.dispose();

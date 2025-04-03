@@ -16,7 +16,9 @@ import javax.swing.*;
  * @author jessica
  */
 public class PanelCert extends javax.swing.JPanel {
+
     private MainJFrame frame;
+
     /**
      * Creates new form PanelCert
      */
@@ -168,9 +170,9 @@ public class PanelCert extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(12, 12, 0, 0);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void FieldFolioActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    private void FieldFolioActionPerformed(java.awt.event.ActionEvent evt) {
 
-    }                                          
+    }
 
     private void FieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldFolioActionPerformed
 
@@ -188,14 +190,15 @@ public class PanelCert extends javax.swing.JPanel {
             int cantidadDocumentos = Integer.parseInt(FieldCantidad.getText().trim());
 
             DocumentoController dao = new DocumentoController();
-            boolean resultado = dao.agregarDocumento(new Documento(folio, tipoDocumento, estatus, cantidadDocumentos));
+            dao.agregarDocumento(new Documento(folio, tipoDocumento, estatus, cantidadDocumentos), resultado -> {
+                if (resultado) {
+                    JOptionPane.showMessageDialog(this, "Documento guardado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al guardar el documento", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
 
-            if (resultado) {
-                JOptionPane.showMessageDialog(this, "Documento guardado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Error al guardar el documento", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (NumberFormatException | IOException e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Verifica los campos numéricos", "Error de formato", JOptionPane.WARNING_MESSAGE);
         }
 

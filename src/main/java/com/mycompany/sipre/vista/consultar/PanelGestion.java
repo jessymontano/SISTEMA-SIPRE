@@ -47,8 +47,9 @@ public class PanelGestion extends javax.swing.JPanel {
     private void llenarTabla() {
         // obtener lista de documentos
         DocumentoController documentoDAO = new DocumentoController();
-        try {
-            documentos = documentoDAO.obtenerTodosLosDocumentos();
+
+        documentoDAO.obtenerTodosLosDocumentos(documentos -> {
+            this.documentos = documentos;
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
             for (Documento documento : documentos) {
@@ -60,9 +61,7 @@ public class PanelGestion extends javax.swing.JPanel {
                     "Eliminar"
                 });
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
 
     }
 
@@ -419,12 +418,13 @@ public class PanelGestion extends javax.swing.JPanel {
 
         private void eliminarDocumento(int rowIndex) {
             DocumentoController documentoDAO = new DocumentoController();
-            try {
 
-                documentoDAO.eliminarDocumento(documentos.get(rowIndex).getFolio());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            documentoDAO.eliminarDocumento(documentos.get(rowIndex).getFolio(), eliminado -> {
+                if (eliminado) {
+
+                }
+            });
+
             llenarTabla();
         }
     }
@@ -441,12 +441,9 @@ public class PanelGestion extends javax.swing.JPanel {
 
             // actualizar el documento con los datos introducidos
             DocumentoController documentoDAO = new DocumentoController();
-            try {
-                documentoDAO.actualizarDocumento(folioAnterior, documento);
+            documentoDAO.actualizarDocumento(folioAnterior, documento, actualizado -> {
 
-            } catch (IOException error) {
-                error.printStackTrace();
-            }
+            });
 
             llenarTabla();
             jDialog1.dispose();

@@ -152,28 +152,29 @@ public class PanelFolio extends javax.swing.JPanel {
 
             // Crear instancia del DAO y buscar el documento
             DocumentoController documentoController = new DocumentoController();
-            
-            Documento documento = documentoController.obtenerDocumentoPorFolio(folio);
 
-            if (documento != null) {
-                // Limpiar la tabla antes de mostrar los nuevos resultados
-                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                model.setRowCount(0);
+            documentoController.obtenerDocumentoPorFolio(folio, documento -> {
+                if (documento != null) {
+                    // Limpiar la tabla antes de mostrar los nuevos resultados
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    model.setRowCount(0);
 
-                // Agregar los datos del documento a la tabla
-                model.addRow(new Object[]{
+                    // Agregar los datos del documento a la tabla
+                    model.addRow(new Object[]{
                         documento.getFolio(),
                         documento.getTipoDocumento(),
                         documento.getEstatus(),
                         documento.getCantidadDocumentos(),
                         documento.getFecha(),
                         documento.getMotivo()
-                });
-            } else {
-                // Mostrar mensaje si no se encuentra el documento
-                javax.swing.JOptionPane.showMessageDialog(this, "No se encontró ningún documento con el folio ingresado.", "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            }
-        } catch (NumberFormatException | IOException e) {
+                    });
+                } else {
+                    // Mostrar mensaje si no se encuentra el documento
+                    javax.swing.JOptionPane.showMessageDialog(this, "No se encontró ningún documento con el folio ingresado.", "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+            });
+
+        } catch (NumberFormatException e) {
             // Manejar el caso donde el folio no sea un número válido
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido (número entero).", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }

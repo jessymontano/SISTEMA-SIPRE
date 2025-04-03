@@ -236,48 +236,51 @@ public class PanelSolicitud extends javax.swing.JPanel {
             // Llamar al método para obtener el tipo de documento
             DocumentoController documentoController = new DocumentoController();
             SolicitudController solicitudController = new SolicitudController();
-            Documento documento = documentoController.obtenerDocumentoPorFolio(folio);
-            String tipoDocumento = documento.getTipoDocumento();
+            documentoController.obtenerDocumentoPorFolio(folio, documento -> {
+                String tipoDocumento = documento.getTipoDocumento();
 
-            if (tipoDocumento != null) {
-                jLabel6.setText(tipoDocumento);  // Establecer el valor del tipo de documento
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Folio no encontrado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                return; // Salir si no se encuentra el folio
-            }
+                if (tipoDocumento != null) {
+                    jLabel6.setText(tipoDocumento);  // Establecer el valor del tipo de documento
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Folio no encontrado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return; // Salir si no se encuentra el folio
+                }
 
-            // Validar el motivo
-            String motivo = jTextArea1.getText().trim();
-            if (motivo.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "El campo Motivo no puede estar vacío.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+                // Validar el motivo
+                String motivo = jTextArea1.getText().trim();
+                if (motivo.isEmpty()) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "El campo Motivo no puede estar vacío.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-            // Obtener la fecha seleccionada
-            String anoSeleccionado = ComboAno.getSelectedItem().toString();
-            int mesSeleccionado = ComboMes.getSelectedIndex() + 1;
+                // Obtener la fecha seleccionada
+                String anoSeleccionado = ComboAno.getSelectedItem().toString();
+                int mesSeleccionado = ComboMes.getSelectedIndex() + 1;
 
-            if (mesSeleccionado == 0) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Por favor seleccione un mes válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+                if (mesSeleccionado == 0) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Por favor seleccione un mes válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
-            // Formato de fecha: "YYYY-MM-DD"
-            String fechaStr = String.format("%s-%02d-01", anoSeleccionado, mesSeleccionado);
-            Date fechaSolicitud = Date.valueOf(fechaStr);
+                // Formato de fecha: "YYYY-MM-DD"
+                String fechaStr = String.format("%s-%02d-01", anoSeleccionado, mesSeleccionado);
+                Date fechaSolicitud = Date.valueOf(fechaStr);
 
-            // Continuar con la lógica de agregar la solicitud solo si todo está bien
-            boolean resultado = solicitudController.agregarSolicitud(new Solicitud(folio, tipoDocumento, fechaSolicitud, motivo));
+                // Continuar con la lógica de agregar la solicitud solo si todo está bien
+                solicitudController.agregarSolicitud(new Solicitud(folio, tipoDocumento, fechaSolicitud, motivo), resultado -> {
+                    if (resultado) {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Solicitud guardada con éxito!");
 
-            if (resultado) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Solicitud guardada con éxito!");
+                        // Generar el PDF después de guardar la solicitud
+                        GeneradorPDF.generarPDF(folio, tipoDocumento, fechaSolicitud, motivo);  // Llamada al método para generar el PDF
 
-                // Generar el PDF después de guardar la solicitud
-                GeneradorPDF.generarPDF(folio, tipoDocumento, fechaSolicitud, motivo);  // Llamada al método para generar el PDF
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar la solicitud.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                    }
+                });
 
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar la solicitud.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            }
+            });
+
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         } catch (IllegalArgumentException e) {
@@ -297,17 +300,19 @@ public class PanelSolicitud extends javax.swing.JPanel {
             // Crear el objeto de acceso a datos (SolicitudDAO)
             DocumentoController documentoController = new DocumentoController();
             SolicitudController solicitudController = new SolicitudController();
-            Documento documento = documentoController.obtenerDocumentoPorFolio(folio);
-            String tipoDocumento = documento.getTipoDocumento();
+            documentoController.obtenerDocumentoPorFolio(folio, documento -> {
+                String tipoDocumento = documento.getTipoDocumento();
 
-            // Si el tipo de documento es encontrado, actualizar la etiqueta
-            if (tipoDocumento != null) {
-                jLabel6.setText(tipoDocumento);  // Actualiza el texto de la etiqueta con el tipo de documento
-            } else {
-                // Si no se encuentra el folio, mostrar mensaje de error
-                javax.swing.JOptionPane.showMessageDialog(this, "Folio no encontrado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (NumberFormatException | IOException e) {
+                // Si el tipo de documento es encontrado, actualizar la etiqueta
+                if (tipoDocumento != null) {
+                    jLabel6.setText(tipoDocumento);  // Actualiza el texto de la etiqueta con el tipo de documento
+                } else {
+                    // Si no se encuentra el folio, mostrar mensaje de error
+                    javax.swing.JOptionPane.showMessageDialog(this, "Folio no encontrado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            });
+
+        } catch (NumberFormatException e) {
             // Si no se pudo convertir el folio a número, mostrar mensaje de error
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }

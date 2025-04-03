@@ -3,10 +3,10 @@ package com.mycompany.sipre.modelo;
 import java.util.Date;
 
 public class Documento {
-    private int Folio;
-    private String TipoDocumento;
-    private String Estatus;
-    private int CantidadDocumentos;
+    private int folio;
+    private String tipoDocumento;
+    private String estatus;
+    private int cantidadDocumentos;
 
     public Date fecha;
 
@@ -14,10 +14,10 @@ public class Documento {
 
 
     public Documento(int Folio, String TipoDocumento, String Estatus, int CantidadDocumentos) {
-        this.Folio = Folio;
-        this.TipoDocumento = TipoDocumento;
-        this.Estatus = Estatus;
-        this.CantidadDocumentos = CantidadDocumentos;
+        this.folio = Folio;
+        this.tipoDocumento = TipoDocumento;
+        this.estatus = Estatus;
+        this.cantidadDocumentos = CantidadDocumentos;
     }
 
     public Documento() {
@@ -25,32 +25,32 @@ public class Documento {
 
 
     public int getFolio() {
-        return  Folio;
+        return  folio;
     }
 
     public void setFolio(int Folio) {
-        this.Folio = Folio;
+        this.folio = Folio;
     }
 
     public String getTipoDocumento() {
-        return TipoDocumento;
+        return tipoDocumento;
     }
     public void setTipoDocumento(String TipoDocumento) {
-        this.TipoDocumento = TipoDocumento;
+        this.tipoDocumento = TipoDocumento;
     }
 
     public String getEstatus(){
-        return Estatus;
+        return estatus;
     }
     public void setEstatus(String Estatus) {
-        this.Estatus = Estatus;
+        this.estatus = Estatus;
     }
     public int getCantidadDocumentos(){
-        return CantidadDocumentos;
+        return cantidadDocumentos;
     }
 
     public void setCantidadDocumentos(int CantidadDocumentos) {
-        this.CantidadDocumentos = CantidadDocumentos;
+        this.cantidadDocumentos = CantidadDocumentos;
     }
 
     public Date getFecha() {
