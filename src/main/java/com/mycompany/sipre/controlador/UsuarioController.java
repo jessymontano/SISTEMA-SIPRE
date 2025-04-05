@@ -5,9 +5,12 @@
 package com.mycompany.sipre.controlador;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mycompany.sipre.modelo.Usuario;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.function.Consumer;
 import okhttp3.*;
 
@@ -19,6 +22,32 @@ public class UsuarioController {
     private final String BASE_URL = "http://localhost:8080/usuarios";
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
+    
+    public void obtenerTodosLosUsuarios(Consumer<List<Usuario>> callback) {
+        Request request = new Request.Builder().url(BASE_URL).get().build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful() && responseBody != null) {
+                        Type tipoLista = new TypeToken<List<Usuario>>() {
+                        }.getType();
+                        List<Usuario> usuarios = gson.fromJson(responseBody.string(), tipoLista);
+                        callback.accept(usuarios);
+                    } else {
+                        callback.accept(null);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(null);
+            }
+        });
+    }
 
     public void crearUsuario(Usuario usuario, Consumer<Boolean> callback) {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -91,6 +120,49 @@ public class UsuarioController {
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
                 callback.accept(null);
+            }
+        });
+    }
+    
+    public void eliminarUsuario(String nombreUsuario, Consumer<Boolean> callback) {
+        Request request = new Request.Builder()
+                .url(BASE_URL + "/" + nombreUsuario)
+                .delete()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                callback.accept(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(false);
+            }
+        });
+    }
+
+    public void modificarUsuario(String nombreUsuario, Usuario usuario, Consumer<Boolean> callback) {
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        String json = gson.toJson(usuario);
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + "/" + nombreUsuario)
+                .put(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                callback.accept(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(false);
             }
         });
     }
