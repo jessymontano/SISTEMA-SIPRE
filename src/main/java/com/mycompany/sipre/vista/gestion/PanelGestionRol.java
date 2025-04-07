@@ -15,13 +15,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.DefaultCellEditor;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -94,6 +88,17 @@ public class PanelGestionRol extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         FieldNombre = new javax.swing.JTextField();
         fieldRol = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.ipadx = 151;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 18, 0, 0);
+        jDialog1.getContentPane().add(fieldRol, gridBagConstraints);
 
         jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         jDialog1.setTitle("Modificar rol");
@@ -104,6 +109,15 @@ public class PanelGestionRol extends javax.swing.JPanel {
         jDialog1.setPreferredSize(new java.awt.Dimension(500, 300));
         jDialog1.pack();
         jDialog1.getContentPane().setLayout(new java.awt.GridBagLayout());
+
+        jLabel11.setText("Rol:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 72, 0, 0);
+        jDialog1.getContentPane().add(jLabel11, gridBagConstraints);
 
         jLabel8.setText("Apellido: ");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -493,7 +507,9 @@ public class PanelGestionRol extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+
     // End of variables declaration//GEN-END:variables
 }
