@@ -21,9 +21,21 @@ public class Main {
             dialogoLogin.setVisible(true);
             
             if (dialogoLogin.isAutenticado()) {
-                //crear ventana principal si se inicia sesion correctamente
-                MainJFrame frame = new MainJFrame(dialogoLogin.getUsuarioAutenticado());
-                frame.setVisible(true);
+                switch (dialogoLogin.getRol()) {
+                    case "administrador":
+                        AdminJFrame frameAdmin = new AdminJFrame(dialogoLogin.getUsuarioAutenticado());
+                        frameAdmin.setVisible(true);
+                        break;
+                    case "registrador":
+                        MainJFrame frameRegistrador = new MainJFrame(dialogoLogin.getUsuarioAutenticado());
+                        frameRegistrador.setVisible(true);
+                        break;
+                    case "consultador":
+                        ConsultorJFrame frameConsultador = new ConsultorJFrame(dialogoLogin.getUsuarioAutenticado());
+                        frameConsultador.setVisible(true);
+                        break;
+                }
+                
             } else {
                 System.exit(0);
             }

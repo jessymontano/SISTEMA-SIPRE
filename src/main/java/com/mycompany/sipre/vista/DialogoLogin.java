@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 public class DialogoLogin extends javax.swing.JDialog {
 
     private boolean autenticado = false;
+    private String rol;
     private UsuarioController usuarioController;
     private Usuario usuarioAutenticado;
 
@@ -176,6 +177,7 @@ public class DialogoLogin extends javax.swing.JDialog {
             if (resultado) {
                 autenticado = true;
                 usuarioController.getUsuario(usuario, respuesta -> {
+                    rol = respuesta.getRol();
                     usuarioAutenticado = respuesta;
                     dispose();
                 });
@@ -202,6 +204,10 @@ public class DialogoLogin extends javax.swing.JDialog {
 
     public Usuario getUsuarioAutenticado() {
         return usuarioAutenticado;
+    }
+    
+    public String getRol() {
+        return rol;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -59,7 +59,6 @@ public class UsuarioDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return new Usuario(
-                        resultSet.getString("ID_Usuario"),
                         resultSet.getString("Nombre"),
                         resultSet.getString("Apellido"),
                         resultSet.getString("Email"),

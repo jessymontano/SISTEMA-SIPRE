@@ -17,12 +17,12 @@ import javax.swing.*;
  */
 public class PanelCert extends javax.swing.JPanel {
 
-    private MainJFrame frame;
+    private JFrame frame;
 
     /**
      * Creates new form PanelCert
      */
-    public PanelCert(MainJFrame frame) {
+    public PanelCert(JFrame frame) {
         this.frame = frame;
         initComponents();
     }
