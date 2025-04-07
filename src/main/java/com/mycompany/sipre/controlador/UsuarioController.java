@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.function.Consumer;
 import okhttp3.*;
 
+import javax.swing.*;
+
 /**
  *
  * @author jessica
@@ -151,6 +153,31 @@ public class UsuarioController {
         Request request = new Request.Builder()
                 .url(BASE_URL + "/" + nombreUsuario)
                 .put(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                callback.accept(response.isSuccessful());
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(false);
+            }
+        });
+    }
+    public void modificarRolDeUsuario(String nombreUsuario, String nuevoRol, Consumer<Boolean> callback) {
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+        // Crear un JSON solo con el campo "rol"
+        String json = "{\"rol\": \"" + nuevoRol + "\"}";
+
+        RequestBody body = RequestBody.create(json, JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + "/" + nombreUsuario + "/rol") //
+                .put(body) //
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
