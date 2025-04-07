@@ -17,7 +17,7 @@ import javax.swing.SwingUtilities;
  */
 public class Main {
     public static void main(String[] args) {
-        /*SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeLater(() -> {
             //crear dialogo de login
             UsuarioController usuarioController = new UsuarioController();
             DialogoLogin dialogoLogin = new DialogoLogin(null, usuarioController);
@@ -42,14 +42,6 @@ public class Main {
             } else {
                 System.exit(0);
             }
-        }); */
-       PanelGestionRol panel = new PanelGestionRol();
-       JFrame frame = new JFrame("");
-       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       frame.setSize(800,600);
-       frame.setContentPane(panel);
-       frame.setLocationRelativeTo(null);
-       
-       frame.setVisible(true);
+        }); 
     }
 }
