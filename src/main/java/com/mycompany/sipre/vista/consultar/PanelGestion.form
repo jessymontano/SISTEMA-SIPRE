@@ -198,7 +198,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTable1.getTableHeader().setOpaque(false);&#xa;jTable1.getTableHeader().setBackground(new Color(148, 143, 255));"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTable1.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {&#xa;    @Override&#xa;    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {&#xa;        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);&#xa;        setBackground(new Color(77,77,77));&#xa;        setForeground(Color.WHITE);&#xa;        setFont(new Font(&quot;Segoe UI&quot;, Font.BOLD, 12));&#xa;        return this;&#xa;}&#xa;});"/>
           </AuxValues>
         </Component>
       </SubComponents>
