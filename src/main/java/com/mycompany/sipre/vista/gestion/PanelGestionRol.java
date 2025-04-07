@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-
 package com.mycompany.sipre.vista.gestion;
 
 import com.mycompany.sipre.controlador.UsuarioController;
@@ -48,12 +47,11 @@ public class PanelGestionRol extends javax.swing.JPanel {
 
                 for (Usuario usuario : usuariosActualizados) {
                     model.addRow(new Object[]{
-                            usuario.getNombre(),
-                            usuario.getApellido(),
-                            usuario.getEmail(),
-                            usuario.getRol(),
-                            "Modificar",
-                    });
+                        usuario.getNombre(),
+                        usuario.getApellido(),
+                        usuario.getEmail(),
+                        usuario.getRol(),
+                        "Modificar",});
                 }
 
                 jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -90,16 +88,6 @@ public class PanelGestionRol extends javax.swing.JPanel {
         fieldRol = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 1;
-        gridBagConstraints.ipadx = 151;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 18, 0, 0);
-        jDialog1.getContentPane().add(fieldRol, gridBagConstraints);
-
         jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         jDialog1.setTitle("Modificar rol");
         jDialog1.setAlwaysOnTop(true);
@@ -118,6 +106,16 @@ public class PanelGestionRol extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(9, 72, 0, 0);
         jDialog1.getContentPane().add(jLabel11, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.ipadx = 151;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 18, 0, 0);
+        jDialog1.getContentPane().add(fieldRol, gridBagConstraints);
 
         jLabel8.setText("Apellido: ");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -242,26 +240,24 @@ public class PanelGestionRol extends javax.swing.JPanel {
         add(jLabel1, gridBagConstraints);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-
-                },
-                new String [] {
-                        "Nombre", "Apellido", "Email", "Rol", "Modificar"
+                new Object[][]{},
+                new String[]{
+                    "Nombre", "Apellido", "Email", "Rol", "Modificar"
                 }
         ) {
-            Class[] types = new Class [] {
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            Class[] types = new Class[]{
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
-            boolean[] canEdit = new boolean [] {
-                    false, false, false, true, true
+            boolean[] canEdit = new boolean[]{
+                false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jTable1.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer("Modificar"));
@@ -271,7 +267,7 @@ public class PanelGestionRol extends javax.swing.JPanel {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                setBackground(new Color(77,77,77));
+                setBackground(new Color(77, 77, 77));
                 setForeground(Color.WHITE);
                 setFont(new Font("Segoe UI", Font.BOLD, 12));
                 return this;
@@ -438,7 +434,7 @@ public class PanelGestionRol extends javax.swing.JPanel {
         public Object getCellEditorValue() {
             return actionType;
         }
-        
+
     }
 
     // abre un nuevo jDialog con un formulario para editar la información del usuario
@@ -476,6 +472,11 @@ public class PanelGestionRol extends javax.swing.JPanel {
             String nuevoRol = fieldRol.getText().trim();
             UsuarioController controller = new UsuarioController();
 
+            if (!nuevoRol.equals("administrador") && !nuevoRol.equals("consultador") && !nuevoRol.equals("registrador")) {
+                JOptionPane.showMessageDialog(jDialog1, "Rol no válido. Valores aceptados 'administrador', 'consultador', registrador'", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             controller.modificarRolDeUsuario(usuario.getNombre(), nuevoRol, success -> {
                 if (success) {
                     JOptionPane.showMessageDialog(jDialog1, "Rol actualizado exitosamente");
@@ -489,7 +490,6 @@ public class PanelGestionRol extends javax.swing.JPanel {
 
         jDialog1.setVisible(true);
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField FieldNombre;
