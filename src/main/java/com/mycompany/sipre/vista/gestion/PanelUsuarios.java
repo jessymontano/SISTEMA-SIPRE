@@ -550,7 +550,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
                     fieldApellido.getText(),
                     fieldEmail.getText(),
                     fieldContrasena.getText(),
-                    "Consultador"
+                    "consultador"
             );
 
             UsuarioController usuarioController = new UsuarioController();

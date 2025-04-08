@@ -19,7 +19,7 @@ import okhttp3.*;
  */
 public class SolicitudController {
 
-    private final String BASE_URL = "http://localhost:8080/solicitudes";
+    private final String BASE_URL = "https://sipre.arrozzz.pro/solicitudes";
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
 

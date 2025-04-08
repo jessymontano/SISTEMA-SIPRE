@@ -22,7 +22,7 @@ import javax.swing.*;
  */
 public class UsuarioController {
 
-    private final String BASE_URL = "http://localhost:8080/usuarios";
+    private final String BASE_URL = "https://sipre.arrozzz.pro/usuarios";
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
 
