@@ -32,9 +32,7 @@ public class PanelCancelar extends javax.swing.JPanel {
             for (Documento documento : documentos) {
                 model.addRow(new Object[]{
                     documento.getFolio(),
-                    documento.getTipoDocumento(),
-                    documento.getFecha(),
-                    documento.getMotivo()
+                    documento.getTipoDocumento()
                 });
 
             }
@@ -122,14 +120,14 @@ public class PanelCancelar extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Folio", "Tipo de documento", "Fecha de solicitud", ""
+                "Folio", "Tipo de documento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {

@@ -7,6 +7,7 @@ package com.mycompany.sipre.vista.buscar;
 import com.mycompany.sipre.controlador.DocumentoController;
 import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
+import com.mycompany.sipre.modelo.TipoDocumento;
 
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
@@ -24,11 +25,25 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 public class PanelTipo extends javax.swing.JPanel {
 
+    DocumentoController documentoController = new DocumentoController();
+
     /**
      * Creates new form PanelTipo
      */
     public PanelTipo(JFrame frame) {
         initComponents();
+        cargarTiposDocumento();
+    }
+
+    private void cargarTiposDocumento() {
+        documentoController.obtenerTiposDocumento(tipos -> {
+            if (tipos != null) {
+                ComboTipo.removeAllItems();
+                for (TipoDocumento tipo : tipos) {
+                    ComboTipo.addItem(tipo.getNombre());
+                }
+            }
+        });
     }
 
     /**
@@ -103,7 +118,7 @@ public class PanelTipo extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Folio", "Tipo de documento", "Fecha de emisión", ""
+                "Folio", "Tipo de documento", "Estado", ""
             }
         ) {
             Class[] types = new Class [] {
@@ -149,31 +164,39 @@ public class PanelTipo extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Obtener el tipo de documento seleccionado
-        String tipoDocumento = (String) ComboTipo.getSelectedItem();
+        String nombreTipo = (String) ComboTipo.getSelectedItem();
 
-        // Crear una instancia de DocumentoDAO (o el DAO correspondiente)
-        DocumentoController documentoController = new DocumentoController();
+        // Buscar los documentos según el tipo de documento
+        documentoController.obtenerTiposDocumento(tipos -> {
+            if (tipos != null) {
+                int idTipo = -1;
+                for (TipoDocumento tipo : tipos) {
+                    if (tipo.getNombre().equals(nombreTipo)) {
+                        idTipo = tipo.getId();
+                        break;
+                    }
+                }
 
-            // Buscar los documentos según el tipo de documento
-            documentoController.obtenerDocumentosPorTipo(tipoDocumento, documentos -> {
-                // Obtener el modelo de la tabla
-                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                if (idTipo != -1) {
+                    // Buscar documentos usando el ID del tipo
+                    documentoController.obtenerDocumentosPorTipo(idTipo, documentos -> {
+                        if (documentos != null) {
+                            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                            model.setRowCount(0);
 
-                // Limpiar la tabla antes de agregar nuevos datos
-                model.setRowCount(0);
-
-                // Llenar la tabla con los documentos encontrados
-                for (Documento documento : documentos) {
-                    model.addRow(new Object[]{
-                        documento.getFolio(),
-                        documento.getTipoDocumento(),
-                        documento.getEstatus(),
-                        documento.getCantidadDocumentos(),
-                        documento.getFecha(),
-                        documento.getMotivo()
+                            for (Documento documento : documentos) {
+                                model.addRow(new Object[]{
+                                    documento.getFolio(),
+                                    documento.getTipoDocumento(),
+                                    documento.getEstatus(),
+                                    documento.getCantidadDocumentos()
+                                });
+                            }
+                        }
                     });
                 }
-            });
+            }
+        });
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

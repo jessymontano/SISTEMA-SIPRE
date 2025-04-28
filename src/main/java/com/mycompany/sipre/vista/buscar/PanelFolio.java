@@ -108,7 +108,7 @@ public class PanelFolio extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Folio", "Tipo de documento", "Fecha de emisión", ""
+                "Folio", "Tipo de documento", "Estado", "Cantidad"
             }
         ) {
             Class[] types = new Class [] {
@@ -176,9 +176,7 @@ public class PanelFolio extends javax.swing.JPanel {
                         documento.getFolio(),
                         documento.getTipoDocumento(),
                         documento.getEstatus(),
-                        documento.getCantidadDocumentos(),
-                        documento.getFecha(),
-                        documento.getMotivo()
+                        documento.getCantidadDocumentos()
                     });
                 } else {
                     // Mostrar mensaje si no se encuentra el documento

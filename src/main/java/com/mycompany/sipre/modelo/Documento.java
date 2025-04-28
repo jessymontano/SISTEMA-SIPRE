@@ -3,15 +3,11 @@ package com.mycompany.sipre.modelo;
 import java.util.Date;
 
 public class Documento {
-    private int folio;
-    private String tipoDocumento;
+     private int folio;
+    private String tipoDocumento; // For display/UI
+    private int idTipo;          // For database operations
     private String estatus;
     private int cantidadDocumentos;
-
-    public Date fecha;
-
-    public String motivo;
-
 
     public Documento(int Folio, String TipoDocumento, String Estatus, int CantidadDocumentos) {
         this.folio = Folio;
@@ -53,20 +49,12 @@ public class Documento {
         this.cantidadDocumentos = CantidadDocumentos;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public void setIdTipo(int id) {
+        this.idTipo = id;
     }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    
+    public int getIdTipo() {
+        return idTipo;
     }
-
-    public String getMotivo() {
-        return motivo;
-    }
-    public void setMotivo(String motivo) {
-        this.motivo = motivo;
-    }
-
 
 }

@@ -116,7 +116,7 @@
               <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="Folio" type="java.lang.String"/>
                 <Column editable="false" title="Tipo de documento" type="java.lang.Object"/>
-                <Column editable="false" title="Fecha de emisi&#xf3;n" type="java.lang.Object"/>
+                <Column editable="false" title="Estado" type="java.lang.Object"/>
                 <Column editable="false" title="" type="java.lang.Object"/>
               </Table>
             </Property>
