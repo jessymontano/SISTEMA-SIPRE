@@ -110,9 +110,6 @@ public class MainJFrame extends JFrame {
         menuImpresion = new javax.swing.JMenuItem();
         menuCancelar = new javax.swing.JMenuItem();
         menuModificar = new javax.swing.JMenuItem();
-        menuReportes = new javax.swing.JMenu();
-        menuMovimientos = new javax.swing.JMenuItem();
-        menuInventario = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         textoModalidad = new javax.swing.JMenu();
@@ -125,7 +122,7 @@ public class MainJFrame extends JFrame {
         modalidadUsuario = new javax.swing.JMenuItem();
         modalidadAdmin = new javax.swing.JMenuItem();
 
-        jMenuBar2.setBackground(new java.awt.Color(186, 200, 211));
+        jMenuBar2.setBackground(new java.awt.Color(77, 77, 77));
         jMenuBar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
         jMenuBar2.setMaximumSize(new java.awt.Dimension(1280, 23));
         jMenuBar2.setMinimumSize(new java.awt.Dimension(800, 23));
@@ -236,31 +233,6 @@ public class MainJFrame extends JFrame {
 
         jMenuBar2.add(menuSolicitar);
 
-        menuReportes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
-        menuReportes.setText("Reportes");
-        menuReportes.setMaximumSize(new java.awt.Dimension(100, 50));
-        menuReportes.setMinimumSize(new java.awt.Dimension(100, 50));
-        menuReportes.setOpaque(true);
-        menuReportes.setPreferredSize(new java.awt.Dimension(100, 50));
-
-        menuMovimientos.setText("Movimientos de solicitudes");
-        menuMovimientos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuMovimientosActionPerformed(evt);
-            }
-        });
-        menuReportes.add(menuMovimientos);
-
-        menuInventario.setText("Inventario");
-        menuInventario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuReporteInventarioActionPerformed(evt);
-            }
-        });
-        menuReportes.add(menuInventario);
-
-        jMenuBar2.add(menuReportes);
-
         menuAyuda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
         menuAyuda.setText("Ayuda");
         menuAyuda.setActionCommand("ayuda");
@@ -287,6 +259,7 @@ public class MainJFrame extends JFrame {
 
         textoModalidad.setBackground(new java.awt.Color(186, 200, 211));
         textoModalidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
+        textoModalidad.setForeground(new java.awt.Color(255, 255, 255));
         textoModalidad.setText("Modalidad: Registrador");
         textoModalidad.setFocusable(false);
         textoModalidad.setMaximumSize(new java.awt.Dimension(400, 50));
@@ -295,12 +268,13 @@ public class MainJFrame extends JFrame {
         textoModalidad.setRequestFocusEnabled(false);
         jMenuBar2.add(textoModalidad);
 
-        jMenuBar1.setBackground(new java.awt.Color(186, 200, 211));
+        jMenuBar1.setBackground(new java.awt.Color(51, 51, 51));
         jMenuBar1.setMaximumSize(new java.awt.Dimension(1280, 23));
         jMenuBar1.setMinimumSize(new java.awt.Dimension(800, 23));
         jMenuBar1.setPreferredSize(new java.awt.Dimension(800, 23));
 
         menuCuenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
+        menuCuenta.setForeground(new java.awt.Color(255, 255, 255));
         menuCuenta.setText(usuario.getNombre());
         menuCuenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuCuenta.setMaximumSize(new java.awt.Dimension(500, 50));
@@ -336,6 +310,7 @@ public class MainJFrame extends JFrame {
         jMenuBar1.add(menuCuenta);
 
         menuModalidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
+        menuModalidad.setForeground(new java.awt.Color(255, 255, 255));
         menuModalidad.setText("Modalidad");
         menuModalidad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuModalidad.setMaximumSize(new java.awt.Dimension(100, 50));
@@ -472,14 +447,6 @@ public class MainJFrame extends JFrame {
         mostrarPanel("inventario", "Reporte Inventario");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void menuMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuMovimientosActionPerformed
-        mostrarPanel("movimientos", "Reporte movimientos");
-    }//GEN-LAST:event_menuMovimientosActionPerformed
-
-    private void menuReporteInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuReporteInventarioActionPerformed
-         mostrarPanel("inventario", "Reporte Inventario");
-    }//GEN-LAST:event_menuReporteInventarioActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem cerrarSesion;
@@ -499,11 +466,8 @@ public class MainJFrame extends JFrame {
     private javax.swing.JMenuItem menuGestion;
     private javax.swing.JMenuItem menuImpresion;
     private javax.swing.JMenuItem menuInfo;
-    private javax.swing.JMenuItem menuInventario;
     private javax.swing.JMenu menuModalidad;
     private javax.swing.JMenuItem menuModificar;
-    private javax.swing.JMenuItem menuMovimientos;
-    private javax.swing.JMenu menuReportes;
     private javax.swing.JMenu menuSolicitar;
     private javax.swing.JMenuItem menuTipo;
     private javax.swing.JMenuItem modalidadAdmin;

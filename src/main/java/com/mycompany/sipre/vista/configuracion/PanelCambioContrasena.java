@@ -40,7 +40,7 @@ public class PanelCambioContrasena extends javax.swing.JPanel {
         jToggleButton3 = new javax.swing.JToggleButton();
         jButton1 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(217, 216, 255));
+        setBackground(new java.awt.Color(204, 204, 204));
         setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setText("Contraseña actual: ");
@@ -113,7 +113,7 @@ public class PanelCambioContrasena extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
         add(fieldContrasena2, gridBagConstraints);
 
-        jToggleButton1.setBackground(new java.awt.Color(148, 143, 255));
+        jToggleButton1.setBackground(new java.awt.Color(99, 132, 182));
         jToggleButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jToggleButton1.setForeground(new java.awt.Color(255, 255, 255));
         jToggleButton1.setText("?");
@@ -133,7 +133,7 @@ public class PanelCambioContrasena extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(90, 6, 0, 70);
         add(jToggleButton1, gridBagConstraints);
 
-        jToggleButton2.setBackground(new java.awt.Color(148, 143, 255));
+        jToggleButton2.setBackground(new java.awt.Color(99, 132, 182));
         jToggleButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jToggleButton2.setForeground(new java.awt.Color(255, 255, 255));
         jToggleButton2.setText("?");
@@ -153,7 +153,7 @@ public class PanelCambioContrasena extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 70);
         add(jToggleButton2, gridBagConstraints);
 
-        jToggleButton3.setBackground(new java.awt.Color(148, 143, 255));
+        jToggleButton3.setBackground(new java.awt.Color(99, 132, 182));
         jToggleButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jToggleButton3.setForeground(new java.awt.Color(255, 255, 255));
         jToggleButton3.setText("?");
@@ -173,7 +173,7 @@ public class PanelCambioContrasena extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 70);
         add(jToggleButton3, gridBagConstraints);
 
-        jButton1.setBackground(new java.awt.Color(148, 143, 255));
+        jButton1.setBackground(new java.awt.Color(99, 132, 182));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Cambiar contraseña");
