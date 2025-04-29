@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import com.mycompany.sipre.controlador.UsuarioController;
 import com.mycompany.sipre.modelo.Usuario;
 import com.mycompany.sipre.vista.alta.PanelAlta;
+import com.mycompany.sipre.vista.alta.PanelConsulta;
 import com.mycompany.sipre.vista.buscar.*;
 import com.mycompany.sipre.vista.consultar.*;
 import com.mycompany.sipre.vista.gestion.PanelGestionRol;
@@ -63,6 +64,7 @@ public class AdminJFrame extends JFrame {
         panelContenedor.add("usuarios", new PanelUsuarios());
         panelContenedor.add("roles", new PanelGestionRol());
         panelContenedor.add("alta", new PanelAlta(usuario.getId()));
+        panelContenedor.add("consulta", new PanelConsulta());
         
         initComponents();
         
@@ -95,17 +97,17 @@ public class AdminJFrame extends JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         menuGestion = new javax.swing.JMenu();
         menuFormatos = new javax.swing.JMenuItem();
-        menuRecuperar = new javax.swing.JMenuItem();
-        menuControl = new javax.swing.JMenuItem();
+        menuModificar = new javax.swing.JMenuItem();
         menuUsuarios = new javax.swing.JMenuItem();
         menuRoles = new javax.swing.JMenuItem();
         menuSolicitar = new javax.swing.JMenu();
         menuAlta = new javax.swing.JMenuItem();
-        menuAyuda = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuConsultar = new javax.swing.JMenuItem();
         menuGenerar = new javax.swing.JMenu();
         menuEstadistico = new javax.swing.JMenuItem();
         menuExistencias = new javax.swing.JMenuItem();
+        menuAyuda = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         textoModalidad = new javax.swing.JMenu();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCuenta = new javax.swing.JMenu();
@@ -115,6 +117,7 @@ public class AdminJFrame extends JFrame {
         menuModalidad = new javax.swing.JMenu();
         modalidadUsuario = new javax.swing.JMenuItem();
         modalidadAdmin = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenuBar2.setBackground(new java.awt.Color(77, 77, 77));
         jMenuBar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
@@ -133,7 +136,7 @@ public class AdminJFrame extends JFrame {
         menuGestion.setOpaque(true);
         menuGestion.setPreferredSize(new java.awt.Dimension(100, 50));
 
-        menuFormatos.setText("Ingresar nuevos formatos preimpresos");
+        menuFormatos.setText("Añadir nuevos tipos de formatos preimpresos");
         menuFormatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuFormatosActionPerformed(evt);
@@ -141,11 +144,13 @@ public class AdminJFrame extends JFrame {
         });
         menuGestion.add(menuFormatos);
 
-        menuRecuperar.setText("Recuperar formatos no utilizados");
-        menuGestion.add(menuRecuperar);
-
-        menuControl.setText("Control detallado de folios");
-        menuGestion.add(menuControl);
+        menuModificar.setText("Modificar formatos preimpresos");
+        menuModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuModificarActionPerformed(evt);
+            }
+        });
+        menuGestion.add(menuModificar);
 
         menuUsuarios.setText("Crear, modificar o eliminar usuarios");
         menuUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -181,31 +186,15 @@ public class AdminJFrame extends JFrame {
         });
         menuSolicitar.add(menuAlta);
 
+        menuConsultar.setText("Consultar estado de formatos preimpresos");
+        menuConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConsultarActionPerformed(evt);
+            }
+        });
+        menuSolicitar.add(menuConsultar);
+
         jMenuBar2.add(menuSolicitar);
-
-        menuAyuda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
-        menuAyuda.setText("Ayuda");
-        menuAyuda.setActionCommand("ayuda");
-        menuAyuda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menuAyuda.setMaximumSize(new java.awt.Dimension(100, 50));
-        menuAyuda.setMinimumSize(new java.awt.Dimension(100, 50));
-        menuAyuda.setOpaque(true);
-        menuAyuda.setPreferredSize(new java.awt.Dimension(100, 50));
-        menuAyuda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuAyudaActionPerformed(evt);
-            }
-        });
-
-        jMenuItem1.setText("Ayuda");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        menuAyuda.add(jMenuItem1);
-
-        jMenuBar2.add(menuAyuda);
 
         menuGenerar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
         menuGenerar.setText("Generar");
@@ -232,6 +221,30 @@ public class AdminJFrame extends JFrame {
         menuGenerar.add(menuExistencias);
 
         jMenuBar2.add(menuGenerar);
+
+        menuAyuda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
+        menuAyuda.setText("Ayuda");
+        menuAyuda.setActionCommand("ayuda");
+        menuAyuda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuAyuda.setMaximumSize(new java.awt.Dimension(100, 50));
+        menuAyuda.setMinimumSize(new java.awt.Dimension(100, 50));
+        menuAyuda.setOpaque(true);
+        menuAyuda.setPreferredSize(new java.awt.Dimension(100, 50));
+        menuAyuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAyudaActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setText("Ayuda");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuAyuda.add(jMenuItem1);
+
+        jMenuBar2.add(menuAyuda);
 
         textoModalidad.setBackground(new java.awt.Color(77, 77, 77));
         textoModalidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
@@ -310,6 +323,8 @@ public class AdminJFrame extends JFrame {
         menuModalidad.add(modalidadAdmin);
 
         jMenuBar1.add(menuModalidad);
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -408,16 +423,26 @@ public class AdminJFrame extends JFrame {
         mostrarPanel("roles", "Gestionar roles");
     }//GEN-LAST:event_menuRolesActionPerformed
 
+    private void menuModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuModificarActionPerformed
+
+    private void menuConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultarActionPerformed
+        // TODO add your handling code here:
+        mostrarPanel("consulta", "Consultar formatos");
+    }//GEN-LAST:event_menuConsultarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem cerrarSesion;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem menuAlta;
     private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenuItem menuConfiguracion;
-    private javax.swing.JMenuItem menuControl;
+    private javax.swing.JMenuItem menuConsultar;
     private javax.swing.JMenu menuCuenta;
     private javax.swing.JMenuItem menuEstadistico;
     private javax.swing.JMenuItem menuExistencias;
@@ -426,7 +451,7 @@ public class AdminJFrame extends JFrame {
     private javax.swing.JMenu menuGestion;
     private javax.swing.JMenuItem menuInfo;
     private javax.swing.JMenu menuModalidad;
-    private javax.swing.JMenuItem menuRecuperar;
+    private javax.swing.JMenuItem menuModificar;
     private javax.swing.JMenuItem menuRoles;
     private javax.swing.JMenu menuSolicitar;
     private javax.swing.JMenuItem menuUsuarios;
