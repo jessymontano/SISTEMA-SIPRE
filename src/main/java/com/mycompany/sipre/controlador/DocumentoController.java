@@ -2,6 +2,7 @@ package com.mycompany.sipre.controlador;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mycompany.sipre.modelo.AltaDocumentosRequest;
 import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.TipoDocumento;
 import okhttp3.*;
@@ -228,4 +229,43 @@ public class DocumentoController {
             }
         });
     }
+    
+    // alta documento
+    public void altaDocumento(String tipoDocumento, int cantidad, int folioInicial, Integer folioFinal, String fechaIngreso, int idUsuario, Consumer<Boolean> callback) {
+    OkHttpClient client = new OkHttpClient();
+
+    // Crear objeto JSON usando Gson
+    AltaDocumentosRequest altaRequest = new AltaDocumentosRequest();
+    altaRequest.setTipoDocumento(tipoDocumento);
+    altaRequest.setCantidad(cantidad);
+    altaRequest.setFolioInicial(folioInicial);
+    altaRequest.setFolioFinal(folioFinal);
+    altaRequest.setFechaIngreso(fechaIngreso);
+    altaRequest.setIdUsuario(idUsuario);
+
+    MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    RequestBody body = RequestBody.create(gson.toJson(altaRequest), JSON);
+
+    Request request = new Request.Builder()
+            .url(BASE_URL + "/alta-lote")
+            .post(body)
+            .build();
+
+    client.newCall(request).enqueue(new Callback() {
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+            try {
+                callback.accept(response.isSuccessful());
+            } finally {
+                response.close();
+            }
+        }
+
+        @Override
+        public void onFailure(Call call, IOException e) {
+            e.printStackTrace();
+            callback.accept(false);
+        }
+    });
+}
 }

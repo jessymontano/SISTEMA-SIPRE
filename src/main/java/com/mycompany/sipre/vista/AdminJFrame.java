@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import com.mycompany.sipre.controlador.UsuarioController;
 import com.mycompany.sipre.modelo.Usuario;
+import com.mycompany.sipre.vista.alta.PanelAlta;
 import com.mycompany.sipre.vista.buscar.*;
 import com.mycompany.sipre.vista.consultar.*;
 import com.mycompany.sipre.vista.gestion.PanelGestionRol;
@@ -61,6 +62,7 @@ public class AdminJFrame extends JFrame {
         panelContenedor.add("ayuda", new PanelAyuda(this));
         panelContenedor.add("usuarios", new PanelUsuarios());
         panelContenedor.add("roles", new PanelGestionRol());
+        panelContenedor.add("alta", new PanelAlta(usuario.getId()));
         
         initComponents();
         
@@ -98,7 +100,7 @@ public class AdminJFrame extends JFrame {
         menuUsuarios = new javax.swing.JMenuItem();
         menuRoles = new javax.swing.JMenuItem();
         menuSolicitar = new javax.swing.JMenu();
-        menuSolicitudes = new javax.swing.JMenuItem();
+        menuAlta = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         menuGenerar = new javax.swing.JMenu();
@@ -171,13 +173,13 @@ public class AdminJFrame extends JFrame {
         menuSolicitar.setOpaque(true);
         menuSolicitar.setPreferredSize(new java.awt.Dimension(100, 50));
 
-        menuSolicitudes.setText("Solicitudes");
-        menuSolicitudes.addActionListener(new java.awt.event.ActionListener() {
+        menuAlta.setText("Alta de formatos");
+        menuAlta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuSolicitudesActionPerformed(evt);
+                menuAltaActionPerformed(evt);
             }
         });
-        menuSolicitar.add(menuSolicitudes);
+        menuSolicitar.add(menuAlta);
 
         jMenuBar2.add(menuSolicitar);
 
@@ -384,10 +386,10 @@ public class AdminJFrame extends JFrame {
         mostrarPanel("disponibilidad", "Consultar disponibilidad");
     }//GEN-LAST:event_menuExistenciasActionPerformed
 
-    private void menuSolicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSolicitudesActionPerformed
-        // cambiar contenido a panel ver estado
-        mostrarPanel("estado", "Ver estado de solicitud");
-    }//GEN-LAST:event_menuSolicitudesActionPerformed
+    private void menuAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAltaActionPerformed
+        // cambiar contenido a panel alta formatos
+        mostrarPanel("alta", "Alta de formatos");
+    }//GEN-LAST:event_menuAltaActionPerformed
 
     private void menuAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAyudaActionPerformed
          mostrarPanel("ayuda", "Ayuda");
@@ -412,6 +414,7 @@ public class AdminJFrame extends JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem menuAlta;
     private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenuItem menuConfiguracion;
     private javax.swing.JMenuItem menuControl;
@@ -426,7 +429,6 @@ public class AdminJFrame extends JFrame {
     private javax.swing.JMenuItem menuRecuperar;
     private javax.swing.JMenuItem menuRoles;
     private javax.swing.JMenu menuSolicitar;
-    private javax.swing.JMenuItem menuSolicitudes;
     private javax.swing.JMenuItem menuUsuarios;
     private javax.swing.JMenuItem modalidadAdmin;
     private javax.swing.JMenuItem modalidadUsuario;

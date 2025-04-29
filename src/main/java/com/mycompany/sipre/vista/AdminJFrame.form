@@ -120,12 +120,12 @@
             </Property>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="menuSolicitudes">
+            <MenuItem class="javax.swing.JMenuItem" name="menuAlta">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Solicitudes"/>
+                <Property name="text" type="java.lang.String" value="Alta de formatos"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuSolicitudesActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAltaActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
