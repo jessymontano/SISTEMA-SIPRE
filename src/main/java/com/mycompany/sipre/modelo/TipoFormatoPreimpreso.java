@@ -3,32 +3,31 @@ package com.mycompany.sipre.modelo;
 import com.google.gson.annotations.SerializedName;
 
 public class TipoFormatoPreimpreso {
+    public int idTipo;
+    public String nombre;
 
-    private int iD_Tipo;
+    public TipoFormatoPreimpreso(int idTipo, String nombre) {
 
-    private String nombre;
-
-    public TipoFormatoPreimpreso() {}
-
-    public TipoFormatoPreimpreso(int ID_Tipo, String Nombre) {
-        this.iD_Tipo = ID_Tipo;
-        this.nombre = Nombre;
+        this.idTipo = idTipo;
+        this.nombre = nombre;
     }
 
-    public int getID_Tipo() {
-        return iD_Tipo;
+    public TipoFormatoPreimpreso() {
+
+    }
+    public int getIdTipo(){
+        return idTipo;
     }
 
-    public void setID_Tipo(int ID_Tipo) {
-        this.iD_Tipo = ID_Tipo;
+    public void setIdTipo(int idTipo) {
+        this.idTipo = idTipo;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
     public String getNombre() {
         return nombre;
-    }
-
-    public void setNombre(String Nombre) {
-        this.nombre = Nombre;
     }
 }
 

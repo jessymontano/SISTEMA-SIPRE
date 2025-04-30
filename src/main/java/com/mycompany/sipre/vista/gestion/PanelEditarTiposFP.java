@@ -35,8 +35,9 @@ public class PanelEditarTiposFP extends javax.swing.JPanel {
                 model.setRowCount(0); // Limpiar tabla
 
                 for (TipoFormatoPreimpreso tipo : tipoActualizados) {
+                    System.out.println(tipo.getIdTipo());
                     model.addRow(new Object[]{
-                            tipo.getID_Tipo(),
+                            tipo.getIdTipo(),
                             tipo.getNombre(),
                             "Modificar",
                     });
@@ -228,9 +229,9 @@ public class PanelEditarTiposFP extends javax.swing.JPanel {
             tipoSeleccionado.setNombre(nuevoNombre);
             TipoController controller = new TipoController();
 
-            System.out.println("ID antes de actualizar: " + tipoSeleccionado.getID_Tipo());  // Depuración
+            System.out.println("ID antes de actualizar: " + tipoSeleccionado.getIdTipo());  // Depuración
 
-            controller.actualizarTipo(tipoSeleccionado.getID_Tipo(), tipoSeleccionado, exito -> {
+            controller.actualizarTipo(tipoSeleccionado.getIdTipo(), tipoSeleccionado, exito -> {
                 SwingUtilities.invokeLater(() -> {
                     if (exito) {
                         JOptionPane.showMessageDialog(this, "Tipo actualizado correctamente.");
@@ -342,9 +343,9 @@ public class PanelEditarTiposFP extends javax.swing.JPanel {
     }
 
     private void abrirFormulario(int tipoId) {
-        tipoSeleccionado = tipos.stream().filter(tipo -> tipo.getID_Tipo() == tipoId).findFirst().orElse(null);
+        tipoSeleccionado = tipos.stream().filter(tipo -> tipo.getIdTipo() == tipoId).findFirst().orElse(null);
 
-        System.out.println("ID del tipo seleccionado: " + tipoSeleccionado.getID_Tipo());  //
+        System.out.println("ID del tipo seleccionado: " + tipoSeleccionado.getIdTipo());  //
 
         fieldNombre.setText(tipoSeleccionado.getNombre());
         fieldNombre.setEnabled(true);
