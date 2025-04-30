@@ -5,9 +5,13 @@ import com.mycompany.sipre.controlador.SolicitudController;
 import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class PanelCancelar extends javax.swing.JPanel {
@@ -28,9 +32,7 @@ public class PanelCancelar extends javax.swing.JPanel {
             for (Documento documento : documentos) {
                 model.addRow(new Object[]{
                     documento.getFolio(),
-                    documento.getTipoDocumento(),
-                    documento.getFecha(),
-                    documento.getMotivo()
+                    documento.getTipoDocumento()
                 });
 
             }
@@ -51,7 +53,7 @@ public class PanelCancelar extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(217, 216, 255));
+        setBackground(new java.awt.Color(204, 204, 204));
         setPreferredSize(new java.awt.Dimension(587, 300));
         setLayout(new java.awt.GridBagLayout());
 
@@ -85,7 +87,7 @@ public class PanelCancelar extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 0);
         add(FieldFolio, gridBagConstraints);
 
-        jButton2.setBackground(new java.awt.Color(148, 143, 255));
+        jButton2.setBackground(new java.awt.Color(99, 132, 182));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Buscar");
@@ -118,14 +120,14 @@ public class PanelCancelar extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Folio", "Tipo de documento", "Fecha de solicitud", ""
+                "Folio", "Tipo de documento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -136,8 +138,16 @@ public class PanelCancelar extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.getTableHeader().setOpaque(false);
-        jTable1.getTableHeader().setBackground(new Color(148, 143, 255));
+        jTable1.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                setBackground(new Color(77,77,77));
+                setForeground(Color.WHITE);
+                setFont(new Font("Segoe UI", Font.BOLD, 12));
+                return this;
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         gridBagConstraints = new java.awt.GridBagConstraints();

@@ -37,7 +37,7 @@ public class PanelEliminarCuenta extends javax.swing.JPanel {
         fieldContrasena = new javax.swing.JPasswordField();
         jToggleButton3 = new javax.swing.JToggleButton();
 
-        setBackground(new java.awt.Color(217, 216, 255));
+        setBackground(new java.awt.Color(204, 204, 204));
         setMaximumSize(new java.awt.Dimension(400, 300));
         setMinimumSize(new java.awt.Dimension(400, 300));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -52,7 +52,7 @@ public class PanelEliminarCuenta extends javax.swing.JPanel {
         jLabel3.setText("Ingrese su contraseña:");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 190, -1, -1));
 
-        botonContinuar.setBackground(new java.awt.Color(148, 143, 255));
+        botonContinuar.setBackground(new java.awt.Color(99, 132, 182));
         botonContinuar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         botonContinuar.setForeground(new java.awt.Color(255, 255, 255));
         botonContinuar.setText("Continuar");
@@ -77,7 +77,7 @@ public class PanelEliminarCuenta extends javax.swing.JPanel {
         fieldContrasena.setEchoChar('*');
         add(fieldContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 176, -1));
 
-        jToggleButton3.setBackground(new java.awt.Color(148, 143, 255));
+        jToggleButton3.setBackground(new java.awt.Color(99, 132, 182));
         jToggleButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jToggleButton3.setForeground(new java.awt.Color(255, 255, 255));
         jToggleButton3.setText("?");

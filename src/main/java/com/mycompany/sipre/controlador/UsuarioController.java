@@ -127,9 +127,9 @@ public class UsuarioController {
         });
     }
 
-    public void eliminarUsuario(String nombreUsuario, Consumer<Boolean> callback) {
+    public void eliminarUsuario(int idUsuario, Consumer<Boolean> callback) {
         Request request = new Request.Builder()
-                .url(BASE_URL + "/" + nombreUsuario)
+                .url(BASE_URL + "/" + idUsuario)
                 .delete()
                 .build();
 
@@ -147,12 +147,12 @@ public class UsuarioController {
         });
     }
 
-    public void modificarUsuario(String nombreUsuario, Usuario usuario, Consumer<Boolean> callback) {
+    public void modificarUsuario(int idUsuario, Usuario usuario, Consumer<Boolean> callback) {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         String json = gson.toJson(usuario);
         RequestBody body = RequestBody.create(json, JSON);
         Request request = new Request.Builder()
-                .url(BASE_URL + "/" + nombreUsuario)
+                .url(BASE_URL + "/" + idUsuario)
                 .put(body)
                 .build();
 
@@ -170,8 +170,8 @@ public class UsuarioController {
         });
     }
 
-    public void modificarRolDeUsuario(String nombreUsuario, String nuevoRol, Consumer<Boolean> callback) {
-        HttpUrl url = HttpUrl.parse(BASE_URL + "/" + nombreUsuario + "/rol")
+    public void modificarRolDeUsuario(int idUsuario, String nuevoRol, Consumer<Boolean> callback) {
+        HttpUrl url = HttpUrl.parse(BASE_URL + "/" + idUsuario + "/rol")
                 .newBuilder()
                 .addQueryParameter("nuevoRol", nuevoRol)
                 .build();

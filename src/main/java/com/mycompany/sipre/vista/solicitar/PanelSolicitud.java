@@ -9,6 +9,7 @@ import com.mycompany.sipre.controlador.GeneradorPDF;
 import com.mycompany.sipre.controlador.SolicitudController;
 import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -37,29 +38,28 @@ public class PanelSolicitud extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         FieldFolio = new javax.swing.JTextField();
+        ComboTipo = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         ComboAno = new javax.swing.JComboBox<>();
         ComboMes = new javax.swing.JComboBox<>();
 
-        setBackground(new java.awt.Color(217, 216, 255));
+        setBackground(new java.awt.Color(204, 204, 204));
         setPreferredSize(new java.awt.Dimension(587, 300));
         setLayout(new java.awt.GridBagLayout());
 
-        jButton2.setBackground(new java.awt.Color(148, 143, 255));
+        jButton2.setBackground(new java.awt.Color(99, 132, 182));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Guardar solicitud");
+        jButton2.setText("Enviar solicitud");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -83,30 +83,13 @@ public class PanelSolicitud extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(39, 17, 0, 0);
         add(jLabel1, gridBagConstraints);
 
-        jLabel2.setText("Folio Existente en bodega:");
+        jLabel2.setText("Folio:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 135, 0, 0);
         add(jLabel2, gridBagConstraints);
-
-        jButton3.setBackground(new java.awt.Color(148, 143, 255));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Check");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 30;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 40;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 12, 22, 162);
-        add(jButton3, gridBagConstraints);
 
         jLabel3.setText("Tipo de documento:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -135,20 +118,21 @@ public class PanelSolicitud extends javax.swing.JPanel {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 25;
-        gridBagConstraints.gridheight = 40;
+        gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 159;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 1, 0, 0);
         add(FieldFolio, gridBagConstraints);
 
-        jLabel6.setText("Tipo de documento:");
+        ComboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cert. Uso Común", "Cert. Parcelario Individual", "Cert. Parcelario de Grupo", "Cert. Parcelario Destino Esp.", "Tit. De Solar Individual", "Tit. Dominio Pleno Individual", "Tit. Dominio Pleno de Grupo", "Tit. De Solar a Favor del Ejido", "Tit. De Solar Servicio Público", "Tit. De Solar Asoc. Religiosas" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 20;
+        gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(12, 12, 0, 0);
-        add(jLabel6, gridBagConstraints);
+        add(ComboTipo, gridBagConstraints);
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Limpiar");
@@ -239,12 +223,12 @@ public class PanelSolicitud extends javax.swing.JPanel {
             documentoController.obtenerDocumentoPorFolio(folio, documento -> {
                 String tipoDocumento = documento.getTipoDocumento();
 
-                if (tipoDocumento != null) {
+                /*if (tipoDocumento != null) {
                     jLabel6.setText(tipoDocumento);  // Establecer el valor del tipo de documento
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(this, "Folio no encontrado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
                     return; // Salir si no se encuentra el folio
-                }
+                }*/
 
                 // Validar el motivo
                 String motivo = jTextArea1.getText().trim();
@@ -304,12 +288,12 @@ public class PanelSolicitud extends javax.swing.JPanel {
                 String tipoDocumento = documento.getTipoDocumento();
 
                 // Si el tipo de documento es encontrado, actualizar la etiqueta
-                if (tipoDocumento != null) {
+               /* if (tipoDocumento != null) {
                     jLabel6.setText(tipoDocumento);  // Actualiza el texto de la etiqueta con el tipo de documento
                 } else {
                     // Si no se encuentra el folio, mostrar mensaje de error
                     javax.swing.JOptionPane.showMessageDialog(this, "Folio no encontrado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                }
+                } */
             });
 
         } catch (NumberFormatException e) {
@@ -331,16 +315,15 @@ public class PanelSolicitud extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboAno;
     private javax.swing.JComboBox<String> ComboMes;
+    private javax.swing.JComboBox<String> ComboTipo;
     private javax.swing.JTextField FieldFolio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables

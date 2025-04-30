@@ -42,7 +42,7 @@ public class PanelAyuda extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(217, 216, 255));
+        setBackground(new java.awt.Color(204, 204, 204));
         setPreferredSize(new java.awt.Dimension(587, 300));
         setLayout(new java.awt.GridBagLayout());
 

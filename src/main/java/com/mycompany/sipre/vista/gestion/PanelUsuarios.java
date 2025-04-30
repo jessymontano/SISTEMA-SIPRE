@@ -53,6 +53,8 @@ public class PanelUsuarios extends javax.swing.JPanel {
 
                 for (Usuario usuario : usuariosActualizados) {
                     model.addRow(new Object[]{
+                        usuario.getId(),
+                        usuario.getNombreUsuario(),
                         usuario.getNombre(),
                         usuario.getApellido(),
                         usuario.getEmail(),
@@ -86,6 +88,10 @@ public class PanelUsuarios extends javax.swing.JPanel {
         fieldApellido = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         fieldContrasena = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        fieldNombreUsuario = new javax.swing.JTextField();
+        fieldId = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -110,7 +116,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(9, 72, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(12, 32, 0, 0);
         jDialog1.getContentPane().add(jLabel8, gridBagConstraints);
 
         btnGuardar.setBackground(new java.awt.Color(99, 132, 182));
@@ -123,28 +129,28 @@ public class PanelUsuarios extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(26, 45, 75, 0);
+        gridBagConstraints.insets = new java.awt.Insets(31, 33, 50, 0);
         jDialog1.getContentPane().add(btnGuardar, gridBagConstraints);
 
         jLabel3.setText("Nombre: ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.ipadx = 12;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(34, 72, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(12, 32, 0, 0);
         jDialog1.getContentPane().add(jLabel3, gridBagConstraints);
 
         jLabel9.setText("Email: ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(9, 72, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(12, 32, 0, 0);
         jDialog1.getContentPane().add(jLabel9, gridBagConstraints);
 
         fieldNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -153,22 +159,20 @@ public class PanelUsuarios extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.ipadx = 152;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(31, 18, 0, 132);
+        gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 45);
         jDialog1.getContentPane().add(fieldNombre, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 151;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 18, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 0);
         jDialog1.getContentPane().add(fieldEmail, gridBagConstraints);
 
         fieldApellido.addActionListener(new java.awt.event.ActionListener() {
@@ -177,32 +181,79 @@ public class PanelUsuarios extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 151;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 18, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 0);
         jDialog1.getContentPane().add(fieldApellido, gridBagConstraints);
 
         jLabel10.setText("Contraseña:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(9, 72, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(12, 32, 0, 0);
         jDialog1.getContentPane().add(jLabel10, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 151;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 18, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 0);
         jDialog1.getContentPane().add(fieldContrasena, gridBagConstraints);
+
+        jLabel4.setText("Nombre Usuario: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 32, 0, 0);
+        jDialog1.getContentPane().add(jLabel4, gridBagConstraints);
+
+        fieldNombreUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldNombreUsuarioActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 152;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 45);
+        jDialog1.getContentPane().add(fieldNombreUsuario, gridBagConstraints);
+
+        fieldId.setEditable(false);
+        fieldId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldIdActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 152;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(34, 12, 0, 45);
+        jDialog1.getContentPane().add(fieldId, gridBagConstraints);
+
+        jLabel5.setText("ID:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.ipadx = 81;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(40, 32, 0, 0);
+        jDialog1.getContentPane().add(jLabel5, gridBagConstraints);
 
         setBackground(new java.awt.Color(204, 204, 204));
         setLayout(new java.awt.GridBagLayout());
@@ -224,14 +275,14 @@ public class PanelUsuarios extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nombre", "Apellido", "Email", "Modificar", "Eliminar"
+                "ID", "Nombre Usuario", "Nombre", "Apellido", "Email", "Modificar", "Eliminar"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -242,11 +293,11 @@ public class PanelUsuarios extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer("Modificar"));
-        jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox(), "Modificar"));
+        jTable1.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer("Modificar"));
+        jTable1.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JCheckBox(), "Modificar"));
 
-        jTable1.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer("Eliminar"));
-        jTable1.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox(), "Eliminar"));
+        jTable1.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer("Eliminar"));
+        jTable1.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JCheckBox(), "Eliminar"));
         jTable1.setRowHeight(30);
         jTable1.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
@@ -359,6 +410,14 @@ public class PanelUsuarios extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldApellidoActionPerformed
 
+    private void fieldNombreUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldNombreUsuarioActionPerformed
+
+    private void fieldIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldIdActionPerformed
+
     // clase para mostrar botones en la tabla
     class ButtonRenderer extends JButton implements TableCellRenderer {
 
@@ -461,7 +520,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
         private void eliminarUsuario(int rowIndex) {
             UsuarioController usuarioController = new UsuarioController();
 
-            usuarioController.eliminarUsuario(usuarios.get(rowIndex).getNombre(), eliminado -> {
+            usuarioController.eliminarUsuario(usuarios.get(rowIndex).getId(), eliminado -> {
                 if (eliminado) {
                     JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
 
@@ -479,12 +538,16 @@ public class PanelUsuarios extends javax.swing.JPanel {
         Usuario usuario = usuarios.get(rowIndex);
 
         // insertar datos anteriores
+        jLabel5.setVisible(true);
+        fieldId.setVisible(true);
+        fieldId.setText(String.valueOf(usuario.getId()));
+        fieldNombreUsuario.setText(usuario.getNombreUsuario());
         fieldNombre.setText(usuario.getNombre());
         fieldApellido.setText(usuario.getApellido());
         fieldEmail.setText(usuario.getEmail());
-        fieldContrasena.setText("");
+        fieldContrasena.setText(""); // Dejar vacío para nueva contraseña
 
-        jDialog1.setTitle("Modificar Usuario: " + usuario.getNombre());
+        jDialog1.setTitle("Modificar Usuario: " + usuario.getNombreUsuario());
         jDialog1.setSize(500, 400);
         jDialog1.setLocationRelativeTo(this);
 
@@ -504,13 +567,19 @@ public class PanelUsuarios extends javax.swing.JPanel {
                 return;
             }
 
+            // solo actualizar la contraseña si se proporciona una nueva
+            String nuevaContrasena = fieldContrasena.getText();
+            if (!nuevaContrasena.isEmpty()) {
+                usuario.setContrasena(nuevaContrasena);
+            }
+
+            usuario.setNombreUsuario(fieldNombreUsuario.getText());
             usuario.setNombre(fieldNombre.getText());
             usuario.setApellido(fieldApellido.getText());
             usuario.setEmail(fieldEmail.getText());
-            usuario.setContrasena(fieldContrasena.getText());
 
             UsuarioController controller = new UsuarioController();
-            controller.modificarUsuario(usuario.getNombre(), usuario, success -> {
+            controller.modificarUsuario(usuario.getId(), usuario, success -> {
                 if (success) {
                     JOptionPane.showMessageDialog(jDialog1, "Usuario actualizado exitosamente");
                     actualizarTabla();
@@ -525,6 +594,9 @@ public class PanelUsuarios extends javax.swing.JPanel {
     }
 
     private void abrirFormularioCreacion() {
+        jLabel5.setVisible(false);
+        fieldId.setVisible(false);
+        fieldNombreUsuario.setText("");
         fieldNombre.setText("");
         fieldApellido.setText("");
         fieldEmail.setText("");
@@ -536,8 +608,14 @@ public class PanelUsuarios extends javax.swing.JPanel {
         btnGuardar.removeActionListener(btnGuardar.getActionListeners()[0]);
         btnGuardar.addActionListener(e -> {
             // validaciones
-            if (fieldNombre.getText().isEmpty() || fieldEmail.getText().isEmpty() || fieldContrasena.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(jDialog1, "Nombre, email y contraseña son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+            if (fieldNombreUsuario.getText().trim().isEmpty()
+                    || fieldNombre.getText().trim().isEmpty()
+                    || fieldEmail.getText().trim().isEmpty()
+                    || fieldContrasena.getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(jDialog1,
+                        "Nombre de usuario, nombre, email y contraseña son obligatorios",
+                        "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (!fieldEmail.getText().matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
@@ -545,13 +623,13 @@ public class PanelUsuarios extends javax.swing.JPanel {
                 return;
             }
 
-            Usuario nuevoUsuario = new Usuario(
-                    fieldNombre.getText(),
-                    fieldApellido.getText(),
-                    fieldEmail.getText(),
-                    fieldContrasena.getText(),
-                    "Consultador"
-            );
+            Usuario nuevoUsuario = new Usuario();
+            nuevoUsuario.setNombreUsuario(fieldNombreUsuario.getText());
+            nuevoUsuario.setNombre(fieldNombre.getText());
+            nuevoUsuario.setApellido(fieldApellido.getText());
+            nuevoUsuario.setEmail(fieldEmail.getText());
+            nuevoUsuario.setContrasena(fieldContrasena.getText());
+            nuevoUsuario.setRol("consultador");
 
             UsuarioController usuarioController = new UsuarioController();
             usuarioController.crearUsuario(nuevoUsuario, creado -> {
@@ -574,7 +652,9 @@ public class PanelUsuarios extends javax.swing.JPanel {
     private javax.swing.JTextField fieldApellido;
     private javax.swing.JTextField fieldContrasena;
     private javax.swing.JTextField fieldEmail;
+    private javax.swing.JTextField fieldId;
     private javax.swing.JTextField fieldNombre;
+    private javax.swing.JTextField fieldNombreUsuario;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JDialog jDialog1;
@@ -582,6 +662,8 @@ public class PanelUsuarios extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;

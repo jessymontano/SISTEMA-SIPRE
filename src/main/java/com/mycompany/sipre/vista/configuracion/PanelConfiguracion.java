@@ -47,12 +47,14 @@ public class PanelConfiguracion extends javax.swing.JPanel {
         botonActualizar = new javax.swing.JButton();
         panelContenido = new javax.swing.JPanel();
 
-        setBackground(new java.awt.Color(217, 216, 255));
+        setBackground(new java.awt.Color(204, 204, 204));
         setMaximumSize(new java.awt.Dimension(1080, 720));
         setPreferredSize(new java.awt.Dimension(800, 300));
         setLayout(new java.awt.GridBagLayout());
 
+        botonContrasena.setBackground(new java.awt.Color(99, 132, 182));
         botonContrasena.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botonContrasena.setForeground(new java.awt.Color(255, 255, 255));
         botonContrasena.setText("Cambio de contraseña");
         botonContrasena.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,7 +68,9 @@ public class PanelConfiguracion extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(65, 49, 0, 0);
         add(botonContrasena, gridBagConstraints);
 
+        botonEliminar.setBackground(new java.awt.Color(99, 132, 182));
         botonEliminar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botonEliminar.setForeground(new java.awt.Color(255, 255, 255));
         botonEliminar.setText("Eliminar cuenta");
         botonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,7 +85,9 @@ public class PanelConfiguracion extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(12, 49, 0, 0);
         add(botonEliminar, gridBagConstraints);
 
+        botonActualizar.setBackground(new java.awt.Color(99, 132, 182));
         botonActualizar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botonActualizar.setForeground(new java.awt.Color(255, 255, 255));
         botonActualizar.setText("Actualizar datos");
         botonActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,7 +102,7 @@ public class PanelConfiguracion extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(12, 49, 0, 0);
         add(botonActualizar, gridBagConstraints);
 
-        panelContenido.setBackground(new java.awt.Color(217, 216, 255));
+        panelContenido.setBackground(new java.awt.Color(204, 204, 204));
         panelContenido.setMaximumSize(new java.awt.Dimension(300, 224));
 
         javax.swing.GroupLayout panelContenidoLayout = new javax.swing.GroupLayout(panelContenido);

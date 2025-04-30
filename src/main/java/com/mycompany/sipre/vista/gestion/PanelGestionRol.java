@@ -13,6 +13,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -33,6 +35,13 @@ public class PanelGestionRol extends javax.swing.JPanel {
     public PanelGestionRol() {
         initComponents();
         actualizarTabla();
+
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                actualizarTabla(); // Refrescar datos al mostrarse
+            }
+        });
     }
 
     //llenar tabla automaticamente con todas las solicitudes encontradas
@@ -85,7 +94,8 @@ public class PanelGestionRol extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         FieldNombre = new javax.swing.JTextField();
-        fieldRol = new javax.swing.JTextField();
+        comboRoles = new javax.swing.JComboBox<>(new String[]{"administrador", "consultador", "registrador"});
+        comboRoles.setSelectedIndex(-1);
         jLabel11 = new javax.swing.JLabel();
 
         jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -111,11 +121,10 @@ public class PanelGestionRol extends javax.swing.JPanel {
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.gridheight = 1;
         gridBagConstraints.ipadx = 151;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 18, 0, 0);
-        jDialog1.getContentPane().add(fieldRol, gridBagConstraints);
+        jDialog1.getContentPane().add(comboRoles, gridBagConstraints);
 
         jLabel8.setText("Apellido: ");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -190,11 +199,6 @@ public class PanelGestionRol extends javax.swing.JPanel {
             }
         });
 
-        fieldRol.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldRolActionPerformed(evt);
-            }
-        });
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -445,7 +449,7 @@ public class PanelGestionRol extends javax.swing.JPanel {
         fieldNombre.setText(usuario.getNombre());
         fieldApellido.setText(usuario.getApellido());
         fieldEmail.setText(usuario.getEmail());
-        fieldRol.setText(usuario.getRol());
+        comboRoles.setSelectedItem(usuario.getRol());
         fieldContrasena.setText("");
 
         // Deshabilitar edición
@@ -453,7 +457,7 @@ public class PanelGestionRol extends javax.swing.JPanel {
         fieldApellido.setEnabled(false);
         fieldEmail.setEnabled(false);
         fieldContrasena.setEnabled(false);
-        fieldRol.setEnabled(true);
+        comboRoles.setEnabled(true);
 
         jDialog1.setTitle("Modificar Rol: " + usuario.getNombre());
         jDialog1.setSize(500, 400);
@@ -464,21 +468,15 @@ public class PanelGestionRol extends javax.swing.JPanel {
         }
 
         btnGuardar.addActionListener(e -> {
-            if (fieldRol.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(jDialog1, "El rol no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+            
 
-            String nuevoRol = fieldRol.getText().trim();
+            String nuevoRol = (String) comboRoles.getSelectedItem();
             UsuarioController controller = new UsuarioController();
 
-            if (!nuevoRol.equals("administrador") && !nuevoRol.equals("consultador") && !nuevoRol.equals("registrador")) {
-                JOptionPane.showMessageDialog(jDialog1, "Rol no válido. Valores aceptados 'administrador', 'consultador', registrador'", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            controller.modificarRolDeUsuario(usuario.getNombre(), nuevoRol, success -> {
+            controller.modificarRolDeUsuario(usuario.getId(), nuevoRol, success -> {
                 if (success) {
+                    usuario.setRol(nuevoRol);
+                    usuarios.set(rowIndex, usuario);
                     JOptionPane.showMessageDialog(jDialog1, "Rol actualizado exitosamente");
                     actualizarTabla();
                     jDialog1.dispose();
@@ -496,7 +494,7 @@ public class PanelGestionRol extends javax.swing.JPanel {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JTextField fieldApellido;
     private javax.swing.JTextField fieldContrasena;
-    private javax.swing.JTextField fieldRol;
+    private javax.swing.JComboBox<String> comboRoles;
     private javax.swing.JTextField fieldEmail;
     private javax.swing.JTextField fieldNombre;
     private javax.swing.JButton jButton2;

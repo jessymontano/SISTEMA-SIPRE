@@ -7,12 +7,17 @@ package com.mycompany.sipre.vista.buscar;
 import com.mycompany.sipre.controlador.DocumentoController;
 import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
+import com.mycompany.sipre.modelo.TipoDocumento;
 
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.io.IOException;
 import java.util.List;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -20,11 +25,25 @@ import java.util.List;
  */
 public class PanelTipo extends javax.swing.JPanel {
 
+    DocumentoController documentoController = new DocumentoController();
+
     /**
      * Creates new form PanelTipo
      */
     public PanelTipo(JFrame frame) {
         initComponents();
+        cargarTiposDocumento();
+    }
+
+    private void cargarTiposDocumento() {
+        documentoController.obtenerTiposDocumento(tipos -> {
+            if (tipos != null) {
+                ComboTipo.removeAllItems();
+                for (TipoDocumento tipo : tipos) {
+                    ComboTipo.addItem(tipo.getNombre());
+                }
+            }
+        });
     }
 
     /**
@@ -44,7 +63,7 @@ public class PanelTipo extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(217, 216, 255));
+        setBackground(new java.awt.Color(204, 204, 204));
         setPreferredSize(new java.awt.Dimension(587, 300));
         setLayout(new java.awt.GridBagLayout());
 
@@ -68,7 +87,7 @@ public class PanelTipo extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(12, 181, 0, 0);
         add(jLabel2, gridBagConstraints);
 
-        jButton1.setBackground(new java.awt.Color(148, 143, 255));
+        jButton1.setBackground(new java.awt.Color(99, 132, 182));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Buscar");
@@ -77,7 +96,6 @@ public class PanelTipo extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -96,35 +114,38 @@ public class PanelTipo extends javax.swing.JPanel {
         add(ComboTipo, gridBagConstraints);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {},
-                new String [] {
-                        "Folio", "Tipo de documento", "Estatus", "Cantidad de documentos", "Fecha de emisión", "Motivo"
-                }
+            new Object [][] {
+
+            },
+            new String [] {
+                "Folio", "Tipo de documento", "Estado", ""
+            }
         ) {
             Class[] types = new Class [] {
-                    java.lang.String.class,   // Folio
-                    java.lang.String.class,   // Tipo de documento
-                    java.lang.String.class,   // Estatus
-                    java.lang.Integer.class,  // Cantidad de documentos
-                    java.sql.Date.class,      // Fecha de emisión
-                    java.lang.String.class    // Motivo
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                    false, false, false, false, false, false
+                false, false, false, false
             };
 
-            @Override
             public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
+                return types [columnIndex];
             }
 
-            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
-        jTable1.getTableHeader().setOpaque(false);
-        jTable1.getTableHeader().setBackground(new Color(148, 143, 255));
+        jTable1.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                setBackground(new Color(77,77,77));
+                setForeground(Color.WHITE);
+                setFont(new Font("Segoe UI", Font.BOLD, 12));
+                return this;
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -143,31 +164,39 @@ public class PanelTipo extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Obtener el tipo de documento seleccionado
-        String tipoDocumento = (String) ComboTipo.getSelectedItem();
+        String nombreTipo = (String) ComboTipo.getSelectedItem();
 
-        // Crear una instancia de DocumentoDAO (o el DAO correspondiente)
-        DocumentoController documentoController = new DocumentoController();
+        // Buscar los documentos según el tipo de documento
+        documentoController.obtenerTiposDocumento(tipos -> {
+            if (tipos != null) {
+                int idTipo = -1;
+                for (TipoDocumento tipo : tipos) {
+                    if (tipo.getNombre().equals(nombreTipo)) {
+                        idTipo = tipo.getId();
+                        break;
+                    }
+                }
 
-            // Buscar los documentos según el tipo de documento
-            documentoController.obtenerDocumentosPorTipo(tipoDocumento, documentos -> {
-                // Obtener el modelo de la tabla
-                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                if (idTipo != -1) {
+                    // Buscar documentos usando el ID del tipo
+                    documentoController.obtenerDocumentosPorTipo(idTipo, documentos -> {
+                        if (documentos != null) {
+                            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                            model.setRowCount(0);
 
-                // Limpiar la tabla antes de agregar nuevos datos
-                model.setRowCount(0);
-
-                // Llenar la tabla con los documentos encontrados
-                for (Documento documento : documentos) {
-                    model.addRow(new Object[]{
-                        documento.getFolio(),
-                        documento.getTipoDocumento(),
-                        documento.getEstatus(),
-                        documento.getCantidadDocumentos(),
-                        documento.getFecha(),
-                        documento.getMotivo()
+                            for (Documento documento : documentos) {
+                                model.addRow(new Object[]{
+                                    documento.getFolio(),
+                                    documento.getTipoDocumento(),
+                                    documento.getEstatus(),
+                                    documento.getCantidadDocumentos()
+                                });
+                            }
+                        }
                     });
                 }
-            });
+            }
+        });
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

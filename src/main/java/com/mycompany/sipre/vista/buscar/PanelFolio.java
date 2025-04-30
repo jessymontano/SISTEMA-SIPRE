@@ -9,8 +9,12 @@ import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.io.IOException;
 import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -43,7 +47,7 @@ public class PanelFolio extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(217, 216, 255));
+        setBackground(new java.awt.Color(204, 204, 204));
         setPreferredSize(new java.awt.Dimension(587, 300));
         setLayout(new java.awt.GridBagLayout());
 
@@ -83,7 +87,7 @@ public class PanelFolio extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(12, 221, 0, 0);
         add(FieldFolio, gridBagConstraints);
 
-        jButton1.setBackground(new java.awt.Color(148, 143, 255));
+        jButton1.setBackground(new java.awt.Color(99, 132, 182));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Buscar");
@@ -100,18 +104,18 @@ public class PanelFolio extends javax.swing.JPanel {
         add(jButton1, gridBagConstraints);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
+            new Object [][] {
 
-                },
-                new String [] {
-                        "Folio", "Tipo de documento", "Estatus", "Cantidad de documentos", "Fecha de emisión", "Motivo"
-                }
+            },
+            new String [] {
+                "Folio", "Tipo de documento", "Estado", "Cantidad"
+            }
         ) {
             Class[] types = new Class [] {
-                    java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                    false, false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -123,8 +127,16 @@ public class PanelFolio extends javax.swing.JPanel {
             }
         });
         jTable1.setMaximumSize(new java.awt.Dimension(300, 100));
-        jTable1.getTableHeader().setOpaque(false);
-        jTable1.getTableHeader().setBackground(new Color(148, 143, 255));
+        jTable1.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                setBackground(new Color(77,77,77));
+                setForeground(Color.WHITE);
+                setFont(new Font("Segoe UI", Font.BOLD, 12));
+                return this;
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -164,9 +176,7 @@ public class PanelFolio extends javax.swing.JPanel {
                         documento.getFolio(),
                         documento.getTipoDocumento(),
                         documento.getEstatus(),
-                        documento.getCantidadDocumentos(),
-                        documento.getFecha(),
-                        documento.getMotivo()
+                        documento.getCantidadDocumentos()
                     });
                 } else {
                     // Mostrar mensaje si no se encuentra el documento

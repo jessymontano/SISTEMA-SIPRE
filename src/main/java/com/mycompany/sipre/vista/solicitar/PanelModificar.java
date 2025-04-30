@@ -8,6 +8,7 @@ import com.mycompany.sipre.controlador.SolicitudController;
 import com.mycompany.sipre.modelo.Solicitud;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -28,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -101,10 +103,8 @@ public class PanelModificar extends javax.swing.JPanel {
         jDialog1.setTitle("Modificar solicitud");
         jDialog1.setAlwaysOnTop(true);
         jDialog1.getContentPane().setBackground(new java.awt.Color(217, 216, 255));
-        jDialog1.setMaximumSize(new java.awt.Dimension(500, 500));
         jDialog1.setMinimumSize(new java.awt.Dimension(500, 300));
         jDialog1.setModal(true);
-        jDialog1.setPreferredSize(new java.awt.Dimension(500, 300));
         jDialog1.getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -245,11 +245,11 @@ public class PanelModificar extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(18, 16, 30, 0);
         jDialog1.getContentPane().add(btnGuardar, gridBagConstraints);
 
-        setBackground(new java.awt.Color(217, 216, 255));
+        setBackground(new java.awt.Color(204, 204, 204));
         setPreferredSize(new java.awt.Dimension(587, 300));
         setLayout(new java.awt.GridBagLayout());
 
-        jButton2.setBackground(new java.awt.Color(148, 143, 255));
+        jButton2.setBackground(new java.awt.Color(99, 132, 182));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Buscar");
@@ -334,8 +334,16 @@ public class PanelModificar extends javax.swing.JPanel {
         jTable1.getColumn("Modificar").setCellEditor(new ButtonEditor(new JCheckBox()));
         jTable1.getColumnModel().getColumn(3).setPreferredWidth(50);
         jTable1.setRowHeight(30);
-        jTable1.getTableHeader().setOpaque(false);
-        jTable1.getTableHeader().setBackground(new Color(148, 143, 255));
+        jTable1.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                setBackground(new Color(77,77,77));
+                setForeground(Color.WHITE);
+                setFont(new Font("Segoe UI", Font.BOLD, 12));
+                return this;
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
