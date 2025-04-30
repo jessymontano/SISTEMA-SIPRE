@@ -13,6 +13,8 @@ import com.mycompany.sipre.controlador.UsuarioController;
 import com.mycompany.sipre.modelo.Usuario;
 import com.mycompany.sipre.vista.buscar.*;
 import com.mycompany.sipre.vista.consultar.*;
+import com.mycompany.sipre.vista.gestion.PanelAgregarTiposFP;
+import com.mycompany.sipre.vista.gestion.PanelEditarTiposFP;
 import com.mycompany.sipre.vista.gestion.PanelGestionRol;
 import com.mycompany.sipre.vista.gestion.PanelUsuarios;
 import com.mycompany.sipre.vista.solicitar.*;
@@ -33,6 +35,7 @@ public class AdminJFrame extends JFrame {
     private CardLayout cardLayout;
     private JPanel panelContenedor;
     private Usuario usuario;
+
     /**
      * Creates new form Main
      */
@@ -61,6 +64,8 @@ public class AdminJFrame extends JFrame {
         panelContenedor.add("ayuda", new PanelAyuda(this));
         panelContenedor.add("usuarios", new PanelUsuarios());
         panelContenedor.add("roles", new PanelGestionRol());
+        panelContenedor.add("Tipos de Formatos Preimpresos", new PanelAgregarTiposFP());
+        panelContenedor.add("Modificar Tipos de Formatos Preimpresos", new PanelEditarTiposFP());
         
         initComponents();
         
@@ -113,6 +118,8 @@ public class AdminJFrame extends JFrame {
         menuModalidad = new javax.swing.JMenu();
         modalidadUsuario = new javax.swing.JMenuItem();
         modalidadAdmin = new javax.swing.JMenuItem();
+        menuTipos = new javax.swing.JMenuItem();
+        menuEditarTipos = new javax.swing.JMenuItem();
 
         jMenuBar2.setBackground(new java.awt.Color(186, 200, 211));
         jMenuBar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
@@ -159,6 +166,23 @@ public class AdminJFrame extends JFrame {
                 menuRolesActionPerformed(evt);
             }
         });
+
+        menuGestion.add(menuTipos);
+        menuTipos.setText("Nuevo Tipo de formatos preimpresos");
+
+        menuGestion.add(menuEditarTipos);
+        menuEditarTipos.setText("Modificar Tipo de formatos preimpresos");
+
+        menuTipos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) { menuTiposActionPerformed(evt);
+            }
+        });
+
+        menuEditarTipos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) { menuEditarTiposActionPerformed(evt);
+            }
+        });
+
         menuGestion.add(menuRoles);
 
         jMenuBar2.add(menuGestion);
@@ -316,6 +340,9 @@ public class AdminJFrame extends JFrame {
         mostrarPanel("info", "Información personal");
     }//GEN-LAST:event_menuInfoActionPerformed
 
+    private void menuAñadirTipoActionPerformed(java.awt.event.ActionEvent evt) {
+    }
+
     private void cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionActionPerformed
         // mostrar dialogo para confirmar cerrar sesión
         Object[] options = {"Cancelar", "Cerrar sesión"};
@@ -389,6 +416,14 @@ public class AdminJFrame extends JFrame {
          mostrarPanel("ayuda", "Ayuda");
     }//GEN-LAST:event_menuAyudaActionPerformed
     //menuMovimientosActionPerformed
+
+    private void menuTiposActionPerformed(java.awt.event.ActionEvent evt) {
+        mostrarPanel("Tipos de Formatos Preimpresos", "Añadir tipos de formatos");
+    }
+
+    private void menuEditarTiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRolesActionPerformed
+        mostrarPanel("Modificar Tipos de Formatos Preimpresos", "Editar tipos");
+    }//GEN-LAST:event_menuRolesActionPerformed
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // cambiar contenido a panel ayuda
         
@@ -412,6 +447,9 @@ public class AdminJFrame extends JFrame {
     private javax.swing.JMenuItem menuConfiguracion;
     private javax.swing.JMenuItem menuControl;
     private javax.swing.JMenu menuCuenta;
+    private javax.swing.JMenuItem menuTipos;
+
+    private javax.swing.JMenuItem menuEditarTipos;
     private javax.swing.JMenuItem menuEstadistico;
     private javax.swing.JMenuItem menuExistencias;
     private javax.swing.JMenuItem menuFormatos;

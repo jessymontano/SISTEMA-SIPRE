@@ -25,6 +25,7 @@ public class GeneradorPDF {
             // Crear el documento iText
             Document document = new Document(pdfDoc);
 
+
             // Agregar contenido al documento
             Paragraph titulo = new Paragraph("Solicitud para retirar Documentos de la bodega");
             titulo.setTextAlignment(TextAlignment.CENTER);  // Aquí usamos TextAlignment correctamente
