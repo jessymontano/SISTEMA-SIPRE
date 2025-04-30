@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mycompany.sipre.modelo.AltaDocumentosRequest;
 import com.mycompany.sipre.modelo.Documento;
-import com.mycompany.sipre.modelo.TipoDocumento;
 import okhttp3.*;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -198,34 +197,6 @@ public class DocumentoController {
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
                 callback.accept(false);
-            }
-        });
-    }
-
-    public void obtenerTiposDocumento(Consumer<List<TipoDocumento>> callback) {
-        Request request = new Request.Builder()
-                .url(BASE_URL + "/tipos-documento")
-                .get()
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (response.isSuccessful() && responseBody != null) {
-                        Type tipoLista = new TypeToken<List<TipoDocumento>>() {}.getType();
-                        List<TipoDocumento> tipos = gson.fromJson(responseBody.string(), tipoLista);
-                        callback.accept(tipos);
-                    } else {
-                        callback.accept(null);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-                callback.accept(null);
             }
         });
     }

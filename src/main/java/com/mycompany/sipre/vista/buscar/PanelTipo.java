@@ -5,9 +5,10 @@
 package com.mycompany.sipre.vista.buscar;
 
 import com.mycompany.sipre.controlador.DocumentoController;
+import com.mycompany.sipre.controlador.TipoController;
 import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
-import com.mycompany.sipre.modelo.TipoDocumento;
+import com.mycompany.sipre.modelo.TipoFormatoPreimpreso;
 
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +27,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class PanelTipo extends javax.swing.JPanel {
 
     DocumentoController documentoController = new DocumentoController();
+    TipoController tipoController = new TipoController();
 
     /**
      * Creates new form PanelTipo
@@ -36,12 +38,14 @@ public class PanelTipo extends javax.swing.JPanel {
     }
 
     private void cargarTiposDocumento() {
-        documentoController.obtenerTiposDocumento(tipos -> {
+        tipoController.obtenerTipos(tipos -> {
             if (tipos != null) {
+                if (tipos != null) {
                 ComboTipo.removeAllItems();
-                for (TipoDocumento tipo : tipos) {
+                for (TipoFormatoPreimpreso tipo : tipos) {
                     ComboTipo.addItem(tipo.getNombre());
                 }
+            }
             }
         });
     }
@@ -167,12 +171,12 @@ public class PanelTipo extends javax.swing.JPanel {
         String nombreTipo = (String) ComboTipo.getSelectedItem();
 
         // Buscar los documentos según el tipo de documento
-        documentoController.obtenerTiposDocumento(tipos -> {
+        tipoController.obtenerTipos(tipos -> {
             if (tipos != null) {
                 int idTipo = -1;
-                for (TipoDocumento tipo : tipos) {
+                for (TipoFormatoPreimpreso tipo : tipos) {
                     if (tipo.getNombre().equals(nombreTipo)) {
-                        idTipo = tipo.getId();
+                        idTipo = tipo.getIdTipo();
                         break;
                     }
                 }

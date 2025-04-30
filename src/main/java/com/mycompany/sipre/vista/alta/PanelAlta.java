@@ -5,7 +5,8 @@
 package com.mycompany.sipre.vista.alta;
 
 import com.mycompany.sipre.controlador.DocumentoController;
-import com.mycompany.sipre.modelo.TipoDocumento;
+import com.mycompany.sipre.controlador.TipoController;
+import com.mycompany.sipre.modelo.TipoFormatoPreimpreso;
 import java.time.LocalDate;
 
 import java.time.format.DateTimeFormatter;
@@ -20,6 +21,7 @@ public class PanelAlta extends javax.swing.JPanel {
     String hoy;
     int idUsuario;
     DocumentoController documentoController = new DocumentoController();
+    TipoController tipoController = new TipoController();
 
     /**
      * Creates new form PanelAlta
@@ -34,12 +36,14 @@ public class PanelAlta extends javax.swing.JPanel {
     }
 
     private void cargarTiposDocumento() {
-        documentoController.obtenerTiposDocumento(tipos -> {
+        tipoController.obtenerTipos(tipos -> {
             if (tipos != null) {
+                if (tipos != null) {
                 comboTipo.removeAllItems();
-                for (TipoDocumento tipo : tipos) {
+                for (TipoFormatoPreimpreso tipo : tipos) {
                     comboTipo.addItem(tipo.getNombre());
                 }
+            }
             }
         });
     }

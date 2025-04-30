@@ -15,6 +15,8 @@ import com.mycompany.sipre.vista.alta.PanelAlta;
 import com.mycompany.sipre.vista.alta.PanelConsulta;
 import com.mycompany.sipre.vista.buscar.*;
 import com.mycompany.sipre.vista.consultar.*;
+import com.mycompany.sipre.vista.gestion.PanelAgregarTiposFP;
+import com.mycompany.sipre.vista.gestion.PanelEditarTiposFP;
 import com.mycompany.sipre.vista.gestion.PanelGestionRol;
 import com.mycompany.sipre.vista.gestion.PanelUsuarios;
 import com.mycompany.sipre.vista.solicitar.*;
@@ -63,6 +65,8 @@ public class AdminJFrame extends JFrame {
         panelContenedor.add("ayuda", new PanelAyuda(this));
         panelContenedor.add("usuarios", new PanelUsuarios());
         panelContenedor.add("roles", new PanelGestionRol());
+        panelContenedor.add("tipos", new PanelAgregarTiposFP());
+        panelContenedor.add("editar", new PanelEditarTiposFP());
         panelContenedor.add("alta", new PanelAlta(usuario.getId()));
         panelContenedor.add("consulta", new PanelConsulta());
         
@@ -171,7 +175,7 @@ public class AdminJFrame extends JFrame {
         jMenuBar2.add(menuGestion);
 
         menuSolicitar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
-        menuSolicitar.setText("Solicitudes");
+        menuSolicitar.setText("Alta de formatos");
         menuSolicitar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuSolicitar.setMaximumSize(new java.awt.Dimension(100, 50));
         menuSolicitar.setMinimumSize(new java.awt.Dimension(100, 50));
@@ -383,7 +387,7 @@ public class AdminJFrame extends JFrame {
 
     private void menuFormatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFormatosActionPerformed
         // cambiar contenido a panel de buscar por folio
-        mostrarPanel("folio", "Buscar por folio");
+        mostrarPanel("tipos", "Agregar tipos de formatos preimpresos");
     }//GEN-LAST:event_menuFormatosActionPerformed
 
     private void menuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuUsuariosActionPerformed
@@ -425,6 +429,7 @@ public class AdminJFrame extends JFrame {
 
     private void menuModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuModificarActionPerformed
         // TODO add your handling code here:
+        mostrarPanel("editar", "Editar tipos de formatos preimpresos");
     }//GEN-LAST:event_menuModificarActionPerformed
 
     private void menuConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultarActionPerformed
