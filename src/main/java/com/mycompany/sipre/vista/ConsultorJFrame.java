@@ -112,7 +112,7 @@ public class ConsultorJFrame extends JFrame {
         modalidadUsuario = new javax.swing.JMenuItem();
         modalidadAdmin = new javax.swing.JMenuItem();
 
-        jMenuBar2.setBackground(new java.awt.Color(186, 200, 211));
+        jMenuBar2.setBackground(new java.awt.Color(77, 77, 77));
         jMenuBar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
         jMenuBar2.setMaximumSize(new java.awt.Dimension(1280, 23));
         jMenuBar2.setMinimumSize(new java.awt.Dimension(800, 23));
@@ -195,7 +195,7 @@ public class ConsultorJFrame extends JFrame {
             }
         });
 
-        jMenuItem2.setText("jMenuItem2");
+        jMenuItem2.setText("Ayuda");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -205,8 +205,9 @@ public class ConsultorJFrame extends JFrame {
 
         jMenuBar2.add(menuAyuda);
 
-        textoModalidad.setBackground(new java.awt.Color(186, 200, 211));
+        textoModalidad.setBackground(new java.awt.Color(77, 77, 77));
         textoModalidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
+        textoModalidad.setForeground(new java.awt.Color(255, 255, 255));
         textoModalidad.setText("Modalidad: Consultador");
         textoModalidad.setFocusable(false);
         textoModalidad.setMaximumSize(new java.awt.Dimension(400, 50));
@@ -215,12 +216,13 @@ public class ConsultorJFrame extends JFrame {
         textoModalidad.setRequestFocusEnabled(false);
         jMenuBar2.add(textoModalidad);
 
-        jMenuBar1.setBackground(new java.awt.Color(186, 200, 211));
+        jMenuBar1.setBackground(new java.awt.Color(51, 51, 51));
         jMenuBar1.setMaximumSize(new java.awt.Dimension(1280, 23));
         jMenuBar1.setMinimumSize(new java.awt.Dimension(800, 23));
         jMenuBar1.setPreferredSize(new java.awt.Dimension(800, 23));
 
         menuCuenta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
+        menuCuenta.setForeground(new java.awt.Color(255, 255, 255));
         menuCuenta.setText(usuario.getNombre());
         menuCuenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuCuenta.setMaximumSize(new java.awt.Dimension(500, 50));
@@ -256,6 +258,7 @@ public class ConsultorJFrame extends JFrame {
         jMenuBar1.add(menuCuenta);
 
         menuModalidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
+        menuModalidad.setForeground(new java.awt.Color(255, 255, 255));
         menuModalidad.setText("Modalidad");
         menuModalidad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menuModalidad.setMaximumSize(new java.awt.Dimension(100, 50));

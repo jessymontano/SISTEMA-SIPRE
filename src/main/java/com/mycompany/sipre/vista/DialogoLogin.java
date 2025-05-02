@@ -31,7 +31,7 @@ public class DialogoLogin extends javax.swing.JDialog {
         this.usuarioController = controller;
 
         initComponents();
-        getContentPane().setBackground(new Color(217, 216, 255));
+        getContentPane().setBackground(new Color(204,204,204));
     }
 
     /**
@@ -53,7 +53,7 @@ public class DialogoLogin extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Acceder");
-        setBackground(new java.awt.Color(217, 216, 255));
+        setBackground(new java.awt.Color(204, 204, 204));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         fieldUsuario.setMaximumSize(new java.awt.Dimension(150, 22));
@@ -93,7 +93,7 @@ public class DialogoLogin extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(21, 47, 0, 0);
         getContentPane().add(jLabel2, gridBagConstraints);
 
-        jButton1.setBackground(new java.awt.Color(148, 143, 255));
+        jButton1.setBackground(new java.awt.Color(99, 132, 182));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Iniciar Sesión");
@@ -119,7 +119,7 @@ public class DialogoLogin extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(18, 18, 0, 0);
         getContentPane().add(fieldContrasena, gridBagConstraints);
 
-        jToggleButton3.setBackground(new java.awt.Color(148, 143, 255));
+        jToggleButton3.setBackground(new java.awt.Color(99, 132, 182));
         jToggleButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jToggleButton3.setForeground(new java.awt.Color(255, 255, 255));
         jToggleButton3.setText("?");

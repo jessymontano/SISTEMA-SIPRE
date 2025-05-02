@@ -28,7 +28,7 @@ public class PanelActualizarDatos extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(217, 216, 255));
+        setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel1.setText("Actualizar información");
 
