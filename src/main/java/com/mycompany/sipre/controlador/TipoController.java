@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class TipoController {
-    private final String BASE_URL = "http://localhost:8080/tipos";
+    private final String BASE_URL = "https://sipre.arrozzz.pro/tipos";
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
 
