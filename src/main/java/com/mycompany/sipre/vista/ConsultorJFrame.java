@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import com.mycompany.sipre.controlador.UsuarioController;
 import com.mycompany.sipre.modelo.Usuario;
+import com.mycompany.sipre.vista.alta.PanelConsulta;
 import com.mycompany.sipre.vista.buscar.*;
 import com.mycompany.sipre.vista.consultar.*;
 import com.mycompany.sipre.vista.solicitar.*;
@@ -57,10 +58,8 @@ public class ConsultorJFrame extends JFrame {
         panelContenedor.add("config", new PanelConfiguracion(this));
         panelContenedor.add("folio", new PanelFolio(this));
         panelContenedor.add("tipo", new PanelTipo(this));
-        panelContenedor.add("fecha", new PanelFecha(this));
-        panelContenedor.add("certificados", new PanelCert(this));
+        panelContenedor.add("certificados", new PanelConsulta());
         panelContenedor.add("resultados", new PanelResultados());
-        panelContenedor.add("disponibilidad", new PanelDisp(this));
         panelContenedor.add("ayuda", new PanelAyuda(this));
         
         
@@ -96,10 +95,8 @@ public class ConsultorJFrame extends JFrame {
         menuBuscar = new javax.swing.JMenu();
         menuFolio = new javax.swing.JMenuItem();
         menuTipo = new javax.swing.JMenuItem();
-        menuFecha = new javax.swing.JMenuItem();
         menuConsultar = new javax.swing.JMenu();
         menuCertificados = new javax.swing.JMenuItem();
-        menuDisponibilidad = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         textoModalidad = new javax.swing.JMenu();
@@ -145,14 +142,6 @@ public class ConsultorJFrame extends JFrame {
         });
         menuBuscar.add(menuTipo);
 
-        menuFecha.setText("Fecha");
-        menuFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuFechaActionPerformed(evt);
-            }
-        });
-        menuBuscar.add(menuFecha);
-
         jMenuBar2.add(menuBuscar);
 
         menuConsultar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
@@ -170,14 +159,6 @@ public class ConsultorJFrame extends JFrame {
             }
         });
         menuConsultar.add(menuCertificados);
-
-        menuDisponibilidad.setText("Disponibilidad de formatos preimpresos");
-        menuDisponibilidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuDisponibilidadActionPerformed(evt);
-            }
-        });
-        menuConsultar.add(menuDisponibilidad);
 
         jMenuBar2.add(menuConsultar);
 
@@ -341,20 +322,10 @@ public class ConsultorJFrame extends JFrame {
         //
     }//GEN-LAST:event_menuAyudaActionPerformed
 
-    private void menuDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDisponibilidadActionPerformed
-        // cambiar contenido a panel de consultar disponibilidad
-        mostrarPanel("disponibilidad", "Consultar disponibilidad");
-    }//GEN-LAST:event_menuDisponibilidadActionPerformed
-
     private void menuCertificadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCertificadosActionPerformed
         // cambiar contenido a panel de consultar certificados
         mostrarPanel("certificados", "Consultar certificados");
     }//GEN-LAST:event_menuCertificadosActionPerformed
-
-    private void menuFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFechaActionPerformed
-        // cambiar contenido a panel de buscar por fecha
-        mostrarPanel("fecha", "Buscar por fecha");
-    }//GEN-LAST:event_menuFechaActionPerformed
 
     private void menuTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTipoActionPerformed
         // cambiar contenido a panel de buscar por tipo
@@ -382,8 +353,6 @@ public class ConsultorJFrame extends JFrame {
     private javax.swing.JMenuItem menuConfiguracion;
     private javax.swing.JMenu menuConsultar;
     private javax.swing.JMenu menuCuenta;
-    private javax.swing.JMenuItem menuDisponibilidad;
-    private javax.swing.JMenuItem menuFecha;
     private javax.swing.JMenuItem menuFolio;
     private javax.swing.JMenuItem menuInfo;
     private javax.swing.JMenu menuModalidad;

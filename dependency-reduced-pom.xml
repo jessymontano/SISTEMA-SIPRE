@@ -45,7 +45,7 @@
   </build>
   <properties>
     <maven.compiler.release>22</maven.compiler.release>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <exec.mainClass>com.mycompany.sipre.Main</exec.mainClass>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>

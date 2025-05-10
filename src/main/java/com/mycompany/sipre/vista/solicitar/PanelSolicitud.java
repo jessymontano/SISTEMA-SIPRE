@@ -7,25 +7,58 @@ package com.mycompany.sipre.vista.solicitar;
 import com.mycompany.sipre.controlador.DocumentoController;
 import com.mycompany.sipre.controlador.GeneradorPDF;
 import com.mycompany.sipre.controlador.SolicitudController;
+import com.mycompany.sipre.controlador.TipoController;
 import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
+import com.mycompany.sipre.modelo.TipoFormatoPreimpreso;
+import com.mycompany.sipre.modelo.Usuario;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.IOException;
 
 import javax.swing.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author jessica
  */
 public class PanelSolicitud extends javax.swing.JPanel {
-
+    
+    TipoController tipoController = new TipoController();
+    Usuario usuario;
+    String hoy;
     /**
      * Creates new form PanelSolicitud
      */
-    public PanelSolicitud(JFrame frames) {
+    public PanelSolicitud(JFrame frames, Usuario usuario) {
         initComponents();
+        LocalDate fechaHoy = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        hoy = fechaHoy.format(formatter);
+        this.usuario = usuario;
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {;
+                cargarTiposDocumento();
+            }
+        });
+    }
+    
+    private void cargarTiposDocumento() {
+        tipoController.obtenerTipos(tipos -> {
+            if (tipos != null) {
+                if (tipos != null) {
+                ComboTipo.removeAllItems();
+                for (TipoFormatoPreimpreso tipo : tipos) {
+                    ComboTipo.addItem(tipo.getNombre());
+                }
+            }
+            }
+        });
     }
 
     /**
@@ -36,7 +69,6 @@ public class PanelSolicitud extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -47,14 +79,16 @@ public class PanelSolicitud extends javax.swing.JPanel {
         ComboTipo = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        ComboAno = new javax.swing.JComboBox<>();
-        ComboMes = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel(hoy);
+        jLabel7 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 204, 204));
-        setPreferredSize(new java.awt.Dimension(587, 300));
-        setLayout(new java.awt.GridBagLayout());
+        setMaximumSize(new java.awt.Dimension(600, 400));
+        setMinimumSize(new java.awt.Dimension(600, 400));
+        setPreferredSize(new java.awt.Dimension(600, 400));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton2.setBackground(new java.awt.Color(99, 132, 182));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -65,256 +99,156 @@ public class PanelSolicitud extends javax.swing.JPanel {
                 jButton2ActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 12;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 40;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 12, 22, 162);
-        add(jButton2, gridBagConstraints);
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 270, 140, -1));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Solicitud de impresión");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 11;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(39, 17, 0, 0);
-        add(jLabel1, gridBagConstraints);
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 39, -1, -1));
 
         jLabel2.setText("Folio:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 135, 0, 0);
-        add(jLabel2, gridBagConstraints);
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(109, 70, -1, -1));
 
         jLabel3.setText("Tipo de documento:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 135, 0, 0);
-        add(jLabel3, gridBagConstraints);
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(109, 104, -1, -1));
 
         jLabel4.setText("Fecha de solicitud:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 135, 0, 0);
-        add(jLabel4, gridBagConstraints);
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(109, 135, -1, -1));
 
         FieldFolio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FieldFolioActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 25;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 159;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 1, 0, 0);
-        add(FieldFolio, gridBagConstraints);
-
-        ComboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cert. Uso Común", "Cert. Parcelario Individual", "Cert. Parcelario de Grupo", "Cert. Parcelario Destino Esp.", "Tit. De Solar Individual", "Tit. Dominio Pleno Individual", "Tit. Dominio Pleno de Grupo", "Tit. De Solar a Favor del Ejido", "Tit. De Solar Servicio Público", "Tit. De Solar Asoc. Religiosas" }));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 20;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 12, 0, 0);
-        add(ComboTipo, gridBagConstraints);
+        add(FieldFolio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 67, 223, -1));
+        add(ComboTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 101, 140, -1));
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Limpiar");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 51, 22, 0);
-        add(jButton1, gridBagConstraints);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, -1, -1));
 
         jLabel5.setText("Motivo:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 135, 0, 0);
-        add(jLabel5, gridBagConstraints);
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(109, 163, -1, -1));
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextArea1.setMaximumSize(new java.awt.Dimension(200, 84));
+        jTextArea1.setMinimumSize(new java.awt.Dimension(200, 84));
+        jTextArea1.setPreferredSize(new java.awt.Dimension(200, 84));
+        jScrollPane2.setViewportView(jTextArea1);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 50;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 228;
-        gridBagConstraints.ipady = 70;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 162);
-        add(jScrollPane1, gridBagConstraints);
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 163, 270, 90));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 100, -1));
 
-        int anoInicio = 2000;
-        int anoActual = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
-
-        String[] anos = new String[anoActual - anoInicio + 1];
-
-        for (int i = 0; i <= anoActual - anoInicio; i++) {
-            anos[i] = String.valueOf(anoActual - i);
-        }
-        ComboAno.setModel(new javax.swing.DefaultComboBoxModel<>(anos));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 15;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 3, 0, 0);
-        add(ComboAno, gridBagConstraints);
-
-        ComboMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
-        ComboMes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboMesActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 26;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 26;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 12, 0, 162);
-        add(ComboMes, gridBagConstraints);
+        jLabel7.setText(hoy);
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            // Verificar si el campo de folio no está vacío
-            String folioText = FieldFolio.getText().trim();
-            if (folioText.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "El campo Folio no puede estar vacío.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        String folioText = FieldFolio.getText().trim();
+        if (folioText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo Folio no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int folio = Integer.parseInt(folioText);
+        String motivo = jTextArea1.getText().trim();
+        
+        if (motivo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo Motivo no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Obtener el tipo de documento seleccionado
+        String nombreTipoDocumento = (String) ComboTipo.getSelectedItem();
+        SolicitudController solicitudController = new SolicitudController();
+        
+        // Primero obtener el ID del tipo
+        solicitudController.obtenerIdTipoPorNombre(nombreTipoDocumento, idTipo -> {
+            if (idTipo == -1) {
+                JOptionPane.showMessageDialog(this, "Tipo de documento no válido.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
-            // Convierte el texto del folio a entero
-            int folio = Integer.parseInt(folioText);
-
-            // Llamar al método para obtener el tipo de documento
-            DocumentoController documentoController = new DocumentoController();
-            SolicitudController solicitudController = new SolicitudController();
-            documentoController.obtenerDocumentoPorFolio(folio, documento -> {
-                String tipoDocumento = documento.getTipoDocumento();
-
-                /*if (tipoDocumento != null) {
-                    jLabel6.setText(tipoDocumento);  // Establecer el valor del tipo de documento
-                } else {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Folio no encontrado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    return; // Salir si no se encuentra el folio
-                }*/
-
-                // Validar el motivo
-                String motivo = jTextArea1.getText().trim();
-                if (motivo.isEmpty()) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "El campo Motivo no puede estar vacío.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // Obtener la fecha seleccionada
-                String anoSeleccionado = ComboAno.getSelectedItem().toString();
-                int mesSeleccionado = ComboMes.getSelectedIndex() + 1;
-
-                if (mesSeleccionado == 0) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Por favor seleccione un mes válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                // Formato de fecha: "YYYY-MM-DD"
-                String fechaStr = String.format("%s-%02d-01", anoSeleccionado, mesSeleccionado);
-                Date fechaSolicitud = Date.valueOf(fechaStr);
-
-                // Continuar con la lógica de agregar la solicitud solo si todo está bien
-                solicitudController.agregarSolicitud(new Solicitud(folio, tipoDocumento, fechaSolicitud, motivo), resultado -> {
+            
+        java.util.Date fechaHoy = java.sql.Date.valueOf(LocalDate.now());
+            // Ahora agregar la solicitud con el ID_Tipo
+            solicitudController.agregarSolicitud(
+                folio, 
+                idTipo, 
+                fechaHoy, 
+                motivo, 
+                usuario.getId(), 
+                resultado -> {
                     if (resultado) {
-                        javax.swing.JOptionPane.showMessageDialog(this, "Solicitud guardada con éxito!");
-
-                        // Generar el PDF después de guardar la solicitud
-                        GeneradorPDF.generarPDF(folio, tipoDocumento, fechaSolicitud, motivo);  // Llamada al método para generar el PDF
-
+                        JOptionPane.showMessageDialog(this, "Solicitud guardada con éxito!");
+                        // Generar PDF (opcional)
+                        GeneradorPDF.mostrarPDFEnNavegador(folio, nombreTipoDocumento, fechaHoy, motivo);
                     } else {
-                        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar la solicitud.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "El documento ya fue solicitado.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                });
+                }
+            );
+        });
 
-            });
-
-        } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        } catch (IllegalArgumentException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error en la fecha seleccionada.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            // Captura cualquier otra excepción que pueda ocurrir
-            e.printStackTrace();
-            javax.swing.JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (IllegalArgumentException e) {
+        JOptionPane.showMessageDialog(this, "Error en la fecha seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado.", "Error", JOptionPane.ERROR_MESSAGE);
     }
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-        try {
-            // Obtén el número de folio desde el campo de texto
-            int folio = Integer.parseInt(FieldFolio.getText()); // Convierte el texto del folio a entero
-
-            // Crear el objeto de acceso a datos (SolicitudDAO)
-            DocumentoController documentoController = new DocumentoController();
-            SolicitudController solicitudController = new SolicitudController();
-            documentoController.obtenerDocumentoPorFolio(folio, documento -> {
-                String tipoDocumento = documento.getTipoDocumento();
-
-                // Si el tipo de documento es encontrado, actualizar la etiqueta
-               /* if (tipoDocumento != null) {
-                    jLabel6.setText(tipoDocumento);  // Actualiza el texto de la etiqueta con el tipo de documento
-                } else {
-                    // Si no se encuentra el folio, mostrar mensaje de error
-                    javax.swing.JOptionPane.showMessageDialog(this, "Folio no encontrado.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                } */
-            });
-
-        } catch (NumberFormatException e) {
-            // Si no se pudo convertir el folio a número, mostrar mensaje de error
-            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
     }
 
 
     private void FieldFolioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FieldFolioActionPerformed
-        // TODO add your handling code here:
+        try {
+        int folio = Integer.parseInt(FieldFolio.getText().trim());
+        DocumentoController documentoController = new DocumentoController();
+
+        documentoController.obtenerDocumentoPorFolio(folio, documento -> {
+            if (documento != null) {
+                String tipoDoc = documento.getTipoDocumento();
+                // Buscar el ítem en el ComboBox que coincida con el tipoDoc
+                for (int i = 0; i < ComboTipo.getItemCount(); i++) {
+                    if (ComboTipo.getItemAt(i).equalsIgnoreCase(tipoDoc)) {
+                        ComboTipo.setSelectedIndex(i);
+                        return;
+                    }
+                }
+                JOptionPane.showMessageDialog(this, 
+                    "Tipo de documento no encontrado en la lista: " + tipoDoc, 
+                    "Advertencia", 
+                    JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                    "Documento no encontrado con ese folio.", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, 
+            "Folio inválido.", 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_FieldFolioActionPerformed
 
-    private void ComboMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboMesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ComboMesActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        FieldFolio.setText("");
+        jTextArea1.setText("");
+        ComboTipo.setSelectedIndex(0);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboAno;
-    private javax.swing.JComboBox<String> ComboMes;
     private javax.swing.JComboBox<String> ComboTipo;
     private javax.swing.JTextField FieldFolio;
     private javax.swing.JButton jButton1;
@@ -324,7 +258,10 @@ public class PanelSolicitud extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

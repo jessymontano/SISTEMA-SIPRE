@@ -5,10 +5,13 @@
 package com.mycompany.sipre.vista.alta;
 
 import com.mycompany.sipre.controlador.DocumentoController;
+import com.mycompany.sipre.controlador.TipoController;
 import com.mycompany.sipre.modelo.Documento;
+import com.mycompany.sipre.modelo.TipoFormatoPreimpreso;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.List;
@@ -23,6 +26,8 @@ import javax.swing.table.DefaultTableModel;
 public class PanelConsulta extends javax.swing.JPanel {
     
     List<Documento> documentos;
+    TipoController tipoController = new TipoController();
+    DocumentoController documentoController = new DocumentoController();
     /**
      * Creates new form PanelConsulta
      */
@@ -33,6 +38,7 @@ public class PanelConsulta extends javax.swing.JPanel {
             @Override
             public void componentShown(ComponentEvent e) {
                 llenarTabla();
+                cargarTiposDocumento();
             }
         });
     }
@@ -42,6 +48,7 @@ public class PanelConsulta extends javax.swing.JPanel {
         DocumentoController documentoDAO = new DocumentoController();
 
         documentoDAO.obtenerTodosLosDocumentos(documentos -> {
+            documentos.sort((d1, d2) -> Integer.compare(d1.getFolio(), d2.getFolio()));
             this.documentos = documentos;
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
@@ -49,12 +56,24 @@ public class PanelConsulta extends javax.swing.JPanel {
                 model.addRow(new Object[]{
                     documento.getFolio(),
                     documento.getTipoDocumento(),
-                    documento.getCantidadDocumentos(),
                     documento.getEstatus()
                 });
             }
         });
 
+    }
+     
+     private void cargarTiposDocumento() {
+        tipoController.obtenerTipos(tipos -> {
+            if (tipos != null) {
+                if (tipos != null) {
+                ComboTipo.removeAllItems();
+                for (TipoFormatoPreimpreso tipo : tipos) {
+                    ComboTipo.addItem(tipo.getNombre());
+                }
+            }
+            }
+        });
     }
 
     /**
@@ -70,7 +89,13 @@ public class PanelConsulta extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        FieldFolio = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        ComboTipo = new javax.swing.JComboBox<>();
 
+        setBackground(new java.awt.Color(204, 204, 204));
         setLayout(new java.awt.GridBagLayout());
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -78,14 +103,14 @@ public class PanelConsulta extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Folio", "Tipo de documento", "Cantidad disponible", "Estado"
+                "Folio", "Tipo de documento", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -111,30 +136,151 @@ public class PanelConsulta extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 601;
+        gridBagConstraints.ipadx = 396;
         gridBagConstraints.ipady = 229;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(3, 0, 26, 0);
+        gridBagConstraints.insets = new java.awt.Insets(36, 94, 143, 161);
         add(jScrollPane1, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Consulta de formatos preimpresos");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 229, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(6, 23, 0, 0);
         add(jLabel1, gridBagConstraints);
+
+        FieldFolio.setMaximumSize(new java.awt.Dimension(100, 22));
+        FieldFolio.setMinimumSize(new java.awt.Dimension(100, 22));
+        FieldFolio.setPreferredSize(new java.awt.Dimension(100, 22));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 18;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 18, 0, 0);
+        add(FieldFolio, gridBagConstraints);
+
+        jButton2.setBackground(new java.awt.Color(99, 132, 182));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Buscar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(7, 6, 0, 0);
+        add(jButton2, gridBagConstraints);
+
+        jLabel2.setText("Buscar por folio:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 109, 0, 0);
+        add(jLabel2, gridBagConstraints);
+
+        jLabel3.setText("Filtrar por tipo:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 109, 0, 0);
+        add(jLabel3, gridBagConstraints);
+
+        ComboTipo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 46;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(7, 18, 0, 0);
+        add(ComboTipo, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String textoFolio = FieldFolio.getText().trim();
+    String nombreTipo = (String) ComboTipo.getSelectedItem();
+
+    documentoController.obtenerTodosLosDocumentos(documentos -> {
+    tipoController.obtenerTipos(tipos -> {
+        int idTipoSeleccionado = -1;
+
+        if (nombreTipo != null && !nombreTipo.isEmpty()) {
+            for (TipoFormatoPreimpreso tipo : tipos) {
+                if (tipo.getNombre().equals(nombreTipo)) {
+                    idTipoSeleccionado = tipo.getIdTipo();
+                    break;
+                }
+            }
+        }
+
+        // Copiar a variables finales para usarlas en la lambda del stream
+        final int idFinal = idTipoSeleccionado;
+        final String folioFinal = textoFolio;
+
+        List<Documento> documentosFiltrados = documentos.stream()
+            .filter(d -> {
+                boolean coincideFolio = true;
+                boolean coincideTipo = true;
+
+                if (!folioFinal.isEmpty()) {
+                    try {
+                        int folioBuscado = Integer.parseInt(folioFinal);
+                        coincideFolio = d.getFolio() == folioBuscado;
+                    } catch (NumberFormatException e) {
+                        coincideFolio = false;
+                    }
+                }
+
+                if (idFinal != -1) {
+                    coincideTipo = d.getIdTipo()== idFinal;
+                }
+
+                return coincideFolio && coincideTipo;
+            })
+            .toList();
+
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        for (Documento documento : documentosFiltrados) {
+            model.addRow(new Object[]{
+                documento.getFolio(),
+                documento.getTipoDocumento(),
+                documento.getEstatus()
+            });
+        }
+    });
+
+
+    });
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboTipo;
+    private javax.swing.JTextField FieldFolio;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

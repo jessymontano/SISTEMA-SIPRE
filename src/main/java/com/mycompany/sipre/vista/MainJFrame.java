@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import com.mycompany.sipre.controlador.UsuarioController;
 import com.mycompany.sipre.modelo.Usuario;
+import com.mycompany.sipre.vista.alta.PanelConsulta;
 import com.mycompany.sipre.vista.buscar.*;
 import com.mycompany.sipre.vista.consultar.*;
 import com.mycompany.sipre.vista.solicitar.*;
@@ -57,17 +58,14 @@ public class MainJFrame extends JFrame {
         panelContenedor.add("config", new PanelConfiguracion(this));
         panelContenedor.add("folio", new PanelFolio(this));
         panelContenedor.add("tipo", new PanelTipo(this));
-        panelContenedor.add("fecha", new PanelFecha(this));
-        panelContenedor.add("certificados", new PanelCert(this));
+        panelContenedor.add("certificados", new PanelConsulta());
         panelContenedor.add("resultados", new PanelResultados());
-        panelContenedor.add("disponibilidad", new PanelDisp(this));
-        panelContenedor.add("gestion", new PanelGestion(this));
-        panelContenedor.add("solicitud", new PanelSolicitud(this));
+        panelContenedor.add("solicitud", new PanelSolicitud(this, usuario));
         panelContenedor.add("cancelar", new PanelCancelar(this));
         panelContenedor.add("estado", new PanelModificar(this));
         panelContenedor.add("ayuda", new PanelAyuda(this));
         panelContenedor.add("inventario", new Panelinventario(this));
-        //panelContenedor.add("movimientos", new PanelMovimientos_solicitudes(this));
+        panelContenedor.add("pdf", new PanelConsultarSolicitud(this));
         
         initComponents();
         
@@ -85,6 +83,7 @@ public class MainJFrame extends JFrame {
     // Método para cambiar contenido y título del jframe
     public void mostrarPanel(String nombrePanel, String titulo) {
         cardLayout.show(panelContenedor, nombrePanel);
+        pack();
         setTitle(titulo);
     }
 
@@ -101,15 +100,13 @@ public class MainJFrame extends JFrame {
         menuBuscar = new javax.swing.JMenu();
         menuFolio = new javax.swing.JMenuItem();
         menuTipo = new javax.swing.JMenuItem();
-        menuFecha = new javax.swing.JMenuItem();
         menuConsultar = new javax.swing.JMenu();
         menuCertificados = new javax.swing.JMenuItem();
-        menuDisponibilidad = new javax.swing.JMenuItem();
-        menuGestion = new javax.swing.JMenuItem();
         menuSolicitar = new javax.swing.JMenu();
         menuImpresion = new javax.swing.JMenuItem();
         menuCancelar = new javax.swing.JMenuItem();
         menuModificar = new javax.swing.JMenuItem();
+        menuPDF = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         textoModalidad = new javax.swing.JMenu();
@@ -155,14 +152,6 @@ public class MainJFrame extends JFrame {
         });
         menuBuscar.add(menuTipo);
 
-        menuFecha.setText("Fecha");
-        menuFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuFechaActionPerformed(evt);
-            }
-        });
-        menuBuscar.add(menuFecha);
-
         jMenuBar2.add(menuBuscar);
 
         menuConsultar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
@@ -180,22 +169,6 @@ public class MainJFrame extends JFrame {
             }
         });
         menuConsultar.add(menuCertificados);
-
-        menuDisponibilidad.setText("Disponibilidad de formatos preimpresos");
-        menuDisponibilidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuDisponibilidadActionPerformed(evt);
-            }
-        });
-        menuConsultar.add(menuDisponibilidad);
-
-        menuGestion.setText("Gestión de formatos preimpresos");
-        menuGestion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuGestionActionPerformed(evt);
-            }
-        });
-        menuConsultar.add(menuGestion);
 
         jMenuBar2.add(menuConsultar);
 
@@ -230,6 +203,14 @@ public class MainJFrame extends JFrame {
             }
         });
         menuSolicitar.add(menuModificar);
+
+        menuPDF.setText("Descargar solicitudes en PDF");
+        menuPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPDFActionPerformed(evt);
+            }
+        });
+        menuSolicitar.add(menuPDF);
 
         jMenuBar2.add(menuSolicitar);
 
@@ -399,25 +380,10 @@ public class MainJFrame extends JFrame {
         mostrarPanel("tipo", "Buscar por tipo");
     }//GEN-LAST:event_menuTipoActionPerformed
 
-    private void menuFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFechaActionPerformed
-        // cambiar contenido a panel de buscar por fecha
-        mostrarPanel("fecha", "Buscar por fecha");
-    }//GEN-LAST:event_menuFechaActionPerformed
-
     private void menuCertificadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCertificadosActionPerformed
         // cambiar contenido a panel de consultar certificados
         mostrarPanel("certificados", "Consultar certificados");
     }//GEN-LAST:event_menuCertificadosActionPerformed
-
-    private void menuDisponibilidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDisponibilidadActionPerformed
-        // cambiar contenido a panel de consultar disponibilidad
-        mostrarPanel("disponibilidad", "Consultar disponibilidad");
-    }//GEN-LAST:event_menuDisponibilidadActionPerformed
-
-    private void menuGestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGestionActionPerformed
-        // cambiar contenido a panel gestion de formatos preimpresos
-        mostrarPanel("gestion", "Gestionar formatos preimpresos");
-    }//GEN-LAST:event_menuGestionActionPerformed
 
     private void menuImpresionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuImpresionActionPerformed
         // cambiar contenido a panel solicitud de impresion
@@ -447,6 +413,11 @@ public class MainJFrame extends JFrame {
         mostrarPanel("inventario", "Reporte Inventario");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void menuPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPDFActionPerformed
+        // TODO add your handling code here:
+        mostrarPanel("pdf", "Descargar solicitud en PDF");
+    }//GEN-LAST:event_menuPDFActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem cerrarSesion;
@@ -460,14 +431,12 @@ public class MainJFrame extends JFrame {
     private javax.swing.JMenuItem menuConfiguracion;
     private javax.swing.JMenu menuConsultar;
     private javax.swing.JMenu menuCuenta;
-    private javax.swing.JMenuItem menuDisponibilidad;
-    private javax.swing.JMenuItem menuFecha;
     private javax.swing.JMenuItem menuFolio;
-    private javax.swing.JMenuItem menuGestion;
     private javax.swing.JMenuItem menuImpresion;
     private javax.swing.JMenuItem menuInfo;
     private javax.swing.JMenu menuModalidad;
     private javax.swing.JMenuItem menuModificar;
+    private javax.swing.JMenuItem menuPDF;
     private javax.swing.JMenu menuSolicitar;
     private javax.swing.JMenuItem menuTipo;
     private javax.swing.JMenuItem modalidadAdmin;

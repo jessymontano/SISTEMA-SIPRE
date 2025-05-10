@@ -5,52 +5,63 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.properties.TextAlignment;
-
+import java.awt.Desktop;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class GeneradorPDF {
-    public static void generarPDF(int folio, String tipoDocumento, Date fechaSolicitud, String motivo) {
-        // Crear el documento PDF
+    public static void mostrarPDFEnNavegador(int folio, String tipoDocumento, Date fechaSolicitud, String motivo) {
         try {
-            // Ruta donde se guardará el PDF generado
-            String rutaPDF = "solicitud_folio_" + folio + ".pdf";
-
-            // Establecer el escritor del PDF
-            PdfWriter writer = new PdfWriter(new FileOutputStream(rutaPDF));
+            // 1. Crear PDF en memoria
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PdfWriter writer = new PdfWriter(baos);
             PdfDocument pdfDoc = new PdfDocument(writer);
-
-            // Crear el documento iText
             Document document = new Document(pdfDoc);
 
-
-            // Agregar contenido al documento
-            Paragraph titulo = new Paragraph("Solicitud para retirar Documentos de la bodega");
-            titulo.setTextAlignment(TextAlignment.CENTER);  // Aquí usamos TextAlignment correctamente
-            document.add(titulo);
-            document.add(new Paragraph(" "));  // Salto de línea
-
-            // Formatear la fecha de solicitud
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String fechaFormateada = dateFormat.format(fechaSolicitud);
-
-            // Detalles de la solicitud
-            document.add(new Paragraph("Folio: " + folio));
-            document.add(new Paragraph("Tipo de Documento: " + tipoDocumento));
-            document.add(new Paragraph("Fecha de Solicitud: " + fechaFormateada));
-            document.add(new Paragraph("Motivo: " + motivo));
-            document.add(new Paragraph(" "));  // Salto de línea
-
-            // Cerrar el documento
+            // 2. Agregar contenido
+            agregarContenidoPDF(document, folio, tipoDocumento, fechaSolicitud, motivo);
             document.close();
-            System.out.println("PDF generado en la ruta: " + rutaPDF);
+
+            // 3. Crear archivo temporal
+            File tempFile = File.createTempFile("solicitud_" + folio + "_", ".pdf");
+            tempFile.deleteOnExit();
+
+            // 4. Escribir PDF en archivo temporal
+            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                fos.write(baos.toByteArray());
+            }
+
+            // 5. Abrir en navegador
+            Desktop.getDesktop().browse(tempFile.toURI());
 
         } catch (IOException e) {
+            System.err.println("Error al generar/abrir PDF: " + e.getMessage());
             e.printStackTrace();
-            System.out.println("Error al generar el PDF.");
         }
     }
-}
 
+    private static void agregarContenidoPDF(Document document, int folio, String tipoDocumento, 
+                                          Date fechaSolicitud, String motivo) {
+        // Título
+        Paragraph titulo = new Paragraph("Solicitud de Impresión - Folio: " + folio);
+        titulo.setTextAlignment(TextAlignment.CENTER);
+        titulo.setFontSize(16);
+        document.add(titulo);
+        document.add(new Paragraph("\n"));
+
+        // Formatear fecha
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaFormateada = dateFormat.format(fechaSolicitud);
+
+        // Detalles
+        document.add(new Paragraph("Tipo de Documento: " + tipoDocumento));
+        document.add(new Paragraph("Fecha de Solicitud: " + fechaFormateada));
+        document.add(new Paragraph("Motivo: " + motivo));
+        document.add(new Paragraph("\n"));
+
+    }
+}

@@ -23,7 +23,7 @@ public class PanelAgregarTiposFP extends javax.swing.JPanel {
         setLayout(new java.awt.GridBagLayout());
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18));
         jLabel1.setText("Añadir nuevo tipo de formato preimpreso");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;

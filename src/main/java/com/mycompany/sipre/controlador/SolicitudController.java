@@ -10,6 +10,7 @@ import com.mycompany.sipre.modelo.Solicitud;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Date;
 import java.util.function.Consumer;
 import okhttp3.*;
 
@@ -23,9 +24,12 @@ public class SolicitudController {
     private final OkHttpClient client = new OkHttpClient();
     private final Gson gson = new Gson();
 
-    public void agregarSolicitud(Solicitud solicitud, Consumer<Boolean> callback) {
+     public void agregarSolicitud(int folio, int idTipo, Date fecha, String motivo, int idUsuario, Consumer<Boolean> callback) {
+        // Crear un objeto JSON manualmente para evitar problemas con el modelo
+        String json = String.format("{\"folio\":%d,\"idTipo\":%d,\"fecha\":\"%s\",\"motivo\":\"%s\",\"idUsuario\":%d}",
+                folio, idTipo, fecha.toString(), motivo, idUsuario);
+        
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        String json = gson.toJson(solicitud);
         RequestBody body = RequestBody.create(json, JSON);
         Request request = new Request.Builder().url(BASE_URL).post(body).build();
 
@@ -196,6 +200,34 @@ public class SolicitudController {
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
                 callback.accept(null);
+            }
+        });
+    }
+    
+     public void obtenerIdTipoPorNombre(String nombreTipo, Consumer<Integer> callback) {
+        HttpUrl url = HttpUrl.parse(BASE_URL + "/tipo/id").newBuilder()
+                .addQueryParameter("nombre", nombreTipo)
+                .build();
+
+        Request request = new Request.Builder().url(url).get().build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (response.isSuccessful() && responseBody != null) {
+                        String json = responseBody.string();
+                        callback.accept(gson.fromJson(json, Integer.class));
+                    } else {
+                        callback.accept(-1);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                callback.accept(-1);
             }
         });
     }

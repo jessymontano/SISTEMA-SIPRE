@@ -15,6 +15,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JTable;
@@ -34,7 +36,12 @@ public class PanelTipo extends javax.swing.JPanel {
      */
     public PanelTipo(JFrame frame) {
         initComponents();
-        cargarTiposDocumento();
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {;
+                cargarTiposDocumento();
+            }
+        });
     }
 
     private void cargarTiposDocumento() {
@@ -71,7 +78,7 @@ public class PanelTipo extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(587, 300));
         setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Buscar por tipo");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -108,7 +115,6 @@ public class PanelTipo extends javax.swing.JPanel {
         add(jButton1, gridBagConstraints);
 
         ComboTipo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        ComboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cert. Uso Común", "Cert. Parcelario Individual", "Cert. Parcelario de Grupo", "Cert. Parcelario Destino Esp.", "Tit. De Solar Individual", "Tit. Dominio Pleno Individual", "Tit. Dominio Pleno de Grupo", "Tit. De Solar a Favor del Ejido", "Tit. De Solar Servicio Público", "Tit. De Solar Asoc. Religiosas" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -192,8 +198,7 @@ public class PanelTipo extends javax.swing.JPanel {
                                 model.addRow(new Object[]{
                                     documento.getFolio(),
                                     documento.getTipoDocumento(),
-                                    documento.getEstatus(),
-                                    documento.getCantidadDocumentos()
+                                    documento.getEstatus()
                                 });
                             }
                         }

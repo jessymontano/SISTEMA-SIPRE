@@ -104,9 +104,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
         jDialog1.setTitle("Modificar solicitud");
         jDialog1.setAlwaysOnTop(true);
         jDialog1.setBackground(null);
-        jDialog1.setMaximumSize(new java.awt.Dimension(500, 300));
         jDialog1.setModal(true);
-        jDialog1.setPreferredSize(new java.awt.Dimension(500, 300));
         jDialog1.pack();
         jDialog1.getContentPane().setLayout(new java.awt.GridBagLayout());
 
@@ -258,7 +256,7 @@ public class PanelUsuarios extends javax.swing.JPanel {
         setBackground(new java.awt.Color(204, 204, 204));
         setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Gestionar Usuarios");
         gridBagConstraints = new java.awt.GridBagConstraints();

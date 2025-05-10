@@ -2,7 +2,7 @@ C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\si
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\PanelInicio.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\DialogoLogin.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\gestion\PanelUsuarios.java
-C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\buscar\PanelFecha.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\alta\PanelAlta.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\reportes\PanelMovimientos_solicitudes.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\ConsultorJFrame.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\MainJFrame.java
@@ -10,6 +10,7 @@ C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\si
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\TipoController.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelResumen.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\consultar\PanelCert.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\alta\PanelConsulta.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\configuracion\PanelEliminarCuenta.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\modelo\TipoFormatoPreimpreso.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\modelo\Inventario.java
@@ -21,6 +22,7 @@ C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\si
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelSolicitud.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\consultar\PanelResultados.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\PanelAyuda.java
+C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\modelo\AltaDocumentosRequest.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelResumenCancelacion.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\SolicitudController.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelModificar.java
@@ -34,7 +36,6 @@ C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\si
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\AdminJFrame.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\UsuarioController.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\buscar\PanelFolio.java
-C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\consultar\PanelDisp.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\vista\solicitar\PanelCancelar.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\modelo\Documento.java
 C:\Users\jessica\Documents\NetBeansProjects\SIPRE\src\main\java\com\mycompany\sipre\controlador\GeneradorPDF.java

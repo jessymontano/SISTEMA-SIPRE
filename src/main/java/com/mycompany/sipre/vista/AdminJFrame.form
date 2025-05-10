@@ -59,6 +59,14 @@
             </Property>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menuGestionFormatos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de formatos preimpresos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuGestionFormatosActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuFormatos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="A&#xf1;adir nuevos tipos de formatos preimpresos"/>

@@ -10,6 +10,8 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.List;
 
 public class PanelEditarTiposFP extends javax.swing.JPanel {
@@ -20,7 +22,12 @@ public class PanelEditarTiposFP extends javax.swing.JPanel {
      */
     public PanelEditarTiposFP() {
         initComponents();
-        actualizarTabla();
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                actualizarTabla(); // Refrescar datos al mostrarse
+            }
+        });
         btnGuardar.addActionListener(evt -> btnGuardarActionPerformed(evt));
     }
 
@@ -28,6 +35,8 @@ public class PanelEditarTiposFP extends javax.swing.JPanel {
     private void actualizarTabla() {
         TipoController controller = new TipoController();
         controller.obtenerTipos(tipoActualizados -> {
+            
+            tipoActualizados.sort((d1, d2) -> Integer.compare(d1.getIdTipo(), d2.getIdTipo()));
             this.tipos = tipoActualizados;
 
             SwingUtilities.invokeLater(() -> {

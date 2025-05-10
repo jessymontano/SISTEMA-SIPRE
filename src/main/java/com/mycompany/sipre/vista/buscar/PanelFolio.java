@@ -51,7 +51,7 @@ public class PanelFolio extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(587, 300));
         setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Buscar por folio");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -108,14 +108,14 @@ public class PanelFolio extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Folio", "Tipo de documento", "Estado", "Cantidad"
+                "Folio", "Tipo de documento", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -176,7 +176,6 @@ public class PanelFolio extends javax.swing.JPanel {
                         documento.getFolio(),
                         documento.getTipoDocumento(),
                         documento.getEstatus(),
-                        documento.getCantidadDocumentos()
                     });
                 } else {
                     // Mostrar mensaje si no se encuentra el documento

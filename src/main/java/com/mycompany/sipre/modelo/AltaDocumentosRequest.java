@@ -12,8 +12,6 @@ public class AltaDocumentosRequest {
 
     private String tipoDocumento;
     private int cantidad;
-    private int folioInicial;
-    private int folioFinal;
     private String fechaIngreso;
     private int idUsuario;
 
@@ -35,22 +33,6 @@ public class AltaDocumentosRequest {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public int getFolioInicial() {
-        return folioInicial;
-    }
-
-    public void setFolioInicial(int folioInicial) {
-        this.folioInicial = folioInicial;
-    }
-
-    public int getFolioFinal() {
-        return folioFinal;
-    }
-
-    public void setFolioFinal(int folioFinal) {
-        this.folioFinal = folioFinal;
     }
 
     public String getFechaIngreso() {

@@ -64,12 +64,8 @@ public class PanelAlta extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         comboTipo = new javax.swing.JComboBox<>();
         fieldCantidad = new javax.swing.JTextField();
-        fieldFolioInicial = new javax.swing.JTextField();
-        fieldFolioFinal = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel(hoy);
 
         setBackground(new java.awt.Color(204, 204, 204));
@@ -77,6 +73,11 @@ public class PanelAlta extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Limpiar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 10;
@@ -102,7 +103,7 @@ public class PanelAlta extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(36, 40, 43, 109);
         add(jButton2, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Alta de formatos");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
@@ -138,26 +139,6 @@ public class PanelAlta extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(9, 44, 0, 0);
         add(jLabel4, gridBagConstraints);
 
-        jLabel5.setText("Número de folio:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 44, 0, 0);
-        add(jLabel5, gridBagConstraints);
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("<html>(Opcional) Número final de folio:</html>");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.ipadx = -69;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(9, 44, 0, 0);
-        add(jLabel6, gridBagConstraints);
-
         comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
@@ -180,30 +161,6 @@ public class PanelAlta extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 109);
         add(fieldCantidad, gridBagConstraints);
-
-        fieldFolioInicial.setMinimumSize(new java.awt.Dimension(100, 22));
-        fieldFolioInicial.setPreferredSize(new java.awt.Dimension(100, 22));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 17;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 64;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 109);
-        add(fieldFolioInicial, gridBagConstraints);
-
-        fieldFolioFinal.setMinimumSize(new java.awt.Dimension(100, 22));
-        fieldFolioFinal.setPreferredSize(new java.awt.Dimension(100, 22));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 17;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 64;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 109);
-        add(fieldFolioFinal, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 3;
@@ -218,9 +175,9 @@ public class PanelAlta extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
     // Validar campos obligatorios
-    if (fieldCantidad.getText().trim().isEmpty() || fieldFolioInicial.getText().trim().isEmpty()) {
+    if (fieldCantidad.getText().trim().isEmpty()) {
         JOptionPane.showMessageDialog(this,
-                "Cantidad y Folio inicial son obligatorios",
+                "El campo cantidad es obligatorio",
                 "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
@@ -228,7 +185,6 @@ public class PanelAlta extends javax.swing.JPanel {
     try {
         String tipoDocumento = (String) comboTipo.getSelectedItem();
         int cantidad = Integer.parseInt(fieldCantidad.getText());
-        int folioInicial = Integer.parseInt(fieldFolioInicial.getText());
         
         // Validar valores positivos
         if (cantidad <= 0) {
@@ -237,47 +193,6 @@ public class PanelAlta extends javax.swing.JPanel {
                     "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        if (folioInicial <= 0) {
-            JOptionPane.showMessageDialog(this,
-                    "El folio inicial debe ser mayor que cero",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Folio final es opcional
-        Integer folioFinal = null;
-        if (fieldFolioFinal.getText().trim().isEmpty()) {
-            // Si está vacío, calcularlo automáticamente
-            folioFinal = folioInicial + cantidad - 1;
-        } else {
-            folioFinal = Integer.parseInt(fieldFolioFinal.getText());
-            
-            // Validar folio final
-            if (folioFinal <= 0) {
-                JOptionPane.showMessageDialog(this,
-                        "El folio final debe ser mayor que cero",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            if (folioFinal < folioInicial) {
-                JOptionPane.showMessageDialog(this,
-                        "El folio final no puede ser menor que el inicial",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            // Validar que la cantidad coincida con el rango
-            int rangoCalculado = folioFinal - folioInicial + 1;
-            if (rangoCalculado != cantidad) {
-                JOptionPane.showMessageDialog(this,
-                        "La cantidad no coincide con el rango de folios",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        }
-
 
         // Confirmación antes de proceder
         int confirm = JOptionPane.showConfirmDialog(this,
@@ -288,15 +203,13 @@ public class PanelAlta extends javax.swing.JPanel {
             return;
         }
 
-        documentoController.altaDocumento(tipoDocumento, cantidad, folioInicial, folioFinal, hoy, idUsuario, creado -> {
+        documentoController.altaDocumento(tipoDocumento, cantidad, hoy, idUsuario, creado -> {
             if (creado) {
                 JOptionPane.showMessageDialog(this, 
                         cantidad + " documentos creados exitosamente", 
                         "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 // Limpiar campos después de éxito
                 fieldCantidad.setText("");
-                fieldFolioInicial.setText("");
-                fieldFolioFinal.setText("");
             } else {
                 JOptionPane.showMessageDialog(this, 
                         "Error al crear documentos. Verifique los datos e intente nuevamente.", 
@@ -311,20 +224,20 @@ public class PanelAlta extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        fieldCantidad.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JTextField fieldCantidad;
-    private javax.swing.JTextField fieldFolioFinal;
-    private javax.swing.JTextField fieldFolioInicial;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,10 +7,14 @@ import com.mycompany.sipre.modelo.Solicitud;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,24 +24,40 @@ public class PanelCancelar extends javax.swing.JPanel {
 
     public PanelCancelar(JFrame frame) {
         initComponents();
-        llenarTabla();
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                llenarTabla();
+            }
+        });
     }
 
     private void llenarTabla() {
-        DocumentoController documentoDAO = new DocumentoController();
+        SolicitudController solicitudController = new SolicitudController();
 
-        documentoDAO.obtenerDocumentosPorEstatus("Solicitado", documentos -> {
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-            for (Documento documento : documentos) {
-                model.addRow(new Object[]{
-                    documento.getFolio(),
-                    documento.getTipoDocumento()
-                });
+        solicitudController.obtenerTodasLasSolicitudes(solicitudes -> {
+            SwingUtilities.invokeLater(() -> {
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0); // Limpiar la tabla
 
-            }
+                if (solicitudes != null) {
+                    for (Solicitud solicitud : solicitudes) {
+                        model.addRow(new Object[]{
+                            solicitud.getFolio(),
+                            solicitud.getTipoDocumento(),
+                            solicitud.getFecha(),
+                            solicitud.getMotivo()
+                        });
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "No se pudieron cargar las solicitudes",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            });
+
         });
-
     }
 
     @SuppressWarnings("unchecked")
@@ -57,7 +77,7 @@ public class PanelCancelar extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(587, 300));
         setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Cancelar solicitud");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -90,7 +110,7 @@ public class PanelCancelar extends javax.swing.JPanel {
         jButton2.setBackground(new java.awt.Color(99, 132, 182));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Buscar");
+        jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -120,14 +140,14 @@ public class PanelCancelar extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Folio", "Tipo de documento"
+                "Folio", "Tipo de documento", "Fecha", "Motivo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -165,38 +185,39 @@ public class PanelCancelar extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-            // Obtén el folio ingresado
-            int folio = Integer.parseInt(FieldFolio.getText().trim());
 
-            // Verifica que se haya ingresado un folio válido
-            if (folio <= 0) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+        // Obtén el folio ingresado
+        int folio = Integer.parseInt(FieldFolio.getText().trim());
 
-            // Confirmar eliminación
-            int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this,
-                    "¿Estás seguro de que deseas cancelar la solicitud con folio " + folio + "?",
-                    "Confirmar cancelación", javax.swing.JOptionPane.YES_NO_OPTION);
+        // Verifica que se haya ingresado un folio válido
+        if (folio <= 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un folio válido.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-            if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
-                // Crear instancia del DAO y llamar al método para eliminar la solicitud
-                SolicitudController solicitudDAO = new SolicitudController();
+        // Confirmar eliminación
+        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this,
+                "¿Estás seguro de que deseas cancelar la solicitud con folio " + folio + "?",
+                "Confirmar cancelación", javax.swing.JOptionPane.YES_NO_OPTION);
 
-                solicitudDAO.cancelarSolicitud(folio, resultado -> {
-                    // Mostrar mensaje según el resultado
-                    if (resultado) {
-                        javax.swing.JOptionPane.showMessageDialog(this, "Solicitud eliminada y estatus actualizado con éxito.");
-                    } else {
-                        javax.swing.JOptionPane.showMessageDialog(this, "No se encontró una solicitud con el folio especificado o no se pudo actualizar el estatus.",
-                                "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-                    }
-                });
-                llenarTabla();
+        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+            // Crear instancia del DAO y llamar al método para eliminar la solicitud
+            SolicitudController solicitudDAO = new SolicitudController();
 
-            }
-       
+            solicitudDAO.cancelarSolicitud(folio, resultado -> {
+                // Mostrar mensaje según el resultado
+                if (resultado) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Solicitud eliminada y estatus actualizado con éxito.");
+
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "No se encontró una solicitud con el folio especificado o no se pudo actualizar el estatus.",
+                            "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            });
+            llenarTabla();
+
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

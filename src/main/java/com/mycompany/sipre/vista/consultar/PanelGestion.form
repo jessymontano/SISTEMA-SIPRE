@@ -135,7 +135,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-      <Color blue="ff" green="d8" red="d9" type="rgb"/>
+      <Color blue="cc" green="cc" red="cc" type="rgb"/>
     </Property>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[587, 300]"/>
@@ -159,7 +159,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="12" style="1"/>
+          <Font name="Segoe UI" size="18" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Gestionar formatos preimpresos"/>
       </Properties>
@@ -183,12 +183,10 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer(&quot;Modificar&quot;));&#xa;jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox(), &quot;Modificar&quot;));&#xa;&#xa;jTable1.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer(&quot;Eliminar&quot;));&#xa;jTable1.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox(), &quot;Eliminar&quot;));">
-              <Table columnCount="5" rowCount="0">
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="jTable1.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer(&quot;Eliminar&quot;));&#xa;jTable1.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(new JCheckBox(), &quot;Eliminar&quot;));">
+              <Table columnCount="3" rowCount="0">
                 <Column editable="false" title="Folio" type="java.lang.String"/>
                 <Column editable="false" title="Tipo de documento" type="java.lang.String"/>
-                <Column editable="false" title="Cantidad disponible" type="java.lang.String"/>
-                <Column editable="true" title="Modificar" type="java.lang.Object"/>
                 <Column editable="true" title="Eliminar" type="java.lang.Object"/>
               </Table>
             </Property>
@@ -206,7 +204,7 @@
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="8f" red="94" type="rgb"/>
+          <Color blue="b6" green="84" red="63" type="rgb"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="12" style="1"/>

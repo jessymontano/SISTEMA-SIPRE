@@ -202,15 +202,13 @@ public class DocumentoController {
     }
     
     // alta documento
-    public void altaDocumento(String tipoDocumento, int cantidad, int folioInicial, Integer folioFinal, String fechaIngreso, int idUsuario, Consumer<Boolean> callback) {
+    public void altaDocumento(String tipoDocumento, int cantidad, String fechaIngreso, int idUsuario, Consumer<Boolean> callback) {
     OkHttpClient client = new OkHttpClient();
 
     // Crear objeto JSON usando Gson
     AltaDocumentosRequest altaRequest = new AltaDocumentosRequest();
     altaRequest.setTipoDocumento(tipoDocumento);
     altaRequest.setCantidad(cantidad);
-    altaRequest.setFolioInicial(folioInicial);
-    altaRequest.setFolioFinal(folioFinal);
     altaRequest.setFechaIngreso(fechaIngreso);
     altaRequest.setIdUsuario(idUsuario);
 

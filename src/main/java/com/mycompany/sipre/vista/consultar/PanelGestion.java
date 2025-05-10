@@ -5,8 +5,10 @@
 package com.mycompany.sipre.vista.consultar;
 
 import com.mycompany.sipre.controlador.DocumentoController;
+import com.mycompany.sipre.controlador.TipoController;
 import com.mycompany.sipre.modelo.Documento;
 import com.mycompany.sipre.modelo.Solicitud;
+import com.mycompany.sipre.modelo.TipoFormatoPreimpreso;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -14,6 +16,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,13 +40,32 @@ import javax.swing.table.TableCellRenderer;
 public class PanelGestion extends javax.swing.JPanel {
 
     List<Documento> documentos;
+    TipoController tipoController = new TipoController();
 
     /**
      * Creates new form PanelGestion
      */
     public PanelGestion(JFrame frame) {
         initComponents();
-        llenarTabla();
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {;
+                cargarTiposDocumento();
+                llenarTabla();
+            }
+        });
+    }
+    private void cargarTiposDocumento() {
+        tipoController.obtenerTipos(tipos -> {
+            if (tipos != null) {
+                if (tipos != null) {
+                comboTipo.removeAllItems();
+                for (TipoFormatoPreimpreso tipo : tipos) {
+                    comboTipo.addItem(tipo.getNombre());
+                }
+            }
+            }
+        });
     }
 
     //llenar tabla automaticamente con todas las solicitudes encontradas
@@ -58,8 +81,6 @@ public class PanelGestion extends javax.swing.JPanel {
                 model.addRow(new Object[]{
                     documento.getFolio(),
                     documento.getTipoDocumento(),
-                    documento.getCantidadDocumentos(),
-                    "Modificar",
                     "Eliminar"
                 });
             }
@@ -197,11 +218,11 @@ public class PanelGestion extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 169);
         jDialog1.getContentPane().add(fieldCantidad, gridBagConstraints);
 
-        setBackground(new java.awt.Color(217, 216, 255));
+        setBackground(new java.awt.Color(204, 204, 204));
         setPreferredSize(new java.awt.Dimension(587, 300));
         setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Gestionar formatos preimpresos");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -216,14 +237,14 @@ public class PanelGestion extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Folio", "Tipo de documento", "Cantidad disponible", "Modificar", "Eliminar"
+                "Folio", "Tipo de documento", "Eliminar"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -234,11 +255,8 @@ public class PanelGestion extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer("Modificar"));
-        jTable1.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(new JCheckBox(), "Modificar"));
-
-        jTable1.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer("Eliminar"));
-        jTable1.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox(), "Eliminar"));
+        jTable1.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer("Eliminar"));
+        jTable1.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(new JCheckBox(), "Eliminar"));
         jTable1.setRowHeight(30);
         jTable1.getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
@@ -265,7 +283,7 @@ public class PanelGestion extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(21, 6, 0, 0);
         add(jScrollPane1, gridBagConstraints);
 
-        jButton2.setBackground(new java.awt.Color(148, 143, 255));
+        jButton2.setBackground(new java.awt.Color(99, 132, 182));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Buscar");
@@ -346,16 +364,10 @@ public class PanelGestion extends javax.swing.JPanel {
             if (isSelected) {
                 setBackground(table.getSelectionBackground());
             } else {
-                setBackground(new java.awt.Color(148, 143, 255));
+                setBackground(new java.awt.Color(99, 132, 182));
             }
 
-            if ("Modificar".equals(actionType)) {
-                ImageIcon icono = new ImageIcon(getClass().getResource("/edit.png"));
-                Image image = icono.getImage();
-                Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-                icono = new ImageIcon(nuevaImagen);
-                setIcon(icono);
-            } else if ("Eliminar".equals(actionType)) {
+            if ("Eliminar".equals(actionType)) {
                 ImageIcon icono = new ImageIcon(getClass().getResource("/delete.png"));
                 Image image = icono.getImage();
                 Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
@@ -381,13 +393,7 @@ public class PanelGestion extends javax.swing.JPanel {
             button = new JButton();
             button.setOpaque(true);
 
-            if ("Modificar".equals(actionType)) {
-                ImageIcon icono = new ImageIcon(getClass().getResource("/edit.png"));
-                Image image = icono.getImage();
-                Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-                icono = new ImageIcon(nuevaImagen);
-                button.setIcon(icono);
-            } else if ("Eliminar".equals(actionType)) {
+            if ("Eliminar".equals(actionType)) {
                 ImageIcon icono = new ImageIcon(getClass().getResource("/delete.png"));
                 Image image = icono.getImage();
                 Image nuevaImagen = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
@@ -398,9 +404,7 @@ public class PanelGestion extends javax.swing.JPanel {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if ("Modificar".equals(actionType)) {
-                        abrirFormulario(selectedRow);
-                    } else if ("Eliminar".equals(actionType)) {
+                    if ("Eliminar".equals(actionType)) {
                         int option = JOptionPane.showConfirmDialog(null,
                                 "¿Está seguro de que desea eliminar este documento?",
                                 "Confirmar", JOptionPane.YES_NO_OPTION);
@@ -435,30 +439,6 @@ public class PanelGestion extends javax.swing.JPanel {
 
             llenarTabla();
         }
-    }
-
-    // abre un nuevo jDialog con un formulario para editar la información del documento
-    private void abrirFormulario(int rowIndex) {
-        Documento documento = documentos.get(rowIndex);
-        int folioAnterior = documento.getFolio();
-
-        btnGuardar.addActionListener(e -> {
-            documento.setFolio(Integer.parseInt(fieldFolio.getText()));
-            documento.setTipoDocumento((String) comboTipo.getSelectedItem());
-            documento.setCantidadDocumentos(Integer.parseInt(fieldCantidad.getText()));
-
-            // actualizar el documento con los datos introducidos
-            DocumentoController documentoDAO = new DocumentoController();
-            documentoDAO.actualizarDocumento(folioAnterior, documento, actualizado -> {
-
-            });
-
-            llenarTabla();
-            jDialog1.dispose();
-        });
-
-        jDialog1.setLocationRelativeTo(this);
-        jDialog1.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

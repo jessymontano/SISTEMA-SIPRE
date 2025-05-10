@@ -27,7 +27,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="12" style="1"/>
+          <Font name="Segoe UI" size="18" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Buscar por tipo"/>
       </Properties>
@@ -73,20 +73,6 @@
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="12" style="1"/>
-        </Property>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="10">
-            <StringItem index="0" value="Cert. Uso Com&#xfa;n"/>
-            <StringItem index="1" value="Cert. Parcelario Individual"/>
-            <StringItem index="2" value="Cert. Parcelario de Grupo"/>
-            <StringItem index="3" value="Cert. Parcelario Destino Esp."/>
-            <StringItem index="4" value="Tit. De Solar Individual"/>
-            <StringItem index="5" value="Tit. Dominio Pleno Individual"/>
-            <StringItem index="6" value="Tit. Dominio Pleno de Grupo"/>
-            <StringItem index="7" value="Tit. De Solar a Favor del Ejido"/>
-            <StringItem index="8" value="Tit. De Solar Servicio P&#xfa;blico"/>
-            <StringItem index="9" value="Tit. De Solar Asoc. Religiosas"/>
-          </StringArray>
         </Property>
       </Properties>
       <AuxValues>

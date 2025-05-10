@@ -13,7 +13,6 @@ import com.mycompany.sipre.controlador.UsuarioController;
 import com.mycompany.sipre.modelo.Usuario;
 import com.mycompany.sipre.vista.alta.PanelAlta;
 import com.mycompany.sipre.vista.alta.PanelConsulta;
-import com.mycompany.sipre.vista.buscar.*;
 import com.mycompany.sipre.vista.consultar.*;
 import com.mycompany.sipre.vista.gestion.PanelAgregarTiposFP;
 import com.mycompany.sipre.vista.gestion.PanelEditarTiposFP;
@@ -69,6 +68,7 @@ public class AdminJFrame extends JFrame {
         panelContenedor.add("editar", new PanelEditarTiposFP());
         panelContenedor.add("alta", new PanelAlta(usuario.getId()));
         panelContenedor.add("consulta", new PanelConsulta());
+        panelContenedor.add("gestion", new PanelGestion(this));
         
         initComponents();
         
@@ -100,6 +100,7 @@ public class AdminJFrame extends JFrame {
 
         jMenuBar2 = new javax.swing.JMenuBar();
         menuGestion = new javax.swing.JMenu();
+        menuGestionFormatos = new javax.swing.JMenuItem();
         menuFormatos = new javax.swing.JMenuItem();
         menuModificar = new javax.swing.JMenuItem();
         menuUsuarios = new javax.swing.JMenuItem();
@@ -139,6 +140,14 @@ public class AdminJFrame extends JFrame {
         menuGestion.setMinimumSize(new java.awt.Dimension(100, 50));
         menuGestion.setOpaque(true);
         menuGestion.setPreferredSize(new java.awt.Dimension(100, 50));
+
+        menuGestionFormatos.setText("Gestión de formatos preimpresos");
+        menuGestionFormatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuGestionFormatosActionPerformed(evt);
+            }
+        });
+        menuGestion.add(menuGestionFormatos);
 
         menuFormatos.setText("Añadir nuevos tipos de formatos preimpresos");
         menuFormatos.addActionListener(new java.awt.event.ActionListener() {
@@ -437,6 +446,11 @@ public class AdminJFrame extends JFrame {
         mostrarPanel("consulta", "Consultar formatos");
     }//GEN-LAST:event_menuConsultarActionPerformed
 
+    private void menuGestionFormatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGestionFormatosActionPerformed
+        // TODO add your handling code here:
+        mostrarPanel("gestion", "Gestionar formatos preimpresos");
+    }//GEN-LAST:event_menuGestionFormatosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem cerrarSesion;
@@ -454,6 +468,7 @@ public class AdminJFrame extends JFrame {
     private javax.swing.JMenuItem menuFormatos;
     private javax.swing.JMenu menuGenerar;
     private javax.swing.JMenu menuGestion;
+    private javax.swing.JMenuItem menuGestionFormatos;
     private javax.swing.JMenuItem menuInfo;
     private javax.swing.JMenu menuModalidad;
     private javax.swing.JMenuItem menuModificar;

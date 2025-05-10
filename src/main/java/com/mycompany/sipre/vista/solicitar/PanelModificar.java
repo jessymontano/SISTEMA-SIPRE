@@ -5,7 +5,9 @@
 package com.mycompany.sipre.vista.solicitar;
 
 import com.mycompany.sipre.controlador.SolicitudController;
+import com.mycompany.sipre.controlador.TipoController;
 import com.mycompany.sipre.modelo.Solicitud;
+import com.mycompany.sipre.modelo.TipoFormatoPreimpreso;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -14,7 +16,10 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -26,9 +31,11 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -40,32 +47,63 @@ import javax.swing.table.TableCellRenderer;
 public class PanelModificar extends javax.swing.JPanel {
 
     private List<Solicitud> solicitudes;
+    TipoController tipoController = new TipoController();
 
     /**
      * Creates new form PanelEstado
      */
     public PanelModificar(JFrame frame) {
         initComponents();
-        llenarTabla();
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                llenarTabla();
+                cargarTiposDocumento();
+            }
+        });
+    }
+    
+    private void cargarTiposDocumento() {
+        tipoController.obtenerTipos(tipos -> {
+            if (tipos != null) {
+                if (tipos != null) {
+                comboTipo.removeAllItems();
+                for (TipoFormatoPreimpreso tipo : tipos) {
+                    comboTipo.addItem(tipo.getNombre());
+                }
+            }
+            }
+        });
     }
 
     //llenar tabla automaticamente con todas las solicitudes encontradas
     private void llenarTabla() {
-        SolicitudController solicitudDAO = new SolicitudController();
+        SolicitudController solicitudController = new SolicitudController();
 
-        solicitudDAO.obtenerTodasLasSolicitudes(solicitudes -> {
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-            for (Solicitud solicitud : solicitudes) {
-                model.addRow(new Object[]{
-                    solicitud.getFolio(),
-                    solicitud.getTipoDocumento(),
-                    solicitud.getFecha(),
-                    "Modificar"
-                });
-            }
+        solicitudController.obtenerTodasLasSolicitudes(solicitudes -> {
+            this.solicitudes = solicitudes;
+            SwingUtilities.invokeLater(() -> {
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0); // Limpiar la tabla
+
+                if (solicitudes != null) {
+                    for (Solicitud solicitud : solicitudes) {
+                        model.addRow(new Object[]{
+                            solicitud.getFolio(),
+                            solicitud.getTipoDocumento(),
+                            solicitud.getFecha(),
+                            "Modificar"
+                        });
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "No se pudieron cargar las solicitudes",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            });
+
         });
-
     }
 
     /**
@@ -85,11 +123,6 @@ public class PanelModificar extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtMotivo = new javax.swing.JTextArea();
-        comboAno = new javax.swing.JComboBox<>();
-        comboMes = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -102,7 +135,8 @@ public class PanelModificar extends javax.swing.JPanel {
         jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         jDialog1.setTitle("Modificar solicitud");
         jDialog1.setAlwaysOnTop(true);
-        jDialog1.getContentPane().setBackground(new java.awt.Color(217, 216, 255));
+        jDialog1.setBackground(null);
+        jDialog1.getContentPane().setBackground(new java.awt.Color(204,204,204));
         jDialog1.setMinimumSize(new java.awt.Dimension(500, 300));
         jDialog1.setModal(true);
         jDialog1.getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -128,7 +162,6 @@ public class PanelModificar extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(33, 69, 0, 0);
         jDialog1.getContentPane().add(jLabel8, gridBagConstraints);
 
-        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cert. Uso Común", "Cert. Parcelario Individual", "Cert. Parcelario de Grupo", "Cert. Parcelario Destino Esp.", "Tit. De Solar Individual", "Tit. Dominio Pleno Individual", "Tit. Dominio Pleno de Grupo", "Tit. De Solar a Favor del Ejido", "Tit. De Solar Servicio Público", "Tit. De Solar Asoc. Religiosas" }));
         comboTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboTipoActionPerformed(evt);
@@ -170,65 +203,7 @@ public class PanelModificar extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 78);
         jDialog1.getContentPane().add(jScrollPane2, gridBagConstraints);
 
-        int anoInicio = 2000;
-        int anoActual = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
-
-        String[] anos = new String[anoActual - anoInicio + 1];
-
-        for (int i = 0; i <= anoActual - anoInicio; i++) {
-            anos[i] = String.valueOf(anoActual - i);
-        }
-        comboAno.setModel(new javax.swing.DefaultComboBoxModel<>(anos));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 12, 0, 0);
-        jDialog1.getContentPane().add(comboAno, gridBagConstraints);
-
-        comboMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
-        comboMes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboMesActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 28;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 6, 0, 78);
-        jDialog1.getContentPane().add(comboMes, gridBagConstraints);
-
-        jLabel5.setText("Año:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 16, 0, 0);
-        jDialog1.getContentPane().add(jLabel5, gridBagConstraints);
-
-        jLabel6.setText("Mes:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 12;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 16;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 0);
-        jDialog1.getContentPane().add(jLabel6, gridBagConstraints);
-
-        jLabel7.setText("Fecha:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.ipadx = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 70, 0, 0);
-        jDialog1.getContentPane().add(jLabel7, gridBagConstraints);
-
-        btnGuardar.setBackground(new java.awt.Color(148, 143, 255));
+        btnGuardar.setBackground(new java.awt.Color(99, 132, 182));
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("Guardar");
@@ -276,7 +251,7 @@ public class PanelModificar extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(18, 1, 0, 0);
         add(jLabel3, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Modificar solicitud");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -379,10 +354,6 @@ public class PanelModificar extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboTipoActionPerformed
 
-    private void comboMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboMesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboMesActionPerformed
-
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -399,7 +370,7 @@ public class PanelModificar extends javax.swing.JPanel {
             if (isSelected) {
                 setBackground(table.getSelectionBackground());
             } else {
-                setBackground(new java.awt.Color(148, 143, 255));
+                setBackground(new java.awt.Color(99, 132, 182));
             }
             ImageIcon icono = new ImageIcon(getClass().getResource("/edit.png"));
             Image image = icono.getImage();
@@ -453,16 +424,9 @@ public class PanelModificar extends javax.swing.JPanel {
 
         btnGuardar.addActionListener(e -> {
             solicitud.setTipoDocumento((String) comboTipo.getSelectedItem());
-
-            String nuevoAno = (String) comboAno.getSelectedItem();
-            int nuevoMes = comboMes.getSelectedIndex();
-
-            Calendar newCal = Calendar.getInstance();
-            newCal.set(Integer.parseInt(nuevoAno), nuevoMes, 1);
-            Date nuevaFecha = newCal.getTime();
-
-            solicitud.setFecha(nuevaFecha);
-
+            
+            java.util.Date fechaHoy = java.sql.Date.valueOf(LocalDate.now());
+            solicitud.setFecha(fechaHoy);
             solicitud.setMotivo(txtMotivo.getText());
 
             // actualizar la solicitud con los datos introducidos
@@ -482,8 +446,6 @@ public class PanelModificar extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField FieldFolio;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JComboBox<String> comboAno;
-    private javax.swing.JComboBox<String> comboMes;
     private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JButton jButton2;
     private javax.swing.JDialog jDialog1;
@@ -492,9 +454,6 @@ public class PanelModificar extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

@@ -7,13 +7,11 @@ public class Documento {
     private String tipoDocumento; // For display/UI
     private int idTipo;          // For database operations
     private String estatus;
-    private int cantidadDocumentos;
 
-    public Documento(int Folio, String TipoDocumento, String Estatus, int CantidadDocumentos) {
+    public Documento(int Folio, String TipoDocumento, String Estatus) {
         this.folio = Folio;
         this.tipoDocumento = TipoDocumento;
         this.estatus = Estatus;
-        this.cantidadDocumentos = CantidadDocumentos;
     }
 
     public Documento() {
@@ -40,13 +38,6 @@ public class Documento {
     }
     public void setEstatus(String Estatus) {
         this.estatus = Estatus;
-    }
-    public int getCantidadDocumentos(){
-        return cantidadDocumentos;
-    }
-
-    public void setCantidadDocumentos(int CantidadDocumentos) {
-        this.cantidadDocumentos = CantidadDocumentos;
     }
 
     public void setIdTipo(int id) {
