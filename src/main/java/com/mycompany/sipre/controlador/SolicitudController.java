@@ -5,6 +5,7 @@
 package com.mycompany.sipre.controlador;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.mycompany.sipre.modelo.Solicitud;
 import java.io.IOException;
@@ -22,7 +23,9 @@ public class SolicitudController {
 
     private final String BASE_URL = "http://localhost:8080/solicitudes";
     private final OkHttpClient client = new OkHttpClient();
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder()
+    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss") // Esto está bien
+    .create();
 
      public void agregarSolicitud(int folio, int idTipo, Date fecha, String motivo, int idUsuario, Consumer<Boolean> callback) {
         // Crear un objeto JSON manualmente para evitar problemas con el modelo

@@ -420,28 +420,67 @@ public class PanelModificar extends javax.swing.JPanel {
 
     // abre un nuevo jDialog con un formulario para editar la información de la solicitud
     private void abrirFormulario(int rowIndex) {
-        Solicitud solicitud = solicitudes.get(rowIndex);
-
-        btnGuardar.addActionListener(e -> {
-            solicitud.setTipoDocumento((String) comboTipo.getSelectedItem());
-            
-            java.util.Date fechaHoy = java.sql.Date.valueOf(LocalDate.now());
-            solicitud.setFecha(fechaHoy);
-            solicitud.setMotivo(txtMotivo.getText());
-
-            // actualizar la solicitud con los datos introducidos
-            SolicitudController solicitudDAO = new SolicitudController();
-
-            solicitudDAO.actualizarSolicitud(solicitud, respuesta -> {
-            });
-
-            llenarTabla();
-            jDialog1.dispose();
-        });
-
-        jDialog1.setLocationRelativeTo(this);
-        jDialog1.setVisible(true);
+    if (rowIndex < 0 || rowIndex >= solicitudes.size()) {
+        JOptionPane.showMessageDialog(this, "Índice de solicitud inválido", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
+
+    Solicitud solicitud = solicitudes.get(rowIndex);
+    
+    // Limpiar listeners previos
+    for (ActionListener al : btnGuardar.getActionListeners()) {
+        btnGuardar.removeActionListener(al);
+    }
+    
+    // Cargar datos actuales en el formulario
+    comboTipo.setSelectedItem(solicitud.getTipoDocumento());
+    txtMotivo.setText(solicitud.getMotivo());
+    
+    // Configurar nuevo listener
+    btnGuardar.addActionListener(e -> {
+        String nombreTipoDocumento = (String) comboTipo.getSelectedItem();
+        String motivo = txtMotivo.getText().trim();
+        
+        if (motivo.isEmpty()) {
+            JOptionPane.showMessageDialog(jDialog1, "El motivo no puede estar vacío", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        SolicitudController solicitudController = new SolicitudController();
+        
+        solicitudController.obtenerIdTipoPorNombre(nombreTipoDocumento, idTipo -> {
+            if (idTipo == -1) {
+                JOptionPane.showMessageDialog(jDialog1, "Tipo de documento no válido", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Actualizar solo los campos modificables
+            solicitud.setIdTipo(idTipo);
+            solicitud.setMotivo(motivo);
+            // La fecha se mantiene como estaba
+            
+            solicitudController.actualizarSolicitud(solicitud, resultado -> {
+                if (resultado) {
+                    JOptionPane.showMessageDialog(jDialog1, 
+                        "Solicitud actualizada con éxito", 
+                        "Éxito", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                    llenarTabla();
+                    jDialog1.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(jDialog1, 
+                        "Error al actualizar la solicitud", 
+                        "Error", 
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            });
+        });
+    });
+    
+    jDialog1.pack();
+    jDialog1.setLocationRelativeTo(this);
+    jDialog1.setVisible(true);
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField FieldFolio;
