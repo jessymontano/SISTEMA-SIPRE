@@ -71,7 +71,7 @@ public class PanelFecha extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(18, 9, 0, 0);
         add(jButton1, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Buscar por fecha");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -81,7 +81,7 @@ public class PanelFecha extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(50, 16, 0, 0);
         add(jLabel1, gridBagConstraints);
 
-        jLabel2.setText("Introduzca la fecha del documento");
+        jLabel2.setText("Introduzca la fecha de la solicitud");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;

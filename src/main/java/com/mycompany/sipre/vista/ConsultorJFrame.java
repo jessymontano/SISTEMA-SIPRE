@@ -58,6 +58,7 @@ public class ConsultorJFrame extends JFrame {
         panelContenedor.add("config", new PanelConfiguracion(this));
         panelContenedor.add("folio", new PanelFolio(this));
         panelContenedor.add("tipo", new PanelTipo(this));
+        panelContenedor.add("fecha", new PanelFecha(this));
         panelContenedor.add("certificados", new PanelConsulta());
         panelContenedor.add("resultados", new PanelResultados());
         panelContenedor.add("ayuda", new PanelAyuda(this));
@@ -95,6 +96,7 @@ public class ConsultorJFrame extends JFrame {
         menuBuscar = new javax.swing.JMenu();
         menuFolio = new javax.swing.JMenuItem();
         menuTipo = new javax.swing.JMenuItem();
+        menuFecha = new javax.swing.JMenuItem();
         menuConsultar = new javax.swing.JMenu();
         menuCertificados = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
@@ -141,6 +143,14 @@ public class ConsultorJFrame extends JFrame {
             }
         });
         menuBuscar.add(menuTipo);
+
+        menuFecha.setText("Fecha");
+        menuFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuFechaActionPerformed(evt);
+            }
+        });
+        menuBuscar.add(menuFecha);
 
         jMenuBar2.add(menuBuscar);
 
@@ -341,6 +351,10 @@ public class ConsultorJFrame extends JFrame {
         mostrarPanel("ayuda", "Ayuda");
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void menuFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFechaActionPerformed
+        mostrarPanel("fecha", "Buscar por fecha");
+    }//GEN-LAST:event_menuFechaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem cerrarSesion;
@@ -353,6 +367,7 @@ public class ConsultorJFrame extends JFrame {
     private javax.swing.JMenuItem menuConfiguracion;
     private javax.swing.JMenu menuConsultar;
     private javax.swing.JMenu menuCuenta;
+    private javax.swing.JMenuItem menuFecha;
     private javax.swing.JMenuItem menuFolio;
     private javax.swing.JMenuItem menuInfo;
     private javax.swing.JMenu menuModalidad;
