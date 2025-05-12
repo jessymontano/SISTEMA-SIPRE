@@ -18,9 +18,11 @@ import com.mycompany.sipre.vista.gestion.PanelAgregarTiposFP;
 import com.mycompany.sipre.vista.gestion.PanelEditarTiposFP;
 import com.mycompany.sipre.vista.gestion.PanelGestionRol;
 import com.mycompany.sipre.vista.gestion.PanelUsuarios;
+import com.mycompany.sipre.vista.reportes.PanelReporteExcelYPDF;
 import com.mycompany.sipre.vista.solicitar.*;
 import com.mycompany.sipre.vista.reportes.Panelinventario;
 //import com.mycompany.sipre.vista.solicitar.reportes.PanelMovimientos_solicitudes;
+import com.mycompany.sipre.vista.reportes.PanelReporteExcelYPDF;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -69,6 +71,7 @@ public class AdminJFrame extends JFrame {
         panelContenedor.add("alta", new PanelAlta(usuario.getId()));
         panelContenedor.add("consulta", new PanelConsulta());
         panelContenedor.add("gestion", new PanelGestion(this));
+        panelContenedor.add("reporteExcelYPDF", new PanelReporteExcelYPDF());
         
         initComponents();
         
@@ -224,14 +227,6 @@ public class AdminJFrame extends JFrame {
             }
         });
         menuGenerar.add(menuEstadistico);
-
-        menuExistencias.setText("Reportes de existencias");
-        menuExistencias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuExistenciasActionPerformed(evt);
-            }
-        });
-        menuGenerar.add(menuExistencias);
 
         jMenuBar2.add(menuGenerar);
 
@@ -406,13 +401,8 @@ public class AdminJFrame extends JFrame {
 
     private void menuEstadisticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEstadisticoActionPerformed
         // cambiar contenido a panel de consultar certificados
-        mostrarPanel("certificados", "Consultar certificados");
+        mostrarPanel("reporteExcelYPDF", "Consultar certificados");
     }//GEN-LAST:event_menuEstadisticoActionPerformed
-
-    private void menuExistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExistenciasActionPerformed
-        // cambiar contenido a panel de consultar disponibilidad
-        mostrarPanel("disponibilidad", "Consultar disponibilidad");
-    }//GEN-LAST:event_menuExistenciasActionPerformed
 
     private void menuAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAltaActionPerformed
         // cambiar contenido a panel alta formatos

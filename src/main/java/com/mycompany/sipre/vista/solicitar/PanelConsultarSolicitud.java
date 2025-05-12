@@ -118,7 +118,7 @@ public class PanelConsultarSolicitud extends javax.swing.JPanel {
     }
 
     private void abrirPDF(int rowIndex) {
-        if (rowIndex >= 0 && rowIndex < solicitudes.size()) {
+        /*if (rowIndex >= 0 && rowIndex < solicitudes.size()) {
             Solicitud solicitud = solicitudes.get(rowIndex);
             
             // Generar y mostrar el PDF en el navegador
@@ -128,7 +128,7 @@ public class PanelConsultarSolicitud extends javax.swing.JPanel {
                 solicitud.getFecha(),
                 solicitud.getMotivo()
             );
-        }
+        }*/
     }
 
     @SuppressWarnings("unchecked")
