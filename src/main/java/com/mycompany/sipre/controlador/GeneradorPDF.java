@@ -63,5 +63,5 @@ public class GeneradorPDF {
         document.add(new Paragraph("Motivo: " + motivo));
         document.add(new Paragraph("\n"));
 
-    }
+}
 }
