@@ -410,11 +410,11 @@ public class AdminJFrame extends JFrame {
     }//GEN-LAST:event_menuAltaActionPerformed
 
     private void menuAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAyudaActionPerformed
-         mostrarPanel("ayuda", "Ayuda");
+         
     }//GEN-LAST:event_menuAyudaActionPerformed
     //menuMovimientosActionPerformed
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // cambiar contenido a panel ayuda
+        mostrarPanel("ayuda", "Ayuda");
         
     }                                          
     //menuInventarioActionPerformed
